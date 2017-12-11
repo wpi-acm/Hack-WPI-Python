@@ -1,0 +1,100 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+p {
+  line-height: 2rem;
+}
+
+#logo-container {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  height: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.button-collapse {
+  color: #26a69a;
+}
+
+.sub-button {
+  margin-top: 5px;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+  .parallax-container .section {
+    width: 100%;
+  }
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  .parallax-container .section {
+    height: auto;
+    overflow: auto;
+  }
+  .container {
+      height: auto;
+  }
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+#registration-banner {
+  min-height: 100px;
+  max-height: 150px;
+}
+
+#registration-banner .section{
+  top: auto;
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+footer.page-footer {
+  margin: 0;
+}
+
+
+.parallax img {
+  display: inherit
+}
+
+#mlh-trust-badge {
+    display: block;
+    max-width: 100px;
+    min-width: 60px;
+    position: fixed;
+    right: 50px;
+    top: 0;
+    width: 10%;
+    z-index: 10000;
+}
