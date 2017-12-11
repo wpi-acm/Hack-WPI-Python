@@ -180,7 +180,7 @@ def admin():
     waitlist_count = 0
     total_count = 0
     check_in_count = 0
-    shirt_count = {'xs': 0, 's': 0, 'm': 0, 'l': 0, 'xl': 0, }
+    shirt_count = {'xxs': 0, 'xs': 0, 's': 0, 'm': 0, 'l': 0, 'xl': 0, 'xxl': 0}
     male_count = 0
     female_count = 0
     schools = {}
