@@ -11,32 +11,36 @@
         <a id="mlh-trust-badge" href="https://mlh.io/seasons/na-2017/events?utm_source=na-2017&utm_medium=TrustBadge&utm_campaign=na-2017&utm_content=black" target="_blank"><img src="https://s3.amazonaws.com/logged-assets/trust-badge/2017/black.svg" alt="Major League Hacking 2017 Hackathon Season" style="width:100%"></a>
 
         <div class="container">
-          <h1>Hi {{ name }}, thanks for logging in with MyMLH!</h1>
-          <h2>If you'd like, add your resume to send to sponsors... </h2>
-          <div class="section">
-            <form method="post" action="/register" enctype="multipart/form-data">
-              <div class="file-field input-field">
-                  <div class="btn">
-                      <span>File</span>
-                      <input id="resume" name="resume" type="file"/>
-                  </div>
-                  <div class="file-path-wrapper">
-                      <input class="file-path validate" type="text">
-                  </div>
-              </div>
-              <p>By registering & attending, you agree to the following policies:</p>
-              <p><a href="https://github.com/MLH/mlh-policies/blob/master/data-sharing.md">MLH's Data Sharing
-                  Notice</a>
-              </p>
-              <p><a href="https://mlh.io/privacy">MLH's Privacy Policy</a></p>
-              <p>
-                  <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md">MLH's
-                      Contest Terms and Conditions</a></p>
-              <p><a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH's Code of Conduct</a></p>
-              <br>
-                <input type="checkbox" id="checkboxid" required><label for="checkboxid">Do you agree with MLH Rules?</label><br>
-              <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
-            </form>
+            <h1>Hi {{ name }}, thanks for logging in with MyMLH!</h1>
+            <h2>We will be sending resumes to sponsoring companies. If you would like us to send your resume, please upload it here:</h2>
+            <div class="section">
+                <form method="post" action="/register" enctype="multipart/form-data">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>File</span>
+                            <input id="resume" name="resume" type="file"/>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <p>By registering & attending, you agree to the following policies:</p>
+                    <p>
+                        <a href="https://github.com/MLH/mlh-policies/blob/master/data-sharing.md">MLH's Data Sharing Notice</a>
+                    </p>
+                    <p>
+                        <a href="https://mlh.io/privacy">MLH's Privacy Policy</a>
+                    </p>
+                    <p>
+                        <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md">MLH's Contest Terms and Conditions</a>
+                    </p>
+                    <p>
+                        <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH's Code of Conduct</a>
+                    </p>
+                    <br>
+                    <input type="checkbox" id="checkboxid" required><label for="checkboxid">Do you agree with MLH Rules?</label><br>
+                    <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
+                </form>
           </div>
     </div>
 </div>
