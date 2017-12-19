@@ -50,5 +50,5 @@ msg += '  ' + str(errs) + '\n'
 
 print(msg)
 
-send_email('hack@wpi.edu', 'HackWPI - Daily Waitlist Report!', msg)
+#send_email('hack@wpi.edu', 'HackWPI - Daily Waitlist Report!', msg)
 send_email('bkayastha@wpi.edu', 'HackWPI - Daily Waitlist Report!', msg)

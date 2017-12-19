@@ -13,9 +13,6 @@ from email.mime.text import MIMEText
 from dateutil.relativedelta import relativedelta
 from flask import Flask, render_template, redirect, url_for, request, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from mailchimp3 import MailChimp
-from pubnub.pnconfiguration import PNConfiguration
-from pubnub.pubnub import PubNub
 from werkzeug.utils import secure_filename
 
 from config_hackWPI import api_keys, WAITLIST_LIMIT, HACKATHON_TIME, ALLOWED_EXTENSIONS
@@ -25,13 +22,8 @@ app.config.from_pyfile('config.py')
 
 db = SQLAlchemy(app)
 
-pnconfig = PNConfiguration()
 
-pnconfig.publish_key = api_keys['pubnub']['pub']
-pnconfig.subscribe_key = api_keys['pubnub']['sub']
-pnconfig.ssl = True
 
-pn = PubNub(pnconfig)
 
 
 class Hacker(db.Model):
@@ -54,6 +46,14 @@ class AutoPromoteKeys(db.Model):
     key = db.Column(db.String(4096))
     val = db.Column(db.String(4096))
 
+@app.errorhandler(413)
+def filesize_too_big(erro):
+    print("Someone tried to send something too big")
+    return "That file was too big, please go back and try a smaller resume pdf"
+
+@app.errorhandler(500)
+def server_error():
+    print("There was a server error... If you're having trouble registering, please email hack@wpi.edu with your details and what you did to break our site :P")
 
 @app.route('/')
 def root():
@@ -154,7 +154,7 @@ def register():
         print(session['mymlh']['first_name'] + " put on database successfully.")
 
         # Send a welcome email
-        msg = 'Hey ' + session['mymlh']['first_name'] + '\n\n'
+        msg = 'Dear ' + session['mymlh']['first_name'] + '\n\n'
         msg += 'Thanks for applying to Hack@WPI!\n'
         if waitlist:
             msg += 'Sorry! We have hit our registration capacity. You have been placed on the waitlist.\n'
@@ -162,8 +162,6 @@ def register():
         else:
             msg += 'You are fully registered! We will send you more info closer to the hackathon.\n'
         send_email(session['mymlh']['email'], 'Hack@WPI - Thanks for applying', msg)
-
-        pn.publish().channel('hackWPI-admin').message({'action': 'new_user'}).sync()
 
         # Finally, send them to their dashboard
         return redirect(url_for('dashboard'))
@@ -266,9 +264,6 @@ def change_admin():
         db.session.query(Hacker).filter(Hacker.mlh_id == request.args.get('mlh_id')).update({'admin': False})
     db.session.commit()
 
-    pn.publish().channel('hackWPI-admin').message(
-        {'status': 'success', 'action': 'change_admin:' + request.args.get('action'), 'more_info': '',
-         'id': request.args.get('mlh_id')}).sync()
 
     return jsonify({'status': 'success', 'action': 'change_admin:' + request.args.get('action'), 'more_info': '',
                     'id': request.args.get('mlh_id')})
@@ -300,14 +295,10 @@ def check_in():
     mlh_info = get_mlh_user(request.args.get('mlh_id'))
 
     # Send a welcome email...
-    msg = 'Hey ' + mlh_info['first_name'] + ',\n\n'
+    msg = 'Dear ' + mlh_info['first_name'] + ',\n\n'
     msg += 'Thanks for checking in!\n'
     msg += 'We will start shortly, please check your dashboard for updates!\n'
     send_email(mlh_info['email'], 'HackWPI - Thanks for checking in', msg)
-
-    pn.publish().channel('hackWPI-admin').message(
-        {'status': 'success', 'action': 'check_in', 'more_info': '',
-         'id': request.args.get('mlh_id')}).sync()
 
     return jsonify(
         {'status': 'success', 'action': 'check_in', 'more_info': '', 'id': request.args.get('mlh_id')})
@@ -355,11 +346,9 @@ def drop():
 
     # Send a goodbye email...
     msg = 'Dear ' + mlh_info['first_name'] + ',\n\n'
-    msg += 'Your application was dropped, sorry to see you go.\n'
+    msg += 'Your application was dropped, sorry to see you go.\n If this was a mistake, you can re-register by going to hack.wpi.edu/register'
     send_email(mlh_info['email'], 'Hack@WPI - Application Dropped', msg)
 
-    pn.publish().channel('hackWPI-admin').message(
-        {'status': 'success', 'action': 'drop', 'more_info': '', 'id': request.args.get('mlh_id')}).sync()
 
     if is_self(request.args.get('mlh_id')):
         session.clear()
@@ -411,9 +400,6 @@ def promote_from_waitlist():
     msg += 'If you cannot make it, please remove yourself at hack.wpi.edu\dashboard.\n'
     send_email(mlh_info['email'], "Hack@WPI - You're off the Waitlist!", msg)
 
-    pn.publish().channel('hackWPI-admin').message(
-        {'status': 'success', 'action': 'promote_from_waitlist', 'more_info': '',
-         'id': request.args.get('mlh_id')}).sync()
 
     print(mlh_info['first_name'] + "is off the waitlist!")
 
@@ -463,7 +449,7 @@ def send_email(to, subject, body):
     print("Email sent to: " + to)
     body += '\nPlease let your friends know about the event as well!.\n'
     body += 'To update your status, you can go to hack.wpi.edu/dashboard\n'
-    body += '\nThanks Again!\nThe HackWPI Team\nhttps://twitter.com/hackwpi?lang=en'
+    body += '\nAll the best!\nThe HackWPI Team\nhttps://twitter.com/hackwpi?lang=en'
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
@@ -537,4 +523,4 @@ def allowed_file(filename):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=80, threaded=True)
