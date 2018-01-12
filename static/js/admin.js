@@ -174,6 +174,8 @@ const checkIn = (id) => {
         title = 'Checked in!'
         msg = 'The hacker was checked in!'
         type = 'success'
+	// Update table in admin.html (This is a hack, and a terrible one, but at least there's feedback on the change.
+	document.getElementById(id + '-checked_in').innerHTML = "True"
       } else {
         title = 'Error!'
         msg = JSON.stringify(data)
