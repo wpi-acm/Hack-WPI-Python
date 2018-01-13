@@ -60,6 +60,35 @@ def root():
     print("Someone visited!.")
     return render_template('index.html')
 
+@app.route('/resumepost', method=['POST'])
+def resumepost():
+    """A last minute hack to let people post their resume after they've already registered"""
+    if request.method == 'POST':
+        if not is_logged_in() or db.session.query(
+                db.exists().where(Hacker.mlh_id == session['mymlh']['id'])).scalar():
+            # Request flow == messed up somehow, restart them
+            return redirect(url_for('register'))
+
+        if 'resume' not in request.files:
+            return "You tried to submit a resume with no file"
+
+        resume = request.files['resume']
+        if resume.filename == '':
+            return "You tried to submit a resume with no file"
+
+        if resume and not allowed_file(resume.filename):
+            return jsonify(
+                {'status': 'error', 'action': 'register',
+                 'more_info': 'Invalid file type... Accepted types are txt pdf doc docx and rtf...'})
+
+        if resume and allowed_file(resume.filename):
+            # Good file!
+            filename = session['mymlh']['first_name'].lower() + '_' + session['mymlh']['last_name'].lower() + '_' + str(
+                session['mymlh']['id']) + '.' + resume.filename.split('.')[-1].lower()
+            filename = secure_filename(filename)
+            resume.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return "Resume uploaded!"
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

@@ -19,6 +19,22 @@
 		You can park at the <a href="https://www.google.com/maps/place/Hackfeld+Lot/@42.274131,-71.8112764,16.88z/data=!4m5!3m4!1s0x89e406f433008cd5:0xba67db4fec56e85c!8m2!3d42.2728874!4d-71.8128909">Hackfeld Lot</a>. Please make sure to print and put this <a href="../static/parking_placecard.pdf">placecard</a>.
 		<br>
 		Let us know if you have any questions by sending them to hack@wpi.edu
+                <br>
+                Forgot to upload your resume while registering? No worries, submit it here:
+
+                <form method="post" action="/resumepost" enctype="multipart/form-data">
+                    <p><b>If you'd like, add your resume to send to sponsors... </b></p>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>File</span>
+                            <input id="resume" name="resume" type="file"/>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                    <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
+                </form>
             {% endif %}
             <br>
             <a href="#" id="drop-link"><p class="sub-button btn waves-effect waves-light grey darken-1">Drop Application if you can't make it :(</p></a>
