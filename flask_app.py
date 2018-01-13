@@ -60,15 +60,10 @@ def root():
     print("Someone visited!.")
     return render_template('index.html')
 
-@app.route('/resumepost', method=['POST'])
+@app.route('/resumepost', methods=['POST'])
 def resumepost():
     """A last minute hack to let people post their resume after they've already registered"""
     if request.method == 'POST':
-        if not is_logged_in() or db.session.query(
-                db.exists().where(Hacker.mlh_id == session['mymlh']['id'])).scalar():
-            # Request flow == messed up somehow, restart them
-            return redirect(url_for('register'))
-
         if 'resume' not in request.files:
             return "You tried to submit a resume with no file"
 
@@ -88,6 +83,7 @@ def resumepost():
             filename = secure_filename(filename)
             resume.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return "Resume uploaded!"
+    return "Something went wrong. If this keeps happening, slack message @bkayastha"
 
 
 @app.route('/register', methods=['GET', 'POST'])
