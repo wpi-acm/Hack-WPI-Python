@@ -327,6 +327,7 @@ def check_in():
     msg = 'Dear ' + mlh_info['first_name'] + ',\n\n'
     msg += 'Thanks for checking in!\n'
     msg += 'We will start shortly, please check your dashboard for updates!\n'
+    msg += 'Here are the slides with all the info: https://goo.gl/mGLDem\n'
     send_email(mlh_info['email'], 'HackWPI - Thanks for checking in', msg)
 
     return jsonify(
@@ -388,6 +389,7 @@ def drop():
 
 @app.route('/promote_from_waitlist', methods=['GET'])
 def promote_from_waitlist():
+    print("Time for promotion!")
     # Promote a hacker from the waitlist...
     if request.args.get('mlh_id') is None:
         return jsonify({'status': 'error', 'action': 'promote_from_waitlist', 'more_info': 'Missing required field...'})

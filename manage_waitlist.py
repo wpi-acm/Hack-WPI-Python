@@ -9,6 +9,8 @@ num_to_promote = WAITLIST_LIMIT - num_attendees
 if num_to_promote > num_waitlisted:
     num_to_promote = num_waitlisted
 
+print("PROMOTING " + str(num_to_promote) + " hackers")
+
 num_to_promote_copy = num_to_promote
 num_promoted = 0
 errs = []
@@ -19,7 +21,7 @@ for id in mlh_ids:
     if num_to_promote > 0:
         print('Attempting to promote: ' + str(id[0]))
         (key, val) = gen_new_auto_promote_keys()
-        url = 'http://75.136.89.196:5000/promote_from_waitlist' + '?mlh_id=' + str(id[0]) + '&' + key + '=' + val
+        url = 'http://hack.wpi.edu/promote_from_waitlist' + '?mlh_id=' + str(id[0]) + '&' + key + '=' + val
         print(url)
         req = requests.get(url)
         if req.status_code == 500:
