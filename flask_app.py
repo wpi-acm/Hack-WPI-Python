@@ -88,6 +88,9 @@ def resumepost():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    # Temporarily disable registration.
+    return "Registration is currently closed.", 403
+
     if request.method == 'GET':
         # Register a hacker...
         if is_logged_in() and db.session.query(
