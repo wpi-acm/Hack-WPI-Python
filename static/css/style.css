@@ -85,7 +85,8 @@ footer.page-footer {
 
 
 .parallax img {
-  display: inherit
+	display: inherit;
+	max-height: 250%;
 }
 
 #mlh-trust-badge {
