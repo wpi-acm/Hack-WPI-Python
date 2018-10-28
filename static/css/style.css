@@ -8,79 +8,79 @@
 
 nav ul a,
 nav .brand-logo {
-  color: #444;
+	color: #444;
 }
 
 p {
-  line-height: 2rem;
+	line-height: 2rem;
 }
 
 #logo-container {
-  padding-top: 5px;
-  padding-bottom: 5px;
-  height: 100%;
-  left: 50%;
-  transform: translateX(-50%);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 100%;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .button-collapse {
-  color: #26a69a;
+	color: #26a69a;
 }
 
 .sub-button {
-  margin-top: 5px;
+	margin-top: 5px;
 }
 
 .parallax-container {
-  min-height: 380px;
-  line-height: 0;
-  height: auto;
-  color: rgba(255,255,255,.9);
+	min-height: 380px;
+	line-height: 0;
+	height: auto;
+	color: rgba(255,255,255,.9);
 }
-  .parallax-container .section {
-    width: 100%;
-  }
+.parallax-container .section {
+	width: 100%;
+}
 
 @media only screen and (max-width : 992px) {
-  .parallax-container .section {
-    top: 40%;
-  }
-  #index-banner .section {
-    top: 10%;
-  }
+	.parallax-container .section {
+		top: 40%;
+	}
+	#index-banner .section {
+		top: 10%;
+	}
 }
 
 @media only screen and (max-width : 600px) {
-  .parallax-container .section {
-    height: auto;
-    overflow: auto;
-  }
-  .container {
-      height: auto;
-  }
-  #index-banner .section {
-    top: 0;
-  }
+	.parallax-container .section {
+		height: auto;
+		overflow: auto;
+	}
+	.container {
+		height: auto;
+	}
+	#index-banner .section {
+		top: 0;
+	}
 }
 
 #registration-banner {
-  min-height: 100px;
-  max-height: 150px;
+	min-height: 100px;
+	max-height: 150px;
 }
 
 #registration-banner .section{
-  top: auto;
+	top: auto;
 }
 
 .icon-block {
-  padding: 0 15px;
+	padding: 0 15px;
 }
 .icon-block .material-icons {
-  font-size: inherit;
+	font-size: inherit;
 }
 
 footer.page-footer {
-  margin: 0;
+	margin: 0;
 }
 
 
@@ -90,14 +90,14 @@ footer.page-footer {
 }
 
 #mlh-trust-badge {
-    display: block;
-    max-width: 100px;
-    min-width: 60px;
-    position: fixed;
-    right: 50px;
-    top: 0;
-    width: 10%;
-    z-index: 10000;
+	display: block;
+	max-width: 100px;
+	min-width: 60px;
+	position: fixed;
+	right: 50px;
+	top: 0;
+	width: 10%;
+	z-index: 10000;
 }
 
 .sponsors img {
