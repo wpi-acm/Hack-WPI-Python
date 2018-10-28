@@ -15,7 +15,7 @@ from flask import Flask, render_template, redirect, url_for, request, session, j
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
-from config_hackWPI import api_keys, SERVER_PORT, WAITLIST_LIMIT, HACKATHON_TIME, ALLOWED_EXTENSIONS
+from config_hackWPI import api_keys, SERVER_LISTEN_ADDR, SERVER_PORT, WAITLIST_LIMIT, HACKATHON_TIME, ALLOWED_EXTENSIONS
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -550,4 +550,4 @@ def allowed_file(filename):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=SERVER_PORT, threaded=True)
+    app.run(host=SERVER_LISTEN_ADDR, port=SERVER_PORT, threaded=True)
