@@ -63,6 +63,14 @@ p {
 	}
 }
 
+#tagline {
+	font-weight: 600;
+}
+
+#event-info {
+	font-weight: 400;
+}
+
 #registration-banner {
 	min-height: 100px;
 	max-height: 150px;
