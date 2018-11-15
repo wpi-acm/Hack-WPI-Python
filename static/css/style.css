@@ -118,6 +118,10 @@ footer.page-footer {
 	font-family: Helvetica, sans-serif;
 }
 
+.silver-sponsors img {
+	max-height: 90px;
+}
+
 .bronze-sponsors img {
 	max-height: 80px;
 }
