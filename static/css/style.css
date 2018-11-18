@@ -108,6 +108,16 @@ footer.page-footer {
 	z-index: 10000;
 }
 
+.sponsors {
+	line-height: 1;
+}
+
+.sponsor-name {
+	margin-right: 20px;
+	white-space: nowrap;
+	font-weight: 500;
+}
+
 .sponsors img {
 	display: inline-block;
 	margin-right: 20px;
@@ -119,9 +129,13 @@ footer.page-footer {
 }
 
 .silver-sponsors img {
-	max-height: 90px;
+	max-height: 85px;
 }
 
 .bronze-sponsors img {
 	max-height: 80px;
+}
+
+.platinum-sponsors .sponsor-name {
+	font-size: 110px;
 }
