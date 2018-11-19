@@ -122,9 +122,9 @@ footer.page-footer {
 	margin-right: 20px;
 }
 
-.sponsors h3 {
-	font-weight: 700;
-	font-family: Helvetica, sans-serif;
+.sponsors h2 {
+	font-weight: 600;
+	font-family: "Archivo Narrow", "Helvetica", sans-serif;
 }
 
 .silver-sponsors img {
