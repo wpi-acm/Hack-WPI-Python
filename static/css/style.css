@@ -127,6 +127,14 @@ footer.page-footer {
 	font-family: "Archivo Narrow", "Helvetica", sans-serif;
 }
 
+.sponsors > div {
+	max-width: 85%;
+}
+
+.gold-sponsors img {
+	max-height: 90px;
+}
+
 .silver-sponsors img {
 	max-height: 85px;
 }
