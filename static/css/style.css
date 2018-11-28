@@ -143,6 +143,10 @@ footer.page-footer {
 	max-height: 80px;
 }
 
+.other-sponsors img {
+	max-height: 75px;
+}
+
 .platinum-sponsors .sponsor-name {
 	font-size: 110px;
 }
