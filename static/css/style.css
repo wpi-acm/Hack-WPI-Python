@@ -131,6 +131,10 @@ footer.page-footer {
 	max-width: 85%;
 }
 
+.partner-sponsors img {
+	max-height: 95px;
+}
+
 .gold-sponsors img {
 	max-height: 90px;
 }
