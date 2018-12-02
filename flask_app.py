@@ -185,7 +185,7 @@ def register():
             msg += 'Sorry! We have hit our registration capacity. You have been placed on the waitlist.\n'
             msg += 'We will let you know if space opens up.\n'
         else:
-            msg += 'You are fully registered! We will send you more info closer to the hackathon.\n'
+            msg += 'You are fully registered! You are guarenteed a spot at the hackathon. We will send you more info closer to the hackathon.\n'
         send_email(session['mymlh']['email'], 'Hack@WPI - Thanks for applying', msg)
 
         # Finally, send them to their dashboard
