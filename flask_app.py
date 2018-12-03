@@ -474,7 +474,7 @@ def is_self(mlh_id):
 
 def send_email(to, subject, body):
     print("Email sent to: " + to)
-    body += '\nPlease let your friends know about the event as well!.\n'
+    body += '\nPlease let your friends know about the event as well!\n'
     body += 'To update your status, you can go to hack.wpi.edu/dashboard\n'
     body += '\nAll the best!\nThe HackWPI Team\nhttps://twitter.com/hackwpi?lang=en'
 
