@@ -23,9 +23,6 @@ app.config.from_pyfile('config.py')
 db = SQLAlchemy(app)
 
 
-
-
-
 class Hacker(db.Model):
     __tablename__ = 'hackers'
 
@@ -515,11 +512,21 @@ def get_mlh_user(mlh_id):
 
 
 def get_mlh_users():
-    req = requests.get(
-        'https://my.mlh.io/api/v2/users.json?client_id=' + api_keys['mlh']['client_id'] + '&secret=' + api_keys['mlh'][
-            'secret'])
-    if req.status_code == 200:
-        return req.json()['data']
+    page_index = 1
+    num_pages = 1
+    users = []
+    while page_index <= num_pages:
+        req = requests.get('https://my.mlh.io/api/v2/users.json?client_id={client_id}&secret={secret}&page={page}'.format(
+            client_id=api_keys['mlh']['client_id'],
+            secret=api_keys['mlh']['secret'],
+            page=page_index
+        ))
+        if req.status_code == 200:
+            users += req.json()['data']
+            num_pages = req.json()['pagination']['total_pages']
+        page_index += 1
+
+    return users if users else None
 
 
 def gen_new_auto_promote_keys(n=50):
