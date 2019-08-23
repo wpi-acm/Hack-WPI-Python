@@ -15,7 +15,8 @@ from flask import Flask, render_template, redirect, url_for, request, session, j
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
-from config_hackWPI import api_keys, SERVER_LISTEN_ADDR, SERVER_PORT, WAITLIST_LIMIT, HACKATHON_TIME, ALLOWED_EXTENSIONS
+from config_hackWPI import (api_keys, SERVER_LISTEN_ADDR, SERVER_PORT, WAITLIST_LIMIT, HACKATHON_TIME,
+                            ALLOWED_EXTENSIONS, REGISTRATION_OPEN)
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -54,11 +55,13 @@ def server_error():
 
 @app.route('/')
 def root():
-    print("Someone visited!.")
-    return render_template('index.html')
+    return render_template('index.html', registration_open=REGISTRATION_OPEN)
 
 @app.route('/resumepost', methods=['POST'])
 def resumepost():
+    if not REGISTRATION_OPEN:
+        return 'Registration is currently closed.', 403
+
     """A last minute hack to let people post their resume after they've already registered"""
     if request.method == 'POST':
         if 'resume' not in request.files:
@@ -85,6 +88,9 @@ def resumepost():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if not REGISTRATION_OPEN:
+        return 'Registration is currently closed.', 403
+
     if request.method == 'GET':
         # Register a hacker...
         if is_logged_in() and db.session.query(
