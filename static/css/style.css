@@ -11,6 +11,10 @@ nav .brand-logo {
 	color: #444;
 }
 
+nav {
+	height: 148px;
+}
+
 p {
 	line-height: 2rem;
 }
@@ -19,8 +23,6 @@ p {
 	padding-top: 5px;
 	padding-bottom: 5px;
 	height: 100%;
-	left: 50%;
-	transform: translateX(-50%);
 }
 
 .button-collapse {
@@ -134,23 +136,19 @@ footer.page-footer {
 }
 
 .partner-sponsors img {
-	max-height: 120px;
+	max-height: 170px;
 }
 
 .gold-sponsors img {
-	max-height: 90px;
+	max-height: 70px;
 }
 
 .silver-sponsors img {
-	max-height: 85px;
+	max-height: 68px;
 }
 
 .bronze-sponsors img {
-	max-height: 80px;
-}
-
-.other-sponsors img {
-	max-height: 75px;
+	max-height: 60px;
 }
 
 .platinum-sponsors .sponsor-name {
@@ -161,3 +159,27 @@ footer.page-footer {
 	padding: 10px;
 }
 
+#logo-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 100%;
+}
+
+.nav-logo {
+	height: 84px;
+}
+
+#hosted-by-container {
+	height: 64px;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	font-weight: 600;
+	font-size: 40px;
+}
+
+.hosted-by-logo {
+	height: 64px;
+}
