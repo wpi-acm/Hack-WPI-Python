@@ -12,7 +12,7 @@ nav .brand-logo {
 }
 
 nav {
-	height: 148px;
+	height: 148px !important;
 }
 
 p {

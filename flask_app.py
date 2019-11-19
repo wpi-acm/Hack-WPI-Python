@@ -136,8 +136,8 @@ def register():
             # Request flow == messed up somehow, restart them
             return redirect(url_for('register'))
 
-        if 'resume' not in request.files:
-            # No file?
+        if 'resume' not in request.files or 'tos' not in request.form:
+            # No file or no TOS agreement?
             return redirect(url_for('register'))
 
         resume = request.files['resume']
@@ -445,6 +445,10 @@ def dashboard():
 
     return render_template('dashboard.html', name=session['mymlh']['first_name'], id=session['mymlh']['id'],
                            admin=is_admin())
+
+@app.route('/tos', methods=['GET'])
+def tos():
+    return render_template('tos.html')
 
 
 def is_logged_in():
