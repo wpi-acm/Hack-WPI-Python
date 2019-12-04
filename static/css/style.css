@@ -20,8 +20,16 @@ p {
 }
 
 #logo-container {
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	height: 100%;
+	width: 100%;
+}
+
+#goat {
 	height: 100%;
 }
 
@@ -159,12 +167,11 @@ footer.page-footer {
 	padding: 10px;
 }
 
-#logo-container {
+#logo-stack {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	width: 100%;
 }
 
 .nav-logo {
