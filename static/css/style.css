@@ -1,185 +1,79 @@
-/* Custom Stylesheet */
-/**
- * Use this file to override Materialize files so you can update
- * the core Materialize files in the future
- *
- * Made By MaterializeCSS.com
- */
+@font-face {font-family: "Krungthep"; src: url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.eot"); src: url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.woff") format("woff"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.svg#Krungthep") format("svg"); }
 
-nav ul a,
-nav .brand-logo {
-	color: #444;
+body {
+    background-color: #00BEBB;
+    font-family: "Krungthep";
+    color: #eee;
 }
 
 nav {
-	height: 148px;
+    background-color: #E7E4C6;
+    border-color: #E7E4C6;
+    color: white;
 }
 
-p {
-	line-height: 2rem;
-}
+hr {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 70%;
+    border-width: 10px;
+    border-color: #F5665B;
+  }
 
-#logo-container {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	height: 100%;
+h2 {
+    text-align: center; 
 }
-
-.button-collapse {
-	color: #26a69a;
+h3 {
+    text-align: center; 
 }
-
-.sub-button {
-	margin-top: 5px;
+h4 {
+    text-align: center; 
 }
-
-.parallax-container {
-	min-height: 380px;
-	line-height: 0;
-	height: auto;
-	color: rgba(255,255,255,.9);
+h5 {
+    text-align: center; 
 }
-.parallax-container .section {
-	width: 100%;
-}
-
-@media only screen and (max-width : 992px) {
-	.parallax-container .section {
-		top: 40%;
-	}
-	#index-banner .section {
-		top: 10%;
-	}
-}
-
-@media only screen and (max-width : 600px) {
-	.parallax-container .section {
-		height: auto;
-		overflow: auto;
-	}
-	.container {
-		height: auto;
-	}
-	#index-banner .section {
-		top: 0;
-	}
-}
-
-#tagline {
-	font-weight: 600;
-}
-
-#event-info {
-	font-weight: 400;
-}
-
-#registration-banner {
-	min-height: 100px;
-	max-height: 150px;
-}
-
-#registration-banner .section{
-	top: auto;
-}
-
-.icon-block {
-	padding: 0 15px;
-}
-.icon-block .material-icons {
-	font-size: inherit;
-}
-
-footer.page-footer {
-	margin: 0;
-}
-
-
-.parallax img {
-	display: inherit;
-	max-width: 200%;
-}
-
-#mlh-trust-badge {
-	display: block;
-	max-width: 100px;
-	min-width: 60px;
-	position: fixed;
-	right: 50px;
-	top: 0;
-	width: 10%;
-	z-index: 10000;
+h6 {
+    text-align: center; 
+    margin-right: 100px;
+	margin-left: 100px;
 }
 
 .sponsors {
-	line-height: 1;
+    text-align: center;
+    display: block;
+    padding: 20px;
 }
-
-.sponsor-name {
-	margin-right: 20px;
-	margin-bottom: 20px;
-	font-weight: 500;
-}
-
 .sponsors img {
 	display: inline-block;
-	margin-right: 20px;
-	margin-bottom: 20px;
+	margin-right: 40px;
+    margin-bottom: 40px;
+}
+.title-sponsors img{
+    max-height: 90px;
 }
 
-.sponsors h2 {
-	font-weight: 600;
-	font-family: "Archivo Narrow", "Helvetica", sans-serif;
-}
-
-.logo {
-	max-width: 85%;
-}
-
-.partner-sponsors img {
-	max-height: 170px;
-}
-
-.gold-sponsors img {
-	max-height: 70px;
-}
+/*.gold-sponsors img {
+	max-height: 40px;
+}*/
 
 .silver-sponsors img {
-	max-height: 68px;
+	max-height: 30px;
 }
 
-.bronze-sponsors img {
-	max-height: 60px;
-}
-
-.platinum-sponsors .sponsor-name {
-	font-size: 110px;
-}
-
-.footer-info {
-	padding: 10px;
-}
-
-#logo-container {
+/*.bronze-sponsors img {
+	max-height: 10px;
+}*/
+/*
+#logo-stack {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	width: 100%;
+}
+*/
+
+a {
+    color: black;
 }
 
-.nav-logo {
-	height: 84px;
-}
 
-#hosted-by-container {
-	height: 64px;
-	text-align: center;
-	display: flex;
-	align-items: center;
-	font-weight: 600;
-	font-size: 40px;
-}
-
-.hosted-by-logo {
-	height: 64px;
-}
