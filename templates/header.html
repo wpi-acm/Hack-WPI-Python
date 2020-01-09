@@ -23,7 +23,7 @@
           </div>
           <ul class="nav justify-content-end">
             <li class="nav-item">
-              {% if registration_open %}
+              {% if registration_open or registration_open is not defined %}
                 <a class="nav-link active" href="/register">Register</a>
               {% else %}
                 <a class="nav-link active disabled" href="#">Registration is closed</a>
