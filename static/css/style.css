@@ -60,7 +60,8 @@ div.main-logo {
 .sponsors img {
 	display: inline-block;
     margin-right: 40px;
-    max-width: 100%;
+    /* Hack to fix overflow of bose logo*/
+    max-width: calc(100% - 10px);
 }
 
 .title-sponsors img{
