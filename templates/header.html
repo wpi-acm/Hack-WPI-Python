@@ -1,31 +1,42 @@
+
 <!DOCTYPE html>
 <html>
+
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Hack @ WPI</title>
-        <link rel="icon" href="../static/favicon.png" type="image/png">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
-        <link href="../static/css/materialize.min.css" rel="stylesheet">
-        <link href="../static/css/style.css" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Archivo+Narrow:600" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
-        <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script><![endif]-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      <link href="../static/css/style.css" rel="stylesheet">
     </head>
+
+    <style>
+      nav {
+        background-color: #F5665B;
+        border-color: #E7E4C6;
+        color: white;
+      }
+    </style>
+
     <body>
-        <nav class="main-nav white" role="navigation">
-            <div class="nav-wrapper container">
-                <div id="logo-container" class="black-text brand-logo">
-                    <img id="goat" src="../static/img/goat.png">
-                    <div id="logo-stack">
-                        <img class="nav-logo" src="../static/img/hackwpi_longlogo.png" alt="hack@WPI">
-                        <div id="hosted-by-container">
-                            <span>Hosted By</span>
-                            <img class="hosted-by-logo" src="../static/img/logos/bose.png" alt="Bose">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
+      <nav class="navbar navbar-inverse sticky-top navbar-expand">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/">HACK@WPI</a>
+          </div>
+          <ul class="nav justify-content-end">
+            <li class="nav-item">
+              {% if registration_open %}
+                <a class="nav-link active" href="/register">Register</a>
+              {% else %}
+                <a class="nav-link active disabled" href="#">Registration is closed</a>
+              {% endif %}
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../static/assets/Hack@WPI-SponsorshipInformation-2020.pdf">Sponsorship Packet</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">Code of Conduct</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+

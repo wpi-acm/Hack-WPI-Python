@@ -1,18 +1,9 @@
-/* Custom Stylesheet */
-/**
- * Use this file to override Materialize files so you can update
- * the core Materialize files in the future
- *
- * Made By MaterializeCSS.com
- */
+@font-face {font-family: "Krungthep"; src: url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.eot"); src: url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.woff") format("woff"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.svg#Krungthep") format("svg"); }
 
-nav ul a,
-nav .brand-logo {
-	color: #444;
-}
-
-nav {
-	height: 148px !important;
+body {
+    background-color: #00BEBB;
+    font-family: "Krungthep";
+    color: #eee;
 }
 
 p {
@@ -37,9 +28,6 @@ p {
 	color: #26a69a;
 }
 
-.sub-button {
-	margin-top: 5px;
-}
 
 .parallax-container {
 	min-height: 380px;
@@ -97,11 +85,6 @@ p {
 	font-size: inherit;
 }
 
-footer.page-footer {
-	margin: 0;
-}
-
-
 .parallax img {
 	display: inherit;
 	max-width: 200%;
@@ -118,75 +101,6 @@ footer.page-footer {
 	z-index: 10000;
 }
 
-.sponsors {
-	line-height: 1;
-}
-
-.sponsor-name {
-	margin-right: 20px;
-	margin-bottom: 20px;
-	font-weight: 500;
-}
-
-.sponsors img {
-	display: inline-block;
-	margin-right: 20px;
-	margin-bottom: 20px;
-}
-
-.sponsors h2 {
-	font-weight: 600;
-	font-family: "Archivo Narrow", "Helvetica", sans-serif;
-}
-
-.logo {
-	max-width: 85%;
-}
-
-.partner-sponsors img {
-	max-height: 170px;
-}
-
-.gold-sponsors img {
-	max-height: 70px;
-}
-
-.silver-sponsors img {
-	max-height: 68px;
-}
-
-.bronze-sponsors img {
-	max-height: 60px;
-}
-
-.platinum-sponsors .sponsor-name {
-	font-size: 110px;
-}
-
-.footer-info {
-	padding: 10px;
-}
-
-#logo-stack {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-
-.nav-logo {
-	height: 84px;
-}
-
-#hosted-by-container {
-	height: 64px;
-	text-align: center;
-	display: flex;
-	align-items: center;
-	font-weight: 600;
-	font-size: 40px;
-}
-
-.hosted-by-logo {
-	height: 64px;
+nav {
+	line-height: normal !important;
 }

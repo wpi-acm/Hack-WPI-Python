@@ -1,207 +1,186 @@
 {% include 'header.html' %}
+
 <div>
-	<div id="index-banner" class="parallax-container valign-wrapper">
-		<div class="section no-pad-bot">
-			<div class="container">
-				<br><br>
-				<h2 id="tagline" class="header center red-text text-darken-2">Learn. Hack. Compete.</h2>
-				<div class="row center">
-					<h5 class="header col s12 light">An open for all WPI Hackathon, for both hardware and software!</h5>
-				</div>
-				<div id="event-info" class="row center">
-					<h5 class="header col s6 m5 light" style="margin-top:0; float: left; display: block">
-						<i class="small material-icons">today</i> January 17 - 19th, 2020
-					</h5>
-					<h5 class="header col s6 m5 light" style="margin-top:0; float: right; display: block">
-						<i class="small material-icons">room</i> WPI Odeum
-					</h5>
-				</div>
-				<div class="row center">
-					{% if registration_open %}
-						<a class="col s12 m8 push-m2 btn-large waves-effect waves-light red darken-1"
-						style= "float: left; display: inline-block; text-decoration: none;"
-						href="/register">Register</a>
-					{% else %}
-						<span class="col s12 m8 push-m2 btn-large waves-effect waves-light red lighten-3"
-						style= "float: left; display: inline-block; text-decoration: none;"
-						disabled="true">Registration isn't open yet.</a>
-					{% endif %}
-				</div>
 
-				<div class="row center">
-					<a id="cocbutton" class="sub-button col s8 push-s2 m6 push-m3 btn waves-effect waves-light grey darken-1"
-									  href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" data-mode="1" target="_blank">Code of Conduct</a>
-				</div>
-				<br>
-			</div>
-		</div>
-		<div class="parallax"><img src="../static/img/background1.jpg" alt="background image"></div>
-	</div>
+<style>
+hr {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 70%;
+    border-width: 10px;
+    border-color: #F5665B;
+  }
 
+h2 {
+    text-align: center;
+}
+h3 {
+    text-align: center;
+}
+h4 {
+    text-align: center;
+}
+h5 {
+    text-align: center;
+}
+h6 {
+    text-align: center;
+    margin-right: 100px;
+	margin-left: 100px;
+}
 
-	<div class="container">
-		<div class="section">
+div.main-logo {
+    margin-top: 16px;
+}
 
-			<!--   Icpathon Section   -->
-			<div class="row">
-				<div class="col s12 m4">
-					<div class="icon-block">
-						<h2 class="center brown-text"><i class="material-icons">grade</i></h2>
-						<h5 class="center">Learn</h5>
-						<p class="light">Participate in the workshops taught by experienced students and learn everything you need to take your project from idea to reality. Ask currently employed Mentors for help when needed.</p>
-					</div>
-				</div>
+.sponsors {
+    text-align: center;
+    display: block;
+    padding: 20px;
+}
 
-				<div class="col s12 m4">
-					<div class="icon-block">
-						<h2 class="center brown-text"><i class="material-icons">settings</i></h2>
-						<h5 class="center">Hack</h5>
-						<p class="light">Work all weekend long to build and hack your project together. We provide food, snacks, drinks, and entertainment; everything you need to stay focused and have fun for the whole event.</p>
-					</div>
-				</div>
+.sponsors > div {
+    margin-bottom: 40px;
+}
 
-				<div class="col s12 m4">
-					<div class="icon-block">
-						<h2 class="center brown-text"><i class="material-icons">group</i></h2>
-						<h5 class="center">Compete</h5>
-						<p class="light">Present your project at the end of the hackathon to our panel of judges, and win various prizes! Grand prizes are available for the top three teams, the best overall, the best software, and the best hardware project. Additionally, smaller prizes will also be available for various categories.</p>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+.sponsors > div:last-child {
+    margin-bottom: 0;
+}
 
 
-	<div class="parallax-container valign-wrapper">
-		<div class="section no-pad-bot">
-			<div class="container">
-				<div class="row center">
-					<img src="../static/img/cosponsors.png" alt="cosponsors" style='height: 100%; width: 100%; object-fit: contain'/>
-				</div>
-			</div>
-		</div>
-		<div class="parallax">
-			<img src="../static/img/background2.jpg" alt="background image">
-		</div>
-	</div>
+.sponsors img {
+	display: inline-block;
+    margin-right: 40px;
+    /* Hack to fix overflow of bose logo*/
+    max-width: calc(100% - 10px);
+}
 
-	<div class="container">
-		<div class="section">
-			<div class="row">
-				<div class="col s12 center" style="margin-top: -40px; margin-bottom: -50px;">
-					<div class="icon-block">
-						<h1 class="center brown-text"><strong>&#11014;</strong></h1>
-						<h5 class="center">Organizing Club</h5>
-						<p class="light">Hack @ WPI is run by the local ACM chapter. The event would not be possible without their support!</p>
-						<div class="divider"></div>
-						<h5 class="center">Sponsoring Companies</h5>
-						<p class="light">Hack @ WPI is proud to announce that the companies below are all part of making the event a reality.</p>
-						<div class="row">
-							<a class="col s12 btn waves-effect waves-light red darken-2"
-							   style= "float: left; display: inline-block; text-decoration: none;"
-							   href= "../static/assets/Hack@WPI-SponsorshipInformation-2020.pdf">Sponsorship Package</a>
-						</div>
-						<h1 class="center brown-text"><strong>&#11015;</strong></h1>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+.title-sponsors img{
+    max-height: 90px;
+}
+
+.silver-sponsors img {
+	max-height: 25px;
+}
+
+a {
+    color: black;
+}
+.x{
+    background-color: #E7E4C6;
+    margin-right: 100px;
+    margin-left: 100px;
+    color: black;
+    border-radius: 50px 50px 50px 50px;
+    padding-bottom: 10px;
+    padding-top:10px;
+}
+
+</style>
+        <!--Logo + Date+ Hosted By -->
+        <div class="container">
+            <div class="row center main-logo">
+                <img src="../static/img/hackwpilogo.png" alt="logo" style='height: 100%; width: 100%; object-fit: contain'/>
+            </div>
+        </div>
+
+        <!--"Hackathon for all students" -->
+        <hr/>
+        <h2> A HACKATHON FOR ALL COLLEGE STUDENTS </h2>
+        <hr/>
+
+        <!--Location -->
+        <h3> WPI Campus Center </h3>
+        <h4>100 Institute Road</h4>
+        <h4> Worcester, MA 01609</h4>
+        <hr/>
 
 
-	<div class="parallax-container valign-wrapper">
-		<div class="section no-pad-bot">
-			<div class="container">
-				<div class="row center sponsors">
-					<div class="partner-sponsors">
-						<h2>Title Sponsors</h2>
-						<img class="logo" src="../static/img/logos/bose-white.png">
-					</div>
-					<div class="platinum-sponsors">
-						<h2>Platinum Sponsors</h2>
-						<div style="font-size: 100px;" class="sponsor-name">WPI Computer Science Department</div>
-					</div>
-					<div class="gold-sponsors">
-						<h2>Gold Sponsors</h2>
-						<!-- iBoss's logo is a bit teeny. need to make it bigger. -->
-						<img class="logo" style="max-height: 80px;" src="../static/img/logos/iboss.png">
-						<img class="logo" src="../static/img/logos/abbvie.png">
-						<img class="logo" src="../static/img/logos/paytronix.png">
-					</div>
-					<div class="silver-sponsors">
-						<h2>Silver Sponsors</h2>
-						<img class="logo" src="../static/img/logos/carbon-black.png">
-					</div>
-					<div class="bronze-sponsors">
-						<h2>Bronze Sponsors</h2>
-						<img class="logo" src="../static/img/logos/amazon.png">
-						<img class="logo" src="../static/img/logos/everquote.png">
-						<img class="logo" src="../static/img/logos/wakefly.png">
-						<img class="logo" src="../static/img/logos/symposes.png">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="parallax">
-			<img src="../static/img/background3.jpg" alt="background image">
-		</div>
-	</div>
+
+        <!-- Sponsors for 2020 -->
+        <h2> OUR SPONSORS FOR 2020 </h2>
+
+        <div class="container">
+                <div class="row center sponsors">
+                    <div class="title-sponsors">
+                            <img class="logo" src="../static/img/logos/bose.png"></div>
+                    <div class="platinum-sponsors">
+					    <h1>WPI Computer Science Department</h1>
+                    </div>
+
+                    <div class="gold-sponsors">
+                            <img class="logo" src="../static/img/logos/iboss.png" style = "height: 150px">
+                            <img class="logo" src="../static/img/logos/kronos.png" style = "height: 75px">
+                            <img class="logo" src="../static/img/logos/paytronix.png" style = "height: 30px">
+                            <img class="logo" src="../static/img/logos/abbvie.png" style = "height: 60px">
+                        </div>
+
+                    <div class="silver-sponsors">
+                        <img class="logo" src="../static/img/logos/carbonblack.png" >
+                    </div>
+
+                    <div class="bronze-sponsors">
+                            <img class="logo" src="../static/img/logos/wakefly.png" style = "height: 70px">
+                            <img class="logo" src="../static/img/logos/amazon.png" style = "height: 70px">
+                            <img class="logo" src="../static/img/logos/everquote.png" style = "height: 35px">
+                            <img class="logo" src="../static/img/logos/synopses.png" style = "height: 20px">
+                            <img class="logo" src="../static/img/logos/boozallenhamilton.png" style = "height: 35px">
+                       </div>
+
+                </div>
+        </div>
+
+        <!--FAQs -->
+        <hr/>
+        <div class = "x">
+        <h2> FAQs </h2>
+
+        <div class = "FAQ">
+            <h4>Who can attend?</h4>
+            <h6> Our event is open to any college student! You don’t need any experience to participate. However, due to legal issues, anyone under 18 must have a legal guardian present and cannot win prizes </h6>
+        </div>
+
+        <div class = "FAQ">
+            <h4>What is the max team size?</h4>
+            <h6>The maximum is 5 people per team. Minimum is 1 :P</h6>
+        </div>
+
+        <div class = "FAQ">
+            <h4>What are the awards for?</h4>
+            <h6>The categories this year are: </h6>
+            <h6>Best Overall Project
+            <h6>Best Game </h6>
+            <h6>Best Software </h6>
+            <h6>Best Hardware </h6>
+            <h6>Company Favorite </h6>
+            <h6>Best Use of the Bose API/SDK </h6>
+            <h6>Best Meme </h6>
+            <h6>Best Rookie </h6>
+        </div>
+
+        <div class = "FAQ">
+            <h4>What should I bring?</h4>
+            <h6>Bring devices, chargers, sleeping bags, toiletries, basically anything you need to be comfortable. We will provide showers at certain time slots during the weekend. Food will also be provided.</h6>
+        </div>
+
+        <div class = "FAQ">
+            <h4>What if I don't have a team?</h4>
+            <h6>You don’t need a team to register! We will have a team formation session right after the opening ceremony for those who would like to work with a team. If you prefer to stay solo, that’s also great. </h6>
+        </div>
+
+        <div class = "FAQ">
+            <h4>How should I prepare beforehand?</h4>
+            <h6>Make sure you have travel plans in place, especially in case of random snowfalls. Unfortunately, we do not provide travel reimbursements.
+                    It’s also nice to have an idea in mind beforehand. However, we ask that you do not bring any pre-made materials to keep the competition fair. </h6>
+        </div>
+
+        <div class = "FAQ">
+            <h4>What is the schedule?</h4>
+            <h6><a href = 'https://docs.google.com/spreadsheets/d/1FSh2UfZwoMwXlgrKnKjnQg2okEcLDVCP30khnPdM1H0/edit?usp=sharing' style= "color: blue">Here it is!</a> Keep in mind that this is tentative. </h6>
+        </div>
+    </div>
+
 </div>
-<footer class="page-footer red darken-2">
-	<div class="footer-info row">
-		<h5 class="white-text">Interested in Sponsoring or Co-Sponsoring?</h5>
-		<div class="col l6 s12">
-			<p class="grey-text text-lighten-4">For any inquiries regarding sponsoring the event as a company or co-sponsoring the event as an on campus club, please email <a class="white-text" href="mailto:hack@wpi.edu?subject=[Hackathon]" target="_top"><u>hack@wpi.edu</u></a>, and we will happily discuss it with you!</p>
-		</div>
-	</div>
-	{% if registration_open %}
-		<div class="footer-info row">
-			<h4 class="white-text">FAQ</h4>
-		</div>
-		<div class="footer-info row">
-			<div class="col l6 s6">
-				<h5 class="white-text">Who is coming?</h5>
-				<p class="grey-text text-lighten-4">We're expecting 200 hackers from all over New England to attend!</p>
-			</div>
-			<h5 class="white-text">Who can attend?</h5>
-			<p class="grey-text text-lighten-4">All students are welcome! However, if you are under 18, your parents must be present for the entire time, and you cannot win prizes.</p>
-		</div>
-		<div class="footer-info row">
-			<div class="col l6 s6">
-				<h5 class="white-text">Will there be travel reimbursements?</h5>
-				<p class="grey-text text-lighten-4">Sadly, we cannot provide reimbursements for travel. The event, however, doesn't cost a thing!</p>
-			</div>
-			<div class="col l6 s6">
-				<h5 class="white-text">What if I don't have experience?</h5>
-				<p class="grey-text text-lighten-4">Doesn't matter! We'll have plenty of mentors from sponsoring companies, as well as workshops throughout the weekend!</p>
-			</div>
-		</div>
-		<div class="footer-info row">
-			<div class="col l6 s6">
-				<h5 class="white-text">What should I bring?</h5>
-				<p class="grey-text text-lighten-4">Bring your laptop, chargers, a sleeping bag, and whatever else you need to make yourself comfortable. Food is provided. </p>
-			</div>
-			<div class="col l6 s6">
-				<h5 class="white-text">What is the max team size?</h5>
-				<p class="grey-text text-lighten-4">Five people per team.</p>
-			</div>
-		</div>
-		<div class="footer-info row">
-			<div class="col l6 s6">
-				<h5 class="white-text">What if I don't have a team?</h5>
-				<p class="grey-text text-lighten-4">Doesn't matter! We'll have plenty of mentors from sponsoring companies, as well as workshops throughout the weekend!</p>
-			</div>
-			<div class="col l6 s6">
-				<h5 class="white-text">When will the schedule be posted?</h5>
-				<p class="grey-text text-lighten-4">We will post the schedule as soon as possible.</p>
-			</div>
-		</div>
-	{% endif %}
-	<div class="footer-copyright">
-		<div class="container">
-			For issues, please contact <a class="white-text" href="mailto:acm@wpi.edu?subject=[Site]" target="_top"><u>acm@wpi.edu</u></a>
-		</div>
-	</div>
-</footer>
-</div>
+
+
 {% include 'footer.html' %}

@@ -1,6 +1,6 @@
 {% include 'header.html' %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+<link href="../static/css/materialize.min.css" rel="stylesheet">
 
 <div class="contact-section" style="height: 100%;">
     <div class="container">
@@ -29,15 +29,18 @@
                 </form>
             {% endif %}
             <br>
-            <a href="#" id="drop-link"><p class="sub-button btn waves-effect waves-light grey darken-1">Drop Application if you can't make it :(</p></a>
+            
             {% if admin %}
 		<br>
                 <a href="/admin"><p class="btn">Admin Dashboard</p></a>
             {% endif %}
             <br>
-            Please sit tight, while we improve the UI of this page :P (Or we'll do it next year)
+            
         </div>
     </div>
+    <br>
+    <br>
+    <center><a href="#" id="drop-link"><p class="btn">Drop Application if you can't make it :(</p></a></center>
 </div>
 
 <script>
