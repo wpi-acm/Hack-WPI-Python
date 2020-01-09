@@ -38,15 +38,28 @@ h6 {
 	margin-left: 100px;
 }
 
+div.main-logo {
+    margin-top: 16px;
+}
+
 .sponsors {
     text-align: center;
     display: block;
     padding: 20px;
 }
+
+.sponsors > div {
+    margin-bottom: 40px;
+}
+
+.sponsors > div:last-child {
+    margin-bottom: 0;
+}
+
+
 .sponsors img {
 	display: inline-block;
 	margin-right: 40px;
-    margin-bottom: 40px;
 }
 .title-sponsors img{
     max-height: 90px;
