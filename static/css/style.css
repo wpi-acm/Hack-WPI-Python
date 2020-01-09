@@ -6,74 +6,100 @@ body {
     color: #eee;
 }
 
-nav {
-    background-color: #E7E4C6;
-    border-color: #E7E4C6;
-    color: white;
+p {
+	line-height: 2rem;
 }
 
-hr {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    width: 70%;
-    border-width: 10px;
-    border-color: #F5665B;
-  }
-
-h2 {
-    text-align: center;
-}
-h3 {
-    text-align: center;
-}
-h4 {
-    text-align: center;
-}
-h5 {
-    text-align: center;
-}
-h6 {
-    text-align: center;
-    margin-right: 100px;
-	margin-left: 100px;
+#logo-container {
+	display: flex;
+	justify-content: center;
+	flex-direction: row;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	height: 100%;
+	width: 100%;
 }
 
-div.main-logo {
-    margin-top: 16px;
+#goat {
+	height: 100%;
 }
 
-.sponsors {
-    text-align: center;
-    display: block;
-    padding: 20px;
-}
-
-.sponsors > div {
-    margin-bottom: 40px;
-}
-
-.sponsors > div:last-child {
-    margin-bottom: 0;
+.button-collapse {
+	color: #26a69a;
 }
 
 
-.sponsors img {
-	display: inline-block;
-    margin-right: 40px;
-    /* Hack to fix overflow of bose logo*/
-    max-width: calc(100% - 10px);
+.parallax-container {
+	min-height: 380px;
+	line-height: 0;
+	height: auto;
+	color: rgba(255,255,255,.9);
+}
+.parallax-container .section {
+	width: 100%;
 }
 
-.title-sponsors img{
-    max-height: 90px;
+@media only screen and (max-width : 992px) {
+	.parallax-container .section {
+		top: 40%;
+	}
+	#index-banner .section {
+		top: 10%;
+	}
 }
 
-.silver-sponsors img {
-	max-height: 25px;
+@media only screen and (max-width : 600px) {
+	.parallax-container .section {
+		height: auto;
+		overflow: auto;
+	}
+	.container {
+		height: auto;
+	}
+	#index-banner .section {
+		top: 0;
+	}
 }
 
-a {
-    color: black;
+#tagline {
+	font-weight: 600;
 }
+
+#event-info {
+	font-weight: 400;
+}
+
+#registration-banner {
+	min-height: 100px;
+	max-height: 150px;
+}
+
+#registration-banner .section{
+	top: auto;
+}
+
+.icon-block {
+	padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+.parallax img {
+	display: inherit;
+	max-width: 200%;
+}
+
+#mlh-trust-badge {
+	display: block;
+	max-width: 100px;
+	min-width: 60px;
+	position: fixed;
+	right: 50px;
+	top: 0;
+	width: 10%;
+	z-index: 10000;
+}
+
 
 

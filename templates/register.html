@@ -1,15 +1,20 @@
 {% include 'header.html' %}
 <link href="../static/css/materialize.min.css" rel="stylesheet">
+<style>
+    a{
+        color:darkblue;
+    }
+</style>
 <div  style="height: 100%;">
     <div id="registration-banner" class="parallax-container valign-wrapper">
         <div class="section">
-            <h2 class="header center red-text text-darken-2">Registration</h2>
+            <h2 class="header center black-text text-darken-2">Registration</h2>
         </div>
         <div class="parallax"><img src="../static/img/background1.jpg" alt="background"></div>
     </div>
     <div class="container">
         <div class="container">
-	    <h1>Hi {{ name }}, just a few more steps!</h1>
+	    <Center><h1>Hi {{ name }}, just a few more steps!</h1></Center>
 	    <div class="section">
             <form method="post" action="/register" enctype="multipart/form-data">
                 <div>
@@ -26,25 +31,25 @@
                 </div>
                 <p>By registering & attending, you agree to the following policies:</p>
                 <p>
-                    <a href="/tos">Hack@WPI's Terms and Conditions</a>
+                    <center><a href="/tos">Hack@WPI's Terms and Conditions</a></center>
                 </p>
                 <p>
-                    <a href="https://github.com/MLH/mlh-policies/blob/master/data-sharing.md">MLH's Data Sharing Notice</a>
+                    <center><a href="https://github.com/MLH/mlh-policies/blob/master/data-sharing.md">MLH's Data Sharing Notice</a></center>
                 </p>
                 <p>
-                    <a href="https://mlh.io/privacy">MLH's Privacy Policy</a>
+                    <center><a href="https://mlh.io/privacy">MLH's Privacy Policy</a></center>
                 </p>
                 <p>
-                      <a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md">MLH's
-                        Contest Terms and Conditions</a>
+                      <center><a href="https://github.com/MLH/mlh-policies/blob/master/prize-terms-and-conditions/contest-terms.md">MLH's
+                        Contest Terms and Conditions</a></center>
                 </p>
                 <p>
-                    <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH's Code of Conduct</a>
+                    <center><a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH's Code of Conduct</a></center>
                 </p>
                 <br>
-                    <input type="checkbox" name="tos" id="checkboxid" required><label for="checkboxid"><b style="color:black;">Do you agree with these Rules?</b></label>
+                    <input type="checkbox" name="tos" id="checkboxid" required><label for="checkboxid"><b style="color:white;">Do you agree with these Rules?</b></label>
                 <br><br>
-                <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
+                <center><input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/></center>
               </form>
           </div>
     </div>
