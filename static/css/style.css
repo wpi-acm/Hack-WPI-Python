@@ -21,19 +21,19 @@ hr {
   }
 
 h2 {
-    text-align: center; 
+    text-align: center;
 }
 h3 {
-    text-align: center; 
+    text-align: center;
 }
 h4 {
-    text-align: center; 
+    text-align: center;
 }
 h5 {
-    text-align: center; 
+    text-align: center;
 }
 h6 {
-    text-align: center; 
+    text-align: center;
     margin-right: 100px;
 	margin-left: 100px;
 }
@@ -52,25 +52,9 @@ h6 {
     max-height: 90px;
 }
 
-/*.gold-sponsors img {
-	max-height: 40px;
-}*/
-
 .silver-sponsors img {
 	max-height: 25px;
 }
-
-/*.bronze-sponsors img {
-	max-height: 10px;
-}*/
-/*
-#logo-stack {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-*/
 
 a {
     color: black;
