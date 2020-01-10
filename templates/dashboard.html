@@ -4,7 +4,7 @@
 
 <div class="contact-section" style="height: 100%;">
     <div class="container">
-        <div class="row" style="margin-top: 10%;">
+        <div class="row center justify-content-center" style="margin-top: 10%;">
             <h1>Hi {{ name }}!</h1>
             {% if waitlisted %}
                 <h1>You are waitlisted, if space opens up we ill let you know...</h1>
@@ -13,7 +13,8 @@
 		Let us know if you have any questions by sending them to hack@wpi.edu
                 <br>
                 Forgot to upload your resume while registering? No worries, submit it here:
-
+            </div>
+            <div class="row center justify-content-center">
                 <form method="post" action="/resumepost" enctype="multipart/form-data">
                     <p><b>If you'd like, add your resume to send to sponsors... </b></p>
                     <div class="file-field input-field">
@@ -29,13 +30,14 @@
                 </form>
             {% endif %}
             <br>
-            
+
+        </div>
             {% if admin %}
-		<br>
+        <br>
+        <div class="row justify-content-center"
                 <a href="/admin"><p class="btn">Admin Dashboard</p></a>
             {% endif %}
             <br>
-            
         </div>
     </div>
     <br>
