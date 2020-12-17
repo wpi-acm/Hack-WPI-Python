@@ -367,28 +367,29 @@ def check_in():
 
 @app.route('/drop', methods=['GET'])
 def drop():
+    mlh_id = request.args.get('mlh_id')
     # Drop a hacker's registration...
-    if request.args.get('mlh_id') is None:
+    if mlh_id is None:
         return jsonify({'status': 'error', 'action': 'drop', 'more_info': 'Missing required field...'})
 
-    if not is_admin() and not is_self(request.args.get('mlh_id')):
+    if not is_admin() and not is_self(mlh_id):
         return jsonify({'status': 'error', 'action': 'drop',
                         'more_info': 'You do not have permissions to perform this action...'})
 
-    row = db.session.query(Hacker.checked_in, Hacker.waitlisted).filter(
-        Hacker.mlh_id == request.args.get('mlh_id')).one_or_none()
+    row = db.session.query(Hacker.checked_in, Hacker.waitlisted, Hacker.first_name, Hacker.last_name, Hacker.email).filter(
+        Hacker.mlh_id == mlh_id).one_or_none()
 
     if row is None:
         return jsonify({'status': 'error', 'action': 'drop',
                         'more_info': 'Could not find hacker...'})
 
-    (checked_in, waitlisted) = row
+    (checked_in, waitlisted, first_name, last_name, email) = row
 
     if checked_in:
         return jsonify({'status': 'error', 'action': 'drop', 'more_info': 'Cannot drop, already checked in...'})
 
-    mlh_info = get_mlh_user(request.args.get('mlh_id'))
-    print(mlh_info['first_name'] + " trying to drop.")
+    # mlh_info = get_mlh_user(request.args.get('mlh_id'))
+    print(first_name + " trying to drop.")
 
 
     # Delete from db...
@@ -398,24 +399,24 @@ def drop():
 
     # Delete resume...
     for ext in ALLOWED_EXTENSIONS:
-        filename = mlh_info['first_name'].lower() + '_' + mlh_info['last_name'].lower() + '_' + request.args.get(
-            'mlh_id') + '.' + ext
+        filename = first_name.lower() + '_' + last_name.lower() + '_' + mlh_id + '.' + ext
         try:
             os.remove(app.config['UPLOAD_FOLDER'] + '/' + filename)
         except OSError:
             pass
 
     # Send a goodbye email...
-    msg = 'Dear ' + mlh_info['first_name'] + ',\n\n'
+    msg = 'Dear ' + first_name + ',\n\n'
     msg += 'Your application was dropped, sorry to see you go.\n If this was a mistake, you can re-register by going to hack.wpi.edu/register'
-    send_email(mlh_info['email'], 'Hack@WPI - Application Dropped', msg)
+    send_email(email, 'Hack@WPI - Application Dropped', msg)
 
 
-    if is_self(request.args.get('mlh_id')):
+    print(first_name + " dropped successfully.")
+    if is_self(mlh_id):
         session.clear()
+        return redirect('https://hack.wpi.edu')
 
-    print(mlh_info['first_name'] + " dropped successfully.")
-    return jsonify({'status': 'success', 'action': 'drop', 'more_info': '', 'id': request.args.get('mlh_id')})
+    return jsonify({'status': 'success', 'action': 'drop', 'more_info': '', 'id': mlh_id})
 
 
 @app.route('/promote_from_waitlist', methods=['GET'])
@@ -476,9 +477,15 @@ def dashboard():
         return redirect(url_for('register'))
 
     hacker = db.session.query(Hacker).filter(Hacker.mlh_id == session['mymlh']['id']).one_or_none()
-    print(hacker)
+
+    # In case application dropped but user not logged out properly
+    if not hacker:
+        session.clear()
+        return redirect(url_for('register'))
+
+    shirt_size = (hacker.shirt_size or 'None').upper()
     return render_template('dashboard.html', name=session['mymlh']['first_name'], id=session['mymlh']['id'],
-                           admin=is_admin(), shirt_size=hacker.shirt_size, special_needs=hacker.special_needs)
+                           admin=is_admin(), shirt_size=shirt_size, special_needs=hacker.special_needs)
 
 @app.route('/tos', methods=['GET'])
 def tos():
