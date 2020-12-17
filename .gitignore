@@ -1,4 +1,5 @@
-resumes
+resumes*/
+resumes*.zip
 config_hackWPI.py
 config.py
 # Created by https://www.gitignore.io/api/web,vim,git,macos,linux,bower,grunt,python,pycharm,windows,eclipse,webstorm,intellij,jetbrains,virtualenv,visualstudio,visualstudiocode

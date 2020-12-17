@@ -11,7 +11,7 @@ import requests
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from dateutil.relativedelta import relativedelta
-from flask import Flask, render_template, redirect, url_for, request, session, jsonify
+from flask import Flask, render_template, redirect, url_for, request, session, jsonify, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
@@ -57,7 +57,13 @@ def server_error():
 
 @app.route('/')
 def root():
-    return render_template('index.html', registration_open=REGISTRATION_OPEN)
+    return render_template('home/index.html', registration_open=REGISTRATION_OPEN)
+
+@app.route('/assets/<path:path>')
+def staticassets(path):
+
+    return send_from_directory('templates/home/assets', path)
+
 
 @app.route('/resumepost', methods=['POST'])
 def resumepost():
