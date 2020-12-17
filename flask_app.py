@@ -106,6 +106,8 @@ def shirtpost():
             upd['shirt_size'] = size
         if special_needs:
             upd['special_needs'] = special_needs
+        else:
+            upd['special_needs'] = None
 
         if db.session.query(db.exists().where(Hacker.mlh_id == id)).scalar():
             db.session.query(Hacker).filter(Hacker.mlh_id == id).update(upd)
@@ -276,7 +278,8 @@ def admin():
         else:
             majors[hacker['major']] += 1
 
-        #shirt_count[hacker['shirt_size'].split(' - ')[1].lower()] += 1
+        if obj.shirt_size in shirt_count:
+            shirt_count[obj.shirt_size] += 1
 
         hackers.append({
             'checked_in': obj.checked_in,
@@ -288,8 +291,8 @@ def admin():
             'first_name': hacker['first_name'],
             'last_name': hacker['last_name'],
             'phone_number': hacker['phone_number'],
-            #'dietary_restrictions': hacker['dietary_restrictions'],
-            #'special_needs': hacker['special_needs'],
+            'shirt_size': (obj.shirt_size or '').upper(),
+            'special_needs': obj.special_needs,
             'school': hacker['school']
         })
 
