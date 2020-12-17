@@ -35,6 +35,8 @@ class Hacker(db.Model):
     first_name = db.Column(db.String(100))
     last_name = db.Column(db.String(100))
     email = db.Column(db.String(100))
+    shirt_size = db.Column(db.String(4))
+    special_needs = db.Column(db.String(300))
 
 
 class AutoPromoteKeys(db.Model):
@@ -82,8 +84,34 @@ def resumepost():
                 session['mymlh']['id']) + '.' + resume.filename.split('.')[-1].lower()
             filename = secure_filename(filename)
             resume.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return "Resume uploaded!"
+            return 'Resume uploaded!  <a href="/dashboard">Return to dashboard</a>'
     return "Something went wrong. If this keeps happening, slack message @bkayastha"
+
+
+@app.route('/shirtpost', methods=['GET'])
+def shirtpost():
+    if not REGISTRATION_OPEN:
+        return 'Registration is currently closed.', 403
+    if not is_logged_in():
+        return 'Not signed in'
+    
+    """MLH removed t-shirt and accommodations fields of profile in V3, this is our hacky substitute"""
+    if request.method == 'GET':
+        size = request.args.get('size')
+        special_needs = request.args.get('special_needs')
+        id = session['mymlh']['id']
+
+        upd = {}
+        if size:
+            upd['shirt_size'] = size
+        if special_needs:
+            upd['special_needs'] = special_needs
+
+        if db.session.query(db.exists().where(Hacker.mlh_id == id)).scalar():
+            db.session.query(Hacker).filter(Hacker.mlh_id == id).update(upd)
+            db.session.commit()
+            return 'Info saved! <a href="../dashboard">Return to dashboard</a>'
+    return "Something went wrong. If this keeps happening, email mikel@wpi.edu"
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -103,7 +131,7 @@ def register():
             return redirect(
                 'https://my.mlh.io/oauth/authorize?client_id=' + api_keys['mlh']['client_id'] + '&redirect_uri=' +
                 api_keys['mlh'][
-                    'callback'] + '&response_type=code&scope=email+phone_number+demographics+birthday+education+event')
+                    'callback'] + '&response_type=code&scope=email+phone_number+demographics+birthday+education')
 
         if is_logged_in():
             return render_template('register.html', name=session['mymlh']['first_name'])
@@ -117,8 +145,9 @@ def register():
 
         if oauth_redirect.status_code == 200:
             access_token = json.loads(oauth_redirect.text)['access_token']
-            user_info_request = requests.get('https://my.mlh.io/api/v2/user.json?access_token=' + access_token)
+            user_info_request = requests.get('https://my.mlh.io/api/v3/user.json?access_token=' + access_token)
             if user_info_request.status_code == 200:
+                print(user_info_request.text)
                 user = json.loads(user_info_request.text)['data']
                 session['mymlh'] = user
                 if db.session.query(db.exists().where(Hacker.mlh_id == user['id'])).scalar():
@@ -247,7 +276,7 @@ def admin():
         else:
             majors[hacker['major']] += 1
 
-        shirt_count[hacker['shirt_size'].split(' - ')[1].lower()] += 1
+        #shirt_count[hacker['shirt_size'].split(' - ')[1].lower()] += 1
 
         hackers.append({
             'checked_in': obj.checked_in,
@@ -259,15 +288,15 @@ def admin():
             'first_name': hacker['first_name'],
             'last_name': hacker['last_name'],
             'phone_number': hacker['phone_number'],
-            'dietary_restrictions': hacker['dietary_restrictions'],
-            'special_needs': hacker['special_needs'],
+            #'dietary_restrictions': hacker['dietary_restrictions'],
+            #'special_needs': hacker['special_needs'],
             'school': hacker['school']
         })
 
     return render_template('admin.html', hackers=hackers, total_count=total_count, waitlist_count=waitlist_count,
                            check_in_count=check_in_count, shirt_count=shirt_count, female_count=female_count,
                            male_count=male_count, schools=schools, majors=majors,
-                           mlh_url='https://my.mlh.io/api/v2/users.json?client_id=' + api_keys['mlh'][
+                           mlh_url='https://my.mlh.io/api/v3/users.json?client_id=' + api_keys['mlh'][
                                'client_id'] + '&secret=' + api_keys['mlh'][
                                        'secret'])
 
@@ -443,8 +472,10 @@ def dashboard():
     if not is_logged_in():
         return redirect(url_for('register'))
 
+    hacker = db.session.query(Hacker).filter(Hacker.mlh_id == session['mymlh']['id']).one_or_none()
+    print(hacker)
     return render_template('dashboard.html', name=session['mymlh']['first_name'], id=session['mymlh']['id'],
-                           admin=is_admin())
+                           admin=is_admin(), shirt_size=hacker.shirt_size, special_needs=hacker.special_needs)
 
 @app.route('/tos', methods=['GET'])
 def tos():
@@ -512,7 +543,7 @@ def get_mlh_user(mlh_id):
     if not isinstance(mlh_id, int):
         mlh_id = int(mlh_id)
     req = requests.get(
-        'https://my.mlh.io/api/v2/users.json?client_id=' + api_keys['mlh']['client_id'] + '&secret=' + api_keys['mlh'][
+        'https://my.mlh.io/api/v3/users.json?client_id=' + api_keys['mlh']['client_id'] + '&secret=' + api_keys['mlh'][
             'secret'])
     if req.status_code == 200:
         hackers = req.json()['data']
@@ -526,7 +557,7 @@ def get_mlh_users():
     num_pages = 1
     users = []
     while page_index <= num_pages:
-        req = requests.get('https://my.mlh.io/api/v2/users.json?client_id={client_id}&secret={secret}&page={page}'.format(
+        req = requests.get('https://my.mlh.io/api/v3/users.json?client_id={client_id}&secret={secret}&page={page}'.format(
             client_id=api_keys['mlh']['client_id'],
             secret=api_keys['mlh']['secret'],
             page=page_index

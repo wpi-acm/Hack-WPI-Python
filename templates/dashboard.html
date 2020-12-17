@@ -7,30 +7,57 @@
         <div class="row center justify-content-center" style="margin-top: 10%;">
             <h1>Hi {{ name }}!</h1>
             {% if waitlisted %}
-                <h1>You are waitlisted, if space opens up we ill let you know...</h1>
+            <h1>You are waitlisted, if space opens up we will let you know...</h1>
             {% else %}
-                <h1>You are fully registered! We look forward to seeing you!</h1>
-		Let us know if you have any questions by sending them to hack@wpi.edu
+            <h1>You are fully registered! We look forward to seeing you!</h1>
+            Let us know if you have any questions by sending them to hack@wpi.edu
+            <br>
+            Forgot to upload your resume while registering? No worries, submit it below.
+        </div>
+	    <div class="row center justify-content-center" style="background-color: #EE6E73; padding: 20;">
+            <form method="get" action="/shirtpost">
                 <br>
-                Forgot to upload your resume while registering? No worries, submit it here:
-            </div>
-            <div class="row center justify-content-center">
-                <form method="post" action="/resumepost" enctype="multipart/form-data">
-                    <p><b>If you'd like, add your resume to send to sponsors... </b></p>
-                    <div class="file-field input-field">
-                        <div class="btn">
-                            <span>File</span>
-                            <input id="resume" name="resume" type="file"/>
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
+                <p><b>Optional Info:</b></p>
+                    <div>
+                            <p>Shirt Size (Currently selected: {{shirt_size.upper()}})</p>
+                            <input type="radio" id="shirtxs" name="size" value="xs">
+                            <label for="shirtxs">XS</label>
+                            <input type="radio" id="shirts" name="size" value="s">
+                            <label for="shirts">S</label>
+                            <input type="radio" id="shirtm" name="size" value="m">
+                            <label for="shirtm">M</label>
+                            <input type="radio" id="shirtl" name="size" value="l">
+                            <label for="shirtl">L</label>
+                            <input type="radio" id="shirtxl" name="size" value="xl">
+                            <label for="shirtxl">XL</label>
+                            <input type="radio" id="shirtxxl" name="size" value="xxl">
+                            <label for="shirtxxl">XXL</label>
+                            <input type="radio" id="no" name="size" value="no">
+                            <label for="no">Don't want one</label>
+                            <p>Special Needs/Accommodations:</p>
+                            <input type="text" name="special_needs" id="special_needs" value="{{ special_needs }}">
                     </div>
-                    <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
+                    <br><br>
+                    <input name="save" class="btn btn-lg btn-primary btn-invert" type="submit" value="Save"/>
+                    <br><br><br>
                 </form>
+        </div>
+        <div class="row center justify-content-center">
+            <form method="post" action="/resumepost" enctype="multipart/form-data">
+                <p><b>If you'd like, add your resume to send to sponsors... </b></p>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input id="resume" name="resume" type="file"/>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+                <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
+            </form>
             {% endif %}
             <br>
-
         </div>
         {% if admin %}
         <br>
