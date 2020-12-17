@@ -1,3 +1,3 @@
 [submodule "templates/home"]
 	path = templates/home
-	url = https://github.com/acm/hack-wpi-static.git
+	url = https://github.com/wpi-acm/hack-wpi-static.git
