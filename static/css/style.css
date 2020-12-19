@@ -45,6 +45,10 @@ p {
 	width: 100%;
 }
 
+label  {
+	color: white !important;
+}
+
 @media only screen and (max-width : 992px) {
 	.parallax-container .section {
 		top: 40%;
