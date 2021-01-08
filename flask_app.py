@@ -273,11 +273,14 @@ def admin():
             female_count += 1
 
         total_count += 1
-
-        if hacker['school']['name'] not in schools:
-            schools[hacker['school']['name']] = 1
+        if not 'school' in hacker:
+            print("Hacker has no school:")
+            print(hacker)
         else:
-            schools[hacker['school']['name']] += 1
+            if hacker['school']['name'] not in schools:
+                schools[hacker['school']['name']] = 1
+            else:
+                schools[hacker['school']['name']] += 1
 
         if hacker['major'] not in majors:
             majors[hacker['major']] = 1
@@ -299,7 +302,7 @@ def admin():
             'phone_number': hacker['phone_number'],
             'shirt_size': (obj.shirt_size or '').upper(),
             'special_needs': obj.special_needs,
-            'school': hacker['school']
+            'school': hacker['school'] if 'school' in hacker else 'NULL'
         })
 
     return render_template('admin.html', hackers=hackers, total_count=total_count, waitlist_count=waitlist_count,
