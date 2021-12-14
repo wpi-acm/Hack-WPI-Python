@@ -5,8 +5,9 @@ html {
 }
 
 body {
-    background-color: #00BEBB;
-    font-family: "Krungthep";
+    background-color: #003049;
+    font-family: 'Montserrat', sans-serif;
+	font-size: 1.1rem;
 	color: #eee;
 	position: relative;
 	min-height: 100%;
@@ -113,7 +114,12 @@ label  {
 
 nav {
 	line-height: normal !important;
+	font-family: "Jost", sans-serif;
+	font-weight: 700;
 }
+/* 
+.navbar-brand {
+} */
 
 .footer-nav {
 	position: absolute;

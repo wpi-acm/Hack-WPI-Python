@@ -2,20 +2,20 @@
 <link href="../static/css/materialize.min.css" rel="stylesheet">
 <style>
     a{
-        color:darkblue;
+        color: skyblue;
     }
 </style>
 <div  style="height: 100%;">
     <div id="registration-banner" class="parallax-container valign-wrapper">
         <div class="section">
-            <h2 class="header center black-text text-darken-2">Registration</h2>
+            <h3 class="header center text-darken-2">Registration</h3>
         </div>
         <div class="parallax"><img src="../static/img/background1.jpg" alt="background"></div>
     </div>
     <div class="container">
         <div class="container">
-	    <Center><h1>Hi {{ name }}, just a few more steps!</h1></Center>
-	    <div class="section">
+	    <Center><h2>Hi {{ name }}, just a few more steps!</h2></Center>
+	    <div class="section" style="background-color: #974355; padding: 20px;">
             <form method="post" action="/register" enctype="multipart/form-data">
                 <div>
                     <p><b>If you'd like, add your resume to send to sponsors... </b></p>
@@ -29,7 +29,8 @@
                         </div>
                     </div>
                 </div>
-                <p>By registering & attending, you agree to the following policies:</p>
+                <p><i>No worries if you don't have one on hand, you can come back and upload it later via the Hack@WPI dashboard!</i></p>
+                <p>Please take a moment to review the following policies and check all the boxes below so we can finalize your registration:</p>
                 <p>
                     <center><a href="/tos">Hack@WPI's Terms and Conditions</a></center>
                 </p>
@@ -47,7 +48,10 @@
                     <center><a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf">MLH's Code of Conduct</a></center>
                 </p>
                 <br>
-                    <input type="checkbox" name="tos" id="checkboxid" required><label for="checkboxid"><b style="color:white;">Do you agree with these Rules?</b></label>
+                    <input type="checkbox" name="tos" id="checkboxid" required><label for="checkboxid"><b style="color:white;">*I have read and agree to the Hack@WPI Terms and Conditions</b></label>
+                    <input type="checkbox" name="mlh1" id="checkboxid1" required><label for="checkboxid1"><b style="color:white;">*I have read and agree to the MLH Code of Conduct</b></label>
+                    <input type="checkbox" name="mlh2" id="checkboxid2" required><label for="checkboxid2"><b style="color:white;">*I authorize you to share my application/registration information with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH Privacy Policy. I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.</b></label>
+                    <input type="checkbox" name="mlh3" id="checkboxid3" required><label for="checkboxid3"><b style="color:white;">*I authorize MLH to send me pre- and post-event information emails, which contain free credit and opportunities from their partners.</b></label>
                 <br><br>
                 <center><input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/></center>
               </form>

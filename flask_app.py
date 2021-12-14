@@ -55,6 +55,14 @@ def filesize_too_big(erro):
 def server_error():
     print("There was a server error... If you're having trouble registering, please email hack@wpi.edu with your details and what you did to break our site :P")
 
+@app.route('/sponsor')
+def sponsorindex():
+    return render_template('home/sponsor/index.html', registration_open=REGISTRATION_OPEN)
+
+@app.route('/sponsor/<path:path>')
+def sponsor(path):
+    return send_from_directory('templates/home/sponsor', path)
+
 @app.route('/')
 def root():
     return render_template('home/index.html', registration_open=REGISTRATION_OPEN)
@@ -225,7 +233,10 @@ def register():
             msg += 'Sorry! We have hit our registration capacity. You have been placed on the waitlist.\n'
             msg += 'We will let you know if space opens up.\n'
         else:
-            msg += 'You are fully registered! You are guarenteed a spot at the hackathon. We will send you more info closer to the hackathon.\n'
+            msg += 'You are fully registered! You are guarenteed a spot at the hackathon. Be sure to see the schedule at https://hack.wpi.edu. The opening ceremony is at 6:00 PM EST on Zoom at https://wpi.zoom.us/j/97135616505. Other zoom links will be sent through the slack.\n\n'
+            msg += 'In the meantime, make sure to join the Slack and DevPost!\n'
+            msg += 'http://bit.ly/hack21slack\n'
+            msg += 'https://hack-wpi-2021.devpost.com/\n'
         send_email(session['mymlh']['email'], 'Hack@WPI - Thanks for applying', msg)
 
         # Finally, send them to their dashboard
