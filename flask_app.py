@@ -99,7 +99,7 @@ def resumepost():
             filename = secure_filename(filename)
             resume.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return 'Resume uploaded!  <a href="/dashboard">Return to dashboard</a>'
-    return "Something went wrong. If this keeps happening, slack message @bkayastha"
+    return "Something went wrong. If this keeps happening, contact hack@wpi.edu for assistance"
 
 
 @app.route('/shirtpost', methods=['GET'])
@@ -127,7 +127,7 @@ def shirtpost():
             db.session.query(Hacker).filter(Hacker.mlh_id == id).update(upd)
             db.session.commit()
             return 'Info saved! <a href="../dashboard">Return to dashboard</a>'
-    return "Something went wrong. If this keeps happening, email mikel@wpi.edu"
+    return "Something went wrong. If this keeps happening, email hack@wpi.edu for assistance"
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -233,10 +233,9 @@ def register():
             msg += 'Sorry! We have hit our registration capacity. You have been placed on the waitlist.\n'
             msg += 'We will let you know if space opens up.\n'
         else:
-            msg += 'You are fully registered! You are guarenteed a spot at the hackathon. Be sure to see the schedule at https://hack.wpi.edu. The opening ceremony is at 6:00 PM EST on Zoom at https://wpi.zoom.us/j/97135616505. Other zoom links will be sent through the slack.\n\n'
-            msg += 'In the meantime, make sure to join the Slack and DevPost!\n'
-            msg += 'http://bit.ly/hack21slack\n'
-            msg += 'https://hack-wpi-2021.devpost.com/\n'
+            msg += 'You are fully registered! You are guarenteed a spot at the hackathon. Be sure to see the schedule at https://hack.wpi.edu. We will be sending a follow-up email with additional information prior to the event.\n\n'
+            msg += 'In the meantime, make sure to join the Slack!\n'
+            msg += 'http://bit.ly/hack22slack\n'
         send_email(session['mymlh']['email'], 'Hack@WPI - Thanks for applying', msg)
 
         # Finally, send them to their dashboard
@@ -378,7 +377,7 @@ def check_in():
     msg = 'Dear ' + mlh_info['first_name'] + ',\n\n'
     msg += 'Thanks for checking in!\n'
     msg += 'We will start shortly, please check your dashboard for updates!\n'
-    msg += 'Here are the slides with all the info: https://goo.gl/mGLDem\n'
+    msg += 'If you have not done so already, make sure to join the slack: https://bit.ly/hack22slack\n'
     send_email(mlh_info['email'], 'HackWPI - Thanks for checking in', msg)
 
     return jsonify(
@@ -427,7 +426,7 @@ def drop():
 
     # Send a goodbye email...
     msg = 'Dear ' + first_name + ',\n\n'
-    msg += 'Your application was dropped, sorry to see you go.\n If this was a mistake, you can re-register by going to hack.wpi.edu/register'
+    msg += 'Your application was dropped, sorry to see you go.\n If this was a mistake, you can re-register by going to https://hack.wpi.edu/register'
     send_email(email, 'Hack@WPI - Application Dropped', msg)
 
 
@@ -480,7 +479,7 @@ def promote_from_waitlist():
     msg = 'Dear ' + mlh_info['first_name'] + ',\n\n'
     msg += 'You are off the waitlist!\n'
     msg += 'Room has opened up, and you are now welcome to come, we look forward to seeing you!\n'
-    msg += 'If you cannot make it, please remove yourself at hack.wpi.edu\dashboard.\n'
+    msg += 'If you cannot make it, please drop your application at https://hack.wpi.edu/dashboard.\n'
     send_email(mlh_info['email'], "Hack@WPI - You're off the Waitlist!", msg)
 
 
@@ -544,7 +543,7 @@ def send_email(to, subject, body):
     print("Email sent to: " + to)
     body += '\nPlease let your friends know about the event as well!\n'
     body += 'To update your status, you can go to hack.wpi.edu/dashboard\n'
-    body += '\nAll the best!\nThe HackWPI Team\nhttps://twitter.com/hackwpi?lang=en'
+    body += '\nAll the best!\nThe Hack@WPI Team'
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()

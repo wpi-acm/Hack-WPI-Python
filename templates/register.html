@@ -5,6 +5,13 @@
         color: skyblue;
     }
 </style>
+<script>
+    function resumeChange() {
+        let val = document.getElementById('resume').value;
+        val = val.split(/\\|\//gi).slice(-1)[0]
+        document.getElementById('filename').setAttribute('value', val);
+    }
+</script>
 <div  style="height: 100%;">
     <div id="registration-banner" class="parallax-container valign-wrapper">
         <div class="section">
@@ -22,10 +29,10 @@
                     <div class="file-field input-field">
                         <div class="btn">
                             <span>File</span>
-                            <input id="resume" name="resume" type="file"/>
+                            <input id="resume" name="resume" type="file" oninput="resumeChange()"/>
                         </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
+                        <div class="file-path-wrapper white-text">
+                            <input disabled id="filename" class="file-path validate white-text" type="text">
                         </div>
                     </div>
                 </div>

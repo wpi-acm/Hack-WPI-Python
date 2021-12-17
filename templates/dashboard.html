@@ -2,8 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <link href="../static/css/materialize.min.css" rel="stylesheet">
 <script>
-    const drop = (id) =>
-    {
+    function drop(id) {
         if(window.confirm("Are you sure you wish to drop your application? This cannot be undone. (patiently wait after clicking the button)")) {
             window.location.href = "/drop?mlh_id=" + id;
         }
@@ -42,6 +41,12 @@
     //     }
     // })
     // })
+    }
+
+    function resumeChange() {
+        let val = document.getElementById('resume').value;
+        val = val.split(/\\|\//gi).slice(-1)[0]
+        document.getElementById('filename').setAttribute('value', val);
     }
 </script>
 
@@ -97,10 +102,10 @@
                 <div class="file-field input-field">
                     <div class="btn">
                         <span>File</span>
-                        <input id="resume" name="resume" type="file"/>
+                        <input id="resume" name="resume" type="file" oninput="resumeChange()"/>
                     </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
+                    <div class="file-path-wrapper white-text">
+                        <input disabled id="filename" class="file-path validate white-text" type="text">
                     </div>
                 </div>
                 <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
@@ -125,12 +130,11 @@
     let errColor = '#E74C3C'
 
     $(document).ready(() => {
-        $('#drop-link'
-    ).click((e) => {
-        e.preventDefault()
-    let id = {{ id }}
-        drop(id)
-    })
+        $('#drop-link').click((e) => {
+            e.preventDefault()
+        let id = {{ id }}
+            drop(id)
+        })
     })
 
 </script>
