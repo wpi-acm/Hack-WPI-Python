@@ -1,0 +1,15 @@
+#!/bin/bash
+# cd to script dir
+SCRIPT_RELATIVE_DIR=$(dirname "${BASH_SOURCE[0]}") 
+cd $SCRIPT_RELATIVE_DIR
+
+# enable python venv
+source ./venv/bin/activate
+
+echo `which python`
+
+# noot
+python ./manage_waitlist.py
+
+# disable venv
+deactivate

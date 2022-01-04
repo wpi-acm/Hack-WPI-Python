@@ -545,21 +545,29 @@ def send_email(to, subject, body):
     body += 'To update your status, you can go to hack.wpi.edu/dashboard\n'
     body += '\nAll the best!\nThe Hack@WPI Team'
 
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    sender = api_keys['smtp_email']['user']
-    server.login(sender, api_keys['smtp_email']['pass'])
+    smtp_server = api_keys['smtp_email']['smtp_server']
+    smtp_port = api_keys['smtp_email']['smtp_port']
+    server = smtplib.SMTP(smtp_server, smtp_port)
+    # Enable TLS if we're using secure SMTP
+    if(smtp_port > 25):
+        server.starttls()
+    user = api_keys['smtp_email']['user']
+    sender = api_keys['smtp_email']['sender']
+    # Login if we're using server with auth
+    if ('pass' in api_keys['smtp_email']):
+        server.login(user, api_keys['smtp_email']['pass'])
 
-    msg = _create_MIMEMultipart(subject, sender, to, body)
+    msg = _create_MIMEMultipart(subject, sender, to, body, user)
 
     server.send_message(msg)
     print("Sucess! (Email to " + to)
 
 
-def _create_MIMEMultipart(subject, sender, to, body):
+def _create_MIMEMultipart(subject, sender, to, body, user=None):
     msg = MIMEMultipart()
     msg['Subject'] = subject
     msg['From'] = sender
+    msg.add_header('reply-to', user)
     if type(to) == list:
         msg['To'] = ", ".join(to)
     else:

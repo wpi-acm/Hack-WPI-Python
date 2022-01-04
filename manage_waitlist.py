@@ -1,6 +1,6 @@
 import requests
 from flask_app import db, Hacker, send_email, gen_new_auto_promote_keys
-from config_hackWPI import WAITLIST_LIMIT
+from config_hackWPI import WAITLIST_LIMIT, WEBHOOK_URL
 
 num_attendees = db.session.query(Hacker).filter(Hacker.waitlisted == False).count()
 num_waitlisted = db.session.query(Hacker).filter(Hacker.waitlisted == True).count()
@@ -52,5 +52,9 @@ msg += '  ' + str(errs) + '\n'
 
 print(msg)
 
-#send_email('hack@wpi.edu', 'HackWPI - Daily Waitlist Report!', msg)
-send_email('bkayastha@wpi.edu', 'HackWPI - Daily Waitlist Report!', msg)
+# requests.post(WEBHOOK_URL, {
+#     "content": msg
+# })
+
+# send_email('hack@wpi.edu', 'HackWPI - Daily Waitlist Report!', msg)
+send_email('mikel@wpi.edu', 'HackWPI - Daily Waitlist Report!', msg)
