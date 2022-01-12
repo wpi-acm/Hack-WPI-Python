@@ -18,6 +18,7 @@ from werkzeug.utils import secure_filename
 from config_hackWPI import (api_keys, SERVER_LISTEN_ADDR, SERVER_PORT, WAITLIST_LIMIT, HACKATHON_TIME,
                             ALLOWED_EXTENSIONS, REGISTRATION_OPEN, MCE_API_KEY)
 from mail import send_message
+from admin import json_to_csv
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -274,6 +275,12 @@ def send():
     send_message(to, subject, html, text)
     return "Message sent successfully to {0} recipients".format(len(to))
 
+@app.route('/hackers.csv', methods=['GET'])
+def hackers_csv():
+    if not is_admin():
+        return redirect(url_for('register'))
+    return json_to_csv(admin(True))
+
 @app.route('/hackers', methods=['GET'])
 def hackers():
     if not is_admin():
@@ -294,6 +301,7 @@ def admin(return_hackers=False):
     shirt_count = {'xxs': 0, 'xs': 0, 's': 0, 'm': 0, 'l': 0, 'xl': 0, 'xxl': 0}
     male_count = 0
     female_count = 0
+    nb_count = 0
     schools = {}
     majors = {}
 
@@ -317,8 +325,10 @@ def admin(return_hackers=False):
 
         if hacker['gender'] == 'Male':
             male_count += 1
-        else:
+        elif hacker['gender'] == 'Female':
             female_count += 1
+        else:
+            nb_count += 1
 
         total_count += 1
         if not 'school' in hacker:
@@ -356,7 +366,7 @@ def admin(return_hackers=False):
         return hackers
 
     return render_template('admin.html', hackers=hackers, total_count=total_count, waitlist_count=waitlist_count,
-                           check_in_count=check_in_count, shirt_count=shirt_count, female_count=female_count,
+                           check_in_count=check_in_count, shirt_count=shirt_count, female_count=female_count, nb_count=nb_count,
                            male_count=male_count, schools=schools, majors=majors,
                            mlh_url='https://my.mlh.io/api/v3/users.json?client_id=' + api_keys['mlh'][
                                'client_id'] + '&secret=' + api_keys['mlh'][

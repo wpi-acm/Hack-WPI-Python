@@ -40,7 +40,10 @@
 <div class="contact-section" style="height: auto; background-repeat: repeat; background-size: contain;">
     <div class="container-fluid" style="margin-left: 3%; margin-right: 3%;">
         <div class="row" style="margin-top: 10%;">
-            <h2><a href="{{ mlh_url }}">Get JSON object of users from MLH. <b>Do NOT share this URL.</b></a></h2>
+            <h5>JSON object of users from MLH (Including dropped applications):</h5>
+            <p><a href="{{ mlh_url }}"><b>Do NOT share this URL.</b></a></p>
+            <h5>Get registered hackers only:</h5>
+            <p><a href="/hackers">JSON</a> <a href="/hackers.csv">CSV</a></p>
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -51,10 +54,10 @@
                     let genderChart = new Chart(genderCtx, {
                         type: 'doughnut',
                         data: {
-                            labels: ['Female', 'Male'],
+                            labels: ['Female', 'Male', 'Non-Binary/Other'],
                             datasets: [
                                 {
-                                    data: [{{ female_count }}, {{ male_count }}]
+                                    data: [{{ female_count }}, {{ male_count }}, {{ nb_count }}]
                                 }
                             ]
                         },
