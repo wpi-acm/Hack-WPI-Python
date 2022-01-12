@@ -16,7 +16,8 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
 from config_hackWPI import (api_keys, SERVER_LISTEN_ADDR, SERVER_PORT, WAITLIST_LIMIT, HACKATHON_TIME,
-                            ALLOWED_EXTENSIONS, REGISTRATION_OPEN)
+                            ALLOWED_EXTENSIONS, REGISTRATION_OPEN, MCE_API_KEY)
+from mail import send_message
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
@@ -241,9 +242,46 @@ def register():
         # Finally, send them to their dashboard
         return redirect(url_for('dashboard'))
 
+@app.route('/mail')
+def mail():
+    if not is_admin():
+        return redirect(url_for('register'))
+    return render_template('mail.html', MCE_API_KEY=MCE_API_KEY, NUM_HACKERS=len(admin(True)))
+
+@app.route('/send', methods=['POST'])
+def send():
+    if not is_admin():
+        return "Not Authorized", 401
+    args = request.json
+    print(args)
+    recipients = args.get("recipients") or ""
+    subject = args.get("subject") or ""
+    html = args.get("html") or ""
+    text = args.get("text") or ""
+
+    to = []
+    if(recipients == "org"):
+        to = ["hack@wpi.edu"]
+    elif(recipients == "admin"):
+        to = ["acm-sysadmin@wpi.edu"]
+    elif(recipients == "all"):
+        to = [x["email"] for x in admin(True)]
+    elif(recipients == "wpi"):
+        to = [ x["email"] for x in admin(True) if "wpi.edu" in x["email"] or \
+            (x["school"] and ("WPI" in x["school"]["name"] or "Worcester Polytechnic" in x["school"]["name"])) ]
+
+    # return str(to)
+    send_message(to, subject, html, text)
+    return "Message sent successfully to {0} recipients".format(len(to))
+
+@app.route('/hackers', methods=['GET'])
+def hackers():
+    if not is_admin():
+        return redirect(url_for('register'))
+    return jsonify(admin(True))
 
 @app.route('/admin', methods=['GET'])
-def admin():
+def admin(return_hackers=False):
     # Displays total registration information...
     # As Firebase could not be used with MyMLH, use PubNub to simulate the realtime database...
 
@@ -314,6 +352,8 @@ def admin():
             'special_needs': obj.special_needs,
             'school': hacker['school'] if 'school' in hacker else 'NULL'
         })
+    if(return_hackers):
+        return hackers
 
     return render_template('admin.html', hackers=hackers, total_count=total_count, waitlist_count=waitlist_count,
                            check_in_count=check_in_count, shirt_count=shirt_count, female_count=female_count,
@@ -538,7 +578,7 @@ def is_self(mlh_id):
         return False
     return True
 
-
+# TODO: Migrate to new mail module  
 def send_email(to, subject, body):
     print("Email sent to: " + to)
     body += '\nPlease let your friends know about the event as well!\n'
