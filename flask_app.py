@@ -519,6 +519,7 @@ def promote_from_waitlist():
     msg = 'Dear ' + mlh_info['first_name'] + ',\n\n'
     msg += 'You are off the waitlist!\n'
     msg += 'Room has opened up, and you are now welcome to come, we look forward to seeing you!\n'
+    msg += '**Note** Please see https://hack.wpi.edu and the event Slack for important information regarding the event format in accordance with new COVID safety guidelines\n'
     msg += 'If you cannot make it, please drop your application at https://hack.wpi.edu/dashboard.\n'
     send_email(mlh_info['email'], "Hack@WPI - You're off the Waitlist!", msg)
 
@@ -593,20 +594,26 @@ def send_email(to, subject, body):
         server.starttls()
     user = api_keys['smtp_email']['user']
     sender = api_keys['smtp_email']['sender']
+    # Get bcc info if it exists
+    bcc = None
+    if ('bcc' in api_keys['smtp_email']):
+        bcc = api_keys['smtp_email']['bcc']
     # Login if we're using server with auth
     if ('pass' in api_keys['smtp_email']):
         server.login(user, api_keys['smtp_email']['pass'])
 
-    msg = _create_MIMEMultipart(subject, sender, to, body, user)
+    msg = _create_MIMEMultipart(subject, sender, to, body, user, bcc)
 
     server.send_message(msg)
     print("Sucess! (Email to " + to)
 
 
-def _create_MIMEMultipart(subject, sender, to, body, user=None):
+def _create_MIMEMultipart(subject, sender, to, body, user=None, bcc=None):
     msg = MIMEMultipart()
     msg['Subject'] = subject
     msg['From'] = sender
+    if (bcc):
+        msg['Bcc'] = bcc
     msg.add_header('reply-to', user)
     if type(to) == list:
         msg['To'] = ", ".join(to)

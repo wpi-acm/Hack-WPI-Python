@@ -52,9 +52,9 @@ msg += '  ' + str(errs) + '\n'
 
 print(msg)
 
-# requests.post(WEBHOOK_URL, {
-#     "content": msg
-# })
+requests.post(WEBHOOK_URL, {
+    "content": msg
+})
 
-# send_email('hack@wpi.edu', 'HackWPI - Daily Waitlist Report!', msg)
+send_email('hack@wpi.edu', 'HackWPI - Daily Waitlist Report!', msg)
 send_email('mikel@wpi.edu', 'HackWPI - Daily Waitlist Report!', msg)
