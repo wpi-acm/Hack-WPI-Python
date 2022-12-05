@@ -1,0 +1,142 @@
+{% include 'header.html' %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link href="../static/css/materialize.min.css" rel="stylesheet">
+<script>
+    function drop(id) {
+        if(window.confirm("Are you sure you wish to drop your application? This cannot be undone. (patiently wait after clicking the button)")) {
+            window.location.href = "/drop?mlh_id=" + id;
+        }
+    //     swal({
+    //         title: 'Drop your application?',
+    //         text: 'Are you sure you wish to drop your application? This cannot be undone. (patiently wait after clicking the button)',
+    //         type: 'warning',
+    //         showCancelButton: true,
+    //         closeOnConfirm: false,
+    //         confirmButtonText: 'Yes, drop!',
+    //         confirmButtonColor: errColor
+    //     }, () => {
+    //         $.get('/drop?mlh_id=' + id, (data) => {
+    //         let title = ''
+    //         let msg = ''
+    //         let type = ''
+    //         if (data.status === 'success'
+    // )
+    //     {
+    //         title = 'Dropped!'
+    //         msg = 'Your application was successfully dropped!'
+    //         type = 'success'
+    //     }
+    // else
+    //     {
+    //         title = 'Error!'
+    //         msg = JSON.stringify(data)
+    //         type = 'error'
+    //     }
+    //     swal(title, msg, type)
+    //     if (data.status === 'success') {
+    //         setTimeout(() => {window.location = '/'
+    //     },
+    //         5000
+    //     )
+    //     }
+    // })
+    // })
+    }
+
+    function resumeChange() {
+        let val = document.getElementById('resume').value;
+        val = val.split(/\\|\//gi).slice(-1)[0]
+        document.getElementById('filename').setAttribute('value', val);
+    }
+</script>
+
+<div class="contact-section" style="height: 100%;">
+    <div class="container">
+        <div class="row center justify-content-center" style="margin-top: 10%;">
+            <h1>Hi {{ name }}!</h1>
+            {% if waitlisted %}
+            <h2>You are waitlisted, if space opens up we will let you know...</h2>
+            {% else %}
+            <h2>You are fully registered! We look forward to seeing you!</h2>
+            Let us know if you have any questions by sending them to <a href="mailto:hack@wpi.edu">hack@wpi.edu</a>
+            <br>
+            <br>
+            Forgot to upload your resume while registering? No worries, submit it below.
+        </div>
+        <div class="row center justify-content-center">
+            <h5>Make sure to join the Slack and enter your shirt size below!</h5>
+            <p>(Please note that due to COVID-19 constraints, we can't guarantee that all participants will receive Hack@WPI t-shirts this year but we are trying to find a way!)</p>
+            <a href="https://join.slack.com/t/wpi-rqw4180/shared_invite/zt-1089kvjx1-3b6v152r6a_fX7NS8EGL9g" style="margin: 5px;" class="btn btn-lg btn-primary btn-invert">Slack</a>
+        </div>
+	    <div class="row center justify-content-center" style="background-color: #974355; padding: 20; margin-left: 20; margin-right: 20; border-radius: 5px;">
+            <form method="get" action="/shirtpost">
+                <br>
+                <p><b>Optional Info:</b></p>
+                    <div>
+                            <p>Shirt Size (Currently selected: {{shirt_size}})</p>
+                            <input type="radio" id="shirtxs" name="size" value="xs">
+                            <label for="shirtxs">XS</label>
+                            <input type="radio" id="shirts" name="size" value="s">
+                            <label for="shirts">S</label>
+                            <input type="radio" id="shirtm" name="size" value="m">
+                            <label for="shirtm">M</label>
+                            <input type="radio" id="shirtl" name="size" value="l">
+                            <label for="shirtl">L</label>
+                            <input type="radio" id="shirtxl" name="size" value="xl">
+                            <label for="shirtxl">XL</label>
+                            <input type="radio" id="shirtxxl" name="size" value="xxl">
+                            <label for="shirtxxl">XXL</label>
+                            <input type="radio" id="no" name="size" value="no">
+                            <label for="no">Don't want one</label>
+                            <p>Special Needs/Accommodations:</p>
+                            <input type="text" name="special_needs" id="special_needs" value="{{ special_needs }}">
+                    </div>
+                    <br><br>
+                    <input name="save" class="btn btn-lg btn-primary btn-invert" type="submit" value="Save"/>
+                    <br><br><br>
+                </form>
+        </div>
+        <div class="row center justify-content-center">
+            <form method="post" action="/resumepost" enctype="multipart/form-data">
+                <p><b>If you'd like, add your resume to send to sponsors... </b></p>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>File</span>
+                        <input id="resume" name="resume" type="file" oninput="resumeChange()"/>
+                    </div>
+                    <div class="file-path-wrapper white-text">
+                        <input disabled id="filename" class="file-path validate white-text" type="text">
+                    </div>
+                </div>
+                <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
+            </form>
+            {% endif %}
+            <br>
+        </div>
+        {% if admin %}
+        <br>
+        <div class="row justify-content-center">
+                <a href="/admin"><p class="btn">Admin Dashboard</p></a>
+        </div>
+        {% endif %}
+        <br>
+    </div>
+    <br>
+    <br>
+    <center><a onclick="drop('{{id}}')" id="drop-link"><p class="btn">Drop Application if you can't make it :(</p></a></center>
+</div>
+
+<script>
+    let errColor = '#E74C3C'
+
+    $(document).ready(() => {
+        $('#drop-link').click((e) => {
+            e.preventDefault()
+        let id = {{ id }}
+            drop(id)
+        })
+    })
+
+</script>
+
+{% include 'footer.html' %}
