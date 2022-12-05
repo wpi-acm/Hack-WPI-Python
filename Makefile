@@ -1,0 +1,33 @@
+SHELL := /bin/bash
+all: clean
+
+# Clean up temp files
+#------------------------------------------------------------------
+clean:
+	@echo "Cleaning up temp files"
+	@find . -name '*~' -ls -delete
+	@find . -name '*.bak' -ls -delete
+	@echo "Cleaning up __pycache__ directories"
+	@find . -name __pycache__ -type d -not -path "./.venv/*" -ls -exec rm -r {} +
+	@echo "Cleaning up logfiles"
+	@find ./logs -name '*.log*' -ls -delete
+	@echo "Cleaning up flask_session"
+	@find . -name flask_session -type d -not -path "./.venv/*" -ls -exec rm -r {} +
+
+init_env:
+	python -m .venv venv
+	source .venv/bin/activate && pip3 install --upgrade pip
+	source .venv/bin/activate && pip3 install -r requirements.txt txt
+
+upgrade_env:
+	source .venv/bin/activate && pip3 install --upgrade -r requirements.txt txt
+
+daemon:
+	@echo "--- STARTING UWSGI DAEMON ---"
+	@echo ""
+	@echo ""	
+	source .venv/bin/activate && uwsgi --py-autoreload=5 --socket 0.0.0.0:8000 --protocol=http --wsgi-file netreg.py --enable-threads --master
+	@echo ""
+	@echo ""
+	@echo "--- STARTING UWSGI DAEMON ---"	
+	
