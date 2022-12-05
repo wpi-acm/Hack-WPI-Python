@@ -19,4 +19,8 @@ def create_app():
 
     from .models import User
 
+    from . import registration
+
+    app.register_blueprint(registration.bp)
+
     return app
