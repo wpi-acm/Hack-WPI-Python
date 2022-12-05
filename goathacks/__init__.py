@@ -15,6 +15,8 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
-    login.init_app(app)
+    login.init_app(app) 
+
+    from .models import User
 
     return app
