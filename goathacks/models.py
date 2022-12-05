@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
     last_login = Column(DateTime, nullable=False)
     active = Column(Boolean, nullable=False, default=True)
     is_admin = Column(Boolean, nullable=False, default=False)
+    waitlisted = Column(Boolean, nullable=False, default=False)
 
 
 @login.user_loader
