@@ -1,0 +1,15 @@
+[Unit]
+Description=%i uWSGI app
+After=syslog.target
+
+[Service]
+ExecStart=/usr/bin/uwsgi \
+        --ini /etc/uwsgi/apps-available/%i.ini \
+        --socket /var/run/uwsgi/%i.socket
+User=www-data
+Group=www-data
+Restart=on-failure
+KillSignal=SIGQUIT
+Type=notify
+StandardError=syslog
+NotifyAccess=all
