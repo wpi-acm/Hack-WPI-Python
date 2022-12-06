@@ -102,3 +102,23 @@ def waitlist_user(email):
         msg.body = render_template("emails/waitlist_promotion.txt", user=user)
         mail.send(msg)
         click.echo(f"Promoted {user.first_name} from the waitlist")
+
+@gr.command("drop")
+@click.option("--email", prompt=True)
+@click.option("--confirm/--noconfirm", prompt=False, default=True)
+def drop_user(email, confirm):
+    """
+    Drops a user's registration
+    """
+    user = User.query.filter_by(email=email).one()
+    if not confirm:
+        pass
+    else:
+        if click.confirm(f"Are you sure you want to drop {user.first_name} {user.last_name}'s registration? **THIS IS IRREVERSIBLE**"):
+           pass 
+        else:
+           return
+    db.session.delete(user)
+    db.session.commit()
+    click.echo(f"Dropped {user.first_name}'s registration")
+    
