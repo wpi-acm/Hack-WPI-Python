@@ -82,7 +82,7 @@ const promoteFromWaitlist = (id) => {
     confirmButtonText: 'Yes, promote!',
     confirmButtonColor: successColor
   }, () => {
-    $.get('/promote_from_waitlist?mlh_id=' + id, (data) => {
+    $.get('/admin/promote_from_waitlist/' + id, (data) => {
       let title = ''
       let msg = ''
       let type = ''
@@ -110,7 +110,7 @@ const changeAdmin = (id, action) => {
     confirmButtonText: 'Yes, ' + action + '!',
     confirmButtonColor: errColor
   }, () => {
-    $.get('/change_admin?mlh_id=' + id + '&action=' + action, (data) => {
+    $.get('/admin/change_admin/' + id + '/' + action, (data) => {
       let title = ''
       let msg = ''
       let type = ''
@@ -138,7 +138,7 @@ const drop = (id) => {
     confirmButtonText: 'Yes, drop!',
     confirmButtonColor: errColor
   }, () => {
-    $.get('/drop?mlh_id=' + id, (data) => {
+    $.get('/admin/drop/' + id, (data) => {
       let title = ''
       let msg = ''
       let type = ''
@@ -166,7 +166,7 @@ const checkIn = (id) => {
     confirmButtonText: 'Yes, check in!',
     confirmButtonColor: successColor
   }, () => {
-    $.get('/check_in?mlh_id=' + id, (data) => {
+    $.get('/admin/check_in/' + id, (data) => {
       let title = ''
       let msg = ''
       let type = ''

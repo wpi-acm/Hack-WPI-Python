@@ -17,6 +17,29 @@ class User(db.Model, UserMixin):
     shirt_size = Column(String, nullable=True)
     accomodations = Column(String, nullable=True)
     checked_in = Column(Boolean, nullable=False, default=False)
+    school = Column(String, nullable=True)
+    phone = Column(String, nullable=True)
+    gender = Column(String, nullable=True)
+
+    def create_json_output(lis):
+        hackers = []
+
+        for u in lis:
+            hackers.append({
+                'checked_in': u.checked_in,
+                'waitlisted': u.waitlisted,
+                'admin': u.is_admin,
+                'id': u.id,
+                'email': u.email,
+                'first_name': u.first_name,
+                'last_name': u.last_name,
+                'phone_number': u.phone,
+                'shirt_size': u.shirt_size,
+                'special_needs': u.accomodations,
+                'school': u.school
+                })
+
+        return hackers
 
 
 @login.user_loader

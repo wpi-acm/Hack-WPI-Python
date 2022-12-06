@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
-    <script src="../static/js/admin.js"></script>
+    <script src="{{url_for('static', filename='js/admin.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
 
@@ -43,7 +43,8 @@
             <h5>JSON object of users from MLH (Including dropped applications):</h5>
             <p><a href="{{ mlh_url }}"><b>Do NOT share this URL.</b></a></p>
             <h5>Get registered hackers only:</h5>
-            <p><a href="/hackers">JSON</a> <a href="/hackers.csv">CSV</a></p>
+            <p><a href="{{url_for('admin.hackers')}}">JSON</a> <a
+                  href="{{url_for('admin.hackers_csv')}}">CSV</a></p>
         </div>
         <div class="row">
             <div class="col-md-4">
@@ -81,10 +82,12 @@
                 <script>
                     let schoolNames = []
                     let schoolNums = []
+                    console.log("{{schools}}")
 
                     {% for school in schools %}
                         schoolNames.push('{{ school }}')
                         schoolNums.push({{ schools[school] }})
+                    console.log("{{school}}")
                     {% endfor %}
 
                     let schoolCtx = document.getElementById('schoolCanvas')
@@ -186,13 +189,13 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>{{ shirt_count['xxs'] }}</td>
-                    <td>{{ shirt_count['xs'] }}</td>
-                    <td>{{ shirt_count['s'] }}</td>
-                    <td>{{ shirt_count['m'] }}</td>
-                    <td>{{ shirt_count['l'] }}</td>
-                    <td>{{ shirt_count['xl'] }}</td>
-                    <td>{{ shirt_count['xxl'] }}</td>
+                    <td>{{ shirt_count['XXS'] }}</td>
+                    <td>{{ shirt_count['XS'] }}</td>
+                    <td>{{ shirt_count['S'] }}</td>
+                    <td>{{ shirt_count['M'] }}</td>
+                    <td>{{ shirt_count['L'] }}</td>
+                    <td>{{ shirt_count['XL'] }}</td>
+                    <td>{{ shirt_count['XXL'] }}</td>
                 </tr>
                 </tbody>
             </table>
@@ -217,27 +220,27 @@
                 </thead>
                 <tbody>
                 {% for hacker in hackers %}
-                    <tr id="{{ hacker['id'] }}-row">
+                    <tr id="{{ hacker.id }}-row">
                         <td>
                             <div class="btn-group">
                                 <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><span
                                         class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    {% if not hacker['checked_in'] %}
-                                        <li><a class="check_in" id="{{ hacker['id'] }}-check_in" href="#">Check In</a>
+                                    {% if not hacker.checked_in %}
+                                        <li><a class="check_in" id="{{ hacker.id }}-check_in" href="#">Check In</a>
                                         </li>
                                     {% endif %}
-                                    {% if hacker['waitlisted'] and not hacker['checked_in'] %}
+                                    {% if hacker.waitlisted and not hacker.checked_in %}
                                         <li><a class="promote_from_waitlist"
                                                id="{{ hacker['id'] }}-promote_from_waitlist"
                                                href="#">Promote From Waitlist</a></li>
                                     {% endif %}
                                     <li class="divider"></li>
-                                    {% if not hacker['checked_in'] %}
+                                    {% if not hacker.checked_in %}
                                         <li><a class="drop" id="{{ hacker['id'] }}-drop" href="#">Drop Application</a>
                                         </li>
                                     {% endif %}
-                                    {% if hacker['admin'] %}
+                                    {% if hacker.is_admin %}
                                         <li><a class="demote_admin" id="{{ hacker['id'] }}-demote_admin" href="#">Demote
                                             Admin</a>
                                         </li>
@@ -251,15 +254,15 @@
                         </td>
                         <td id="{{ hacker['id'] }}-checked_in">{{ hacker['checked_in'] }}</td>
                         <td id="{{ hacker['id'] }}-waitlisted">{{ hacker['waitlisted'] }}</td>
-                        <td>{{ hacker['admin'] }}</td>
+                        <td>{{ hacker.is_admin }}</td>
                         <td>{{ hacker['id'] }}</td>
                         <td>{{ hacker['registration_time'] }}</td>
                         <td>{{ hacker['email'] }}</td>
                         <td>{{ hacker['first_name'] + ' ' + hacker['last_name'] }}</td>
-                        <td>{{ hacker['phone_number'] }}</td>
+                        <td>{{ hacker['phone'] }}</td>
                         <td>{{ hacker['shirt_size'] }}</td>
-                        <td>{{ hacker['special_needs'] }}</td>
-                        <td>{{ hacker['school']['name'] }}</td>
+                        <td>{{ hacker['accomodations'] }}</td>
+                        <td>{{ hacker['school'] }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
