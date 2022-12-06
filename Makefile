@@ -26,7 +26,7 @@ daemon:
 	@echo "--- STARTING UWSGI DAEMON ---"
 	@echo ""
 	@echo ""	
-	source .venv/bin/activate && uwsgi --py-autoreload=5 --socket 0.0.0.0:8000 --protocol=http --wsgi-file netreg.py --enable-threads --master
+	source .venv/bin/activate && uwsgi --py-autoreload=5 --socket 0.0.0.0:8000 --protocol=http --wsgi-file goathacks.py --enable-threads --master
 	@echo ""
 	@echo ""
 	@echo "--- STARTING UWSGI DAEMON ---"	
