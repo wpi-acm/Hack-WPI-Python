@@ -3,7 +3,7 @@ from flask import Blueprint, config, current_app, flash, redirect, render_templa
 import flask_login
 from flask_login import current_user
 from goathacks.registration.forms import LoginForm, RegisterForm
-from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from goathacks import db
 from goathacks.models import User
@@ -63,4 +63,21 @@ def register():
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
-    return "OK"
+    form = LoginForm(request.form)
+
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        user = User.query.filter_by(email=email).first()
+
+        if check_password_hash(user.password, password):
+            flask_login.login_user(user)
+
+            flash("Welcome back!")
+
+            return redirect(url_for("dashboard.home"))
+        else:
+            flash("Incorrect password")
+
+    return render_template("login.html", form=form)

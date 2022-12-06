@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="height: 100%;">
+    <div id="registration-banner" class="parallax-container valign-wrapper">
+        <div class="section">
+            <h3 class="header-center text-darken-2">Login</h3>
+        </div>
+        <div class="parallax"><img src="{{url_for('static', filename='img/background1.jpg')}}"
+                                   alt="background"></div>
+    </div>
+</div>
+<div class="container">
+    <div class="section" style="background-color: #974355; padding: 20px;">
+        <form method="post">
+            {{ form.csrf_token }}
+            <div>
+                {{form.email}}<br/>{{ form.email.label}}
+            </div>
+            <div>
+                {{form.password}}<br/>{{form.password.label}}
+            </div>
+            <div>
+                {{form.submit}}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
