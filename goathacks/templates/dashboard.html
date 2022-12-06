@@ -70,27 +70,18 @@
                 class="btn btn-lg btn-primary btn-invert">Discord</a>
         </div>
 	    <div class="row center justify-content-center" style="background-color: #974355; padding: 20; margin-left: 20; margin-right: 20; border-radius: 5px;">
-            <form method="get" action="/shirtpost">
+            <form method="post">
+                {{ form.csrf_token }}
                 <br>
                 <p><b>Optional Info:</b></p>
                     <div>
-                            <p>Shirt Size (Currently selected: {{shirt_size}})</p>
-                            <input type="radio" id="shirtxs" name="size" value="xs">
-                            <label for="shirtxs">XS</label>
-                            <input type="radio" id="shirts" name="size" value="s">
-                            <label for="shirts">S</label>
-                            <input type="radio" id="shirtm" name="size" value="m">
-                            <label for="shirtm">M</label>
-                            <input type="radio" id="shirtl" name="size" value="l">
-                            <label for="shirtl">L</label>
-                            <input type="radio" id="shirtxl" name="size" value="xl">
-                            <label for="shirtxl">XL</label>
-                            <input type="radio" id="shirtxxl" name="size" value="xxl">
-                            <label for="shirtxxl">XXL</label>
-                            <input type="radio" id="no" name="size" value="no">
-                            <label for="no">Don't want one</label>
+                            <p>Shirt Size (Currently selected: {{current_user.shirt_size}})</p>
+                            {% for subfield in form.shirt_size %}
+                            {{subfield}}{{subfield.label}} 
+                            {% endfor %}
                             <p>Special Needs/Accommodations:</p>
-                            <input type="text" name="special_needs" id="special_needs" value="{{ special_needs }}">
+                            <input type="text" name="accomodations"
+                            id="special_needs" value="{{ current_user.accomodations }}">
                     </div>
                     <br><br>
                     <input name="save" class="btn btn-lg btn-primary btn-invert" type="submit" value="Save"/>
@@ -114,7 +105,7 @@
             {% endif %}
             <br>
         </div>
-        {% if admin %}
+        {% if current_user.is_admin %}
         <br>
         <div class="row justify-content-center">
                 <a href="/admin"><p class="btn">Admin Dashboard</p></a>

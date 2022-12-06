@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     waitlisted = Column(Boolean, nullable=False, default=False)
     shirt_size = Column(String, nullable=True)
     accomodations = Column(String, nullable=True)
+    checked_in = Column(Boolean, nullable=False, default=False)
 
 
 @login.user_loader
