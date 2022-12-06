@@ -22,6 +22,12 @@ init_env:
 upgrade_env:
 	source .venv/bin/activate && pip3 install --upgrade -r requirements.txt txt
 
+make_migrations:
+	source .venv/bin/activate && flask db migrate
+
+run_migrations:
+	source .venv/bin/activate && flask db upgrade
+
 daemon:
 	@echo "--- STARTING UWSGI DAEMON ---"
 	@echo ""
