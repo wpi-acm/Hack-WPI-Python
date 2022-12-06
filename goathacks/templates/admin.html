@@ -81,13 +81,11 @@
                 <canvas id="schoolCanvas" width="400" height="400"></canvas>
                 <script>
                     let schoolNames = []
-                    let schoolNums = []
-                    console.log("{{schools}}")
+                    let schoolNums = [] 
 
                     {% for school in schools %}
                         schoolNames.push('{{ school }}')
-                        schoolNums.push({{ schools[school] }})
-                    console.log("{{school}}")
+                        schoolNums.push({{ schools[school] }}) 
                     {% endfor %}
 
                     let schoolCtx = document.getElementById('schoolCanvas')
