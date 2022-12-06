@@ -150,8 +150,20 @@ form input[type="radio"] {
   padding-right: 5px;
 }
 
+form input[type="checkbox"]:checked {
+  visibility: visible;
+  left: unset;
+  position: unset;
+}
+
 form label {
   font-size: 1.1rem;
   padding-right: 10px;
   padding-left: 25px !important;
+}
+
+form select {
+  display: unset;
+  background: #974355;
+  max-width: 11rem;
 }

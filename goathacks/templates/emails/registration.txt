@@ -1,0 +1,19 @@
+Dear {{ user.first_name }},
+
+Your application for GoatHacks has been confirmed! {% if user.waitlisted
+%}You're on the waitlist right now, but we'll send you another email if a spot
+opens up.{% else %}You've got a confirmed spot this year! Make sure to look at
+the schedule at https://hack.wpi.edu.
+
+{% if not user.waitlisted %}
+We'll send another email with more details closer to the event. In the
+meantime, visit your Dashboard (https://hack.wpi.edu/dashboard) to tell us about
+your shirt size and any accomodations you may need.
+{% endif %}
+
+Happy Hacking!
+
+GoatHacks Team
+
+This is an automated message. Please email hack@wpi.edu with any questions or
+concerns.

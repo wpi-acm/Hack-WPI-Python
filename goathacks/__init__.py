@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_assets import Bundle, Environment
 from flask_cors import CORS
+from flask_mail import Mail
 
 
 db = SQLAlchemy()
@@ -11,6 +12,7 @@ migrate = Migrate()
 login = LoginManager()
 environment = Environment()
 cors = CORS()
+mail = Mail()
 
 def create_app():
     app = Flask(__name__)
@@ -22,6 +24,7 @@ def create_app():
     login.init_app(app) 
     environment.init_app(app)
     cors.init_app(app)
+    mail.init_app(app)
 
     scss = Bundle('css/style.scss', filters='scss',
     output='css/style.css')
@@ -38,3 +41,5 @@ def create_app():
     app.register_blueprint(admin.bp)
 
     return app
+
+

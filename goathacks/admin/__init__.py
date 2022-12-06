@@ -1,11 +1,12 @@
-from flask import Blueprint, jsonify, redirect, render_template, url_for
+from flask import Blueprint, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
+from flask_mail import Message
 
 from goathacks.models import User
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
-from goathacks import db
+from goathacks import db,mail
 
 @bp.route("/")
 @login_required
@@ -53,6 +54,45 @@ def home():
                            female_count=female_count, nb_count=nb_count,
                            check_in_count=check_in_count, schools=schools)
 
+@bp.route("/mail")
+@login_required
+def mail():
+    if not current_user.is_admin:
+        return redirect(url_for("dashboard.home"))
+
+    total_count = len(db.session.execute(db.select(User)).scalars().all())
+
+    return render_template("mail.html", NUM_HACKERS=total_count)
+
+@bp.route("/send", methods=["POST"])
+@login_required
+def send():
+    if not current_user.is_admin:
+        return {"status": "error"}
+
+    json = request.json
+
+    users = User.query.all()
+
+    to = []
+    if json["recipients"] == "org":
+        to = ["hack@wpi.edu"]
+    elif json['recipients'] == 'admin':
+        to = ["acm-sysadmin@wpi.edu"]
+    elif json['recipients'] == "all":
+        to = [x['email'] for x in users]
+
+    with mail.connect() as conn:
+        for e in to:
+            msg = Message(json['subject'])
+            msg.add_recipient(e)
+            msg.html = json['html']
+            msg.body = json['text']
+
+            conn.send(msg)
+
+    return {"status": "success"}
+
 @bp.route("/check_in/<int:id>")
 @login_required
 def check_in(id):
@@ -78,6 +118,11 @@ def drop(id):
 
     if user.checked_in:
         return {"status": "error", "msg": "Hacker is already checked in"}
+
+    msg = Message("Application Dropped")
+    msg.add_recipient(user.email)
+    msg.sender = ("GoatHacks Team", "hack@wpi.edu")
+    msg.body = render_template("emails/dropped.txt", user=user)
 
     db.session.delete(user)
     db.session.commit()
@@ -121,6 +166,11 @@ def promote_waitlist(id):
 
     user.waitlisted = False
     db.session.commit()
+
+    msg = Message("Waitlist Promotion")
+    msg.add_recipient(user.email)
+    msg.sender = ("GoatHacks Team", "hack@wpi.edu")
+    msg.body = render_template("emails/waitlist_promotion.txt", user=user)
 
     return {"status": "success"}
 
