@@ -40,6 +40,10 @@ def create_app():
     app.register_blueprint(dashboard.bp)
     app.register_blueprint(admin.bp)
 
+
+    from goathacks import cli
+    app.cli.add_command(cli.gr)
+
     return app
 
 
