@@ -1,0 +1,20 @@
+{% include 'header.html' %}
+
+<div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class="flashed-content">
+        {% for m in messages %}
+        <li class="message">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+{% block content %}
+
+This content block is still being worked on!
+
+{% endblock %}
+</div>
+
+{% include 'footer.html' %}
