@@ -55,12 +55,14 @@
                 </form>
         </div>
         <div class="row center justify-content-center">
-            <form method="post" action="/resumepost" enctype="multipart/form-data">
+            <form method="post" action="{{url_for('dashboard.resume')}}" enctype="multipart/form-data">
+                {{ resform.csrf_token }}
                 <p><b>If you'd like, add your resume to send to sponsors... </b></p>
                 <div class="file-field input-field">
                     <div class="btn">
                         <span>File</span>
                         <input id="resume" name="resume" type="file" oninput="resumeChange()"/>
+                        
                     </div>
                     <div class="file-path-wrapper white-text">
                         <input disabled id="filename" class="file-path validate white-text" type="text">

@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 from wtforms import RadioField, TextAreaField
 from wtforms.validators import DataRequired
 
@@ -7,3 +8,9 @@ class ShirtAndAccomForm(FlaskForm):
                                                    "None"],
                             validators=[DataRequired()])
     accomodations = TextAreaField("Special needs and/or Accomodations")
+
+class ResumeForm(FlaskForm):
+    resume = FileField("Resume", validators=[FileRequired(),
+                                             FileAllowed(['pdf', 'docx', 'doc',
+                                                          'txt', 'rtf'],
+                                                         "Documents only!")])
