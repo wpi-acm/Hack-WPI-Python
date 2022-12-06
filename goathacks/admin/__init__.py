@@ -123,6 +123,7 @@ def drop(id):
     msg.add_recipient(user.email)
     msg.sender = ("GoatHacks Team", "hack@wpi.edu")
     msg.body = render_template("emails/dropped.txt", user=user)
+    mail.send(msg)
 
     db.session.delete(user)
     db.session.commit()
@@ -171,6 +172,7 @@ def promote_waitlist(id):
     msg.add_recipient(user.email)
     msg.sender = ("GoatHacks Team", "hack@wpi.edu")
     msg.body = render_template("emails/waitlist_promotion.txt", user=user)
+    mail.send(msg)
 
     return {"status": "success"}
 
