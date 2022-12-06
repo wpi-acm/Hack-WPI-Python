@@ -164,3 +164,21 @@ form {
         max-width: 11rem;
     }
 }
+
+// Flashed messages
+.flashes {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+.message {
+    width: 80%;
+    justify-content: center; 
+    border: 1px solid $color-fg;
+    background-color: $color-accent;
+    padding: 0.2rem;
+    font-size: large;
+    color: $color-fg;
+}
+

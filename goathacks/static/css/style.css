@@ -167,3 +167,19 @@ form select {
   background: #974355;
   max-width: 11rem;
 }
+
+.flashes {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+
+.message {
+  width: 80%;
+  justify-content: center;
+  border: 1px solid #eee;
+  background-color: #26a69a;
+  padding: 0.2rem;
+  font-size: large;
+  color: #eee;
+}
