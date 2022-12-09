@@ -15,7 +15,7 @@ clean:
 	@find . -name flask_session -type d -not -path "./.venv/*" -ls -exec rm -r {} +
 
 init_env:
-	virtualenv .venv
+	python3 -m venv .venv
 	source .venv/bin/activate && pip3 install --upgrade pip
 	source .venv/bin/activate && pip3 install -r requirements.txt txt
 
