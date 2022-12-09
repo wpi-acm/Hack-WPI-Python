@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -43,6 +43,11 @@ def create_app():
 
     from goathacks import cli
     app.cli.add_command(cli.gr)
+
+    # Homepage
+    @app.route("/")
+    def index():
+        return render_template("index.html")
 
     return app
 
