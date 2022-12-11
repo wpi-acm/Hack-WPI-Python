@@ -1,4 +1,4 @@
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, redirect, render_template, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -46,6 +46,9 @@ def create_app():
 
     # Homepage
     @app.route("/")
+    def index_redirect():
+        return redirect("/index.html")
+    @app.route("/index.html")
     def index():
         return render_template("home/index.html")
 
