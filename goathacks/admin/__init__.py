@@ -6,7 +6,7 @@ from goathacks.models import User
 
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
-from goathacks import db,mail
+from goathacks import db, mail as app_mail
 
 @bp.route("/")
 @login_required
@@ -80,9 +80,9 @@ def send():
     elif json['recipients'] == 'admin':
         to = ["acm-sysadmin@wpi.edu"]
     elif json['recipients'] == "all":
-        to = [x['email'] for x in users]
+        to = [x.email for x in users]
 
-    with mail.connect() as conn:
+    with app_mail.connect() as conn:
         for e in to:
             msg = Message(json['subject'])
             msg.add_recipient(e)
@@ -123,7 +123,7 @@ def drop(id):
     msg.add_recipient(user.email)
     msg.sender = ("GoatHacks Team", "hack@wpi.edu")
     msg.body = render_template("emails/dropped.txt", user=user)
-    mail.send(msg)
+    app_mail.send(msg)
 
     db.session.delete(user)
     db.session.commit()
