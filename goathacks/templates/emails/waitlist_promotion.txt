@@ -1,0 +1,18 @@
+Hello {{ user.first_name }}!
+
+We're writing to let you know that a spot has opened up in our registrations,
+and you've been promoted off of the waitlist! Please visit our website
+(https://hack.wpi.edu/dashboard) to complete your registration information and
+join our Discord.
+
+If you can no longer make the event, please visit your dashboard and use the
+"Drop my registration" link.
+
+Happy Hacking!
+
+GoatHacks Team
+
+
+
+This is an automated message. Please email hack@wpi.edu with any questions or
+concerns.

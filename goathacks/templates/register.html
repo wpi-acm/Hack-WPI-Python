@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="height: 100%;">
+    <div id="registration-banner" class="parallax-container valign-wrapper">
+        <div class="section">
+            <h3 class="header-center text-darken-2">Registration</h3>
+        </div>
+        <div class="parallax"><img src="{{url_for('static', filename='img/background1.jpg')}}"
+                                   alt="background"></div>
+    </div>
+</div>
+<div class="container">
+<div class="section" style="background-color: #974355; padding: 20px;">
+    <form method="post">
+        {{ form.csrf_token }}
+        <div>
+            {{ form.email}}<br/> {{ form.email.label }}
+        </div>
+        <div>
+            {{ form.password}}<br/>{{form.password.label}}
+        </div>
+        <div>
+            {{ form.password_confirm}}<br/>{{form.password_confirm.label}}
+        </div>
+        <div>
+            {{form.first_name}}<br/>{{form.first_name.label}}
+        </div>
+        <div>
+            {{form.last_name}}<br/>{{form.last_name.label}}
+        </div>
+        <hr/>
+        <h3>Miscellaneous Information</h3>
+        <div>
+            {{form.phone_number}}<br/>{{form.phone_number.label}}
+        </div>
+        <div>
+            {{form.school}}<br/>{{form.school.label}}
+        </div>
+        <div>
+            {{form.gender.label}}{{form.gender}}
+        </div>
+        <hr/>
+        <div>
+            <label for="agree_coc">I confirm that I have read and agree to the
+                Code of Conduct</label>
+            <input type="checkbox" id="agree_coc" name="agree_coc">
+        </div>
+        <div>
+            {{form.submit}}
+        </div>
+    </form>
+
+    <span><p><em>You may also want to <a
+                                              href="{{url_for('registration.login')}}">
+                log in</a>.</em></p></span>
+</div>
+</div>
+{% endblock %}
+

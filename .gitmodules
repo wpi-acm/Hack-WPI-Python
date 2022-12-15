@@ -1,3 +1,4 @@
-[submodule "templates/home"]
-	path = templates/home
-	url = https://github.com/wpi-acm/hack-wpi-static.git
+[submodule "goathacks/templates/home"]
+	path = goathacks/templates/home
+	url = https://github.com/WPI-ACM/Hack-WPI-Static
+    branch = 2023-dev

@@ -1,0 +1,13 @@
+Dear {{ user.first_name }},
+
+Your application has been dropped. We're sorry to see you go!
+
+If this was done in error, you can re-register by going to
+https://hack.wpi.edu/registration.
+
+Happy Hacking!
+
+GoatHacks Team
+
+This is an automated message. Please email hack@wpi.edu with any questions or
+concerns.
