@@ -54,14 +54,10 @@ def create_app():
     def sponsor(path):
         return send_from_directory('templates/home/sponsor', path)
 
-    #Code of condcut
-    @app.route("/conduct")
-    def conductindex():
-        return render_template('home/conduct/index.html')
-    
-    @app.route('/conduct/<path:path>')
+    #Code of conduct 
+    @app.route('/conduct/conduct.pdf')
     def conduct(path):
-        return send_from_directory('templates/home/conduct', path)
+        return url_for('static', filename='conduct.pdf')
 
     # Homepage
     @app.route("/")
