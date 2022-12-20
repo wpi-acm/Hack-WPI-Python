@@ -44,6 +44,25 @@ def create_app():
     from goathacks import cli
     app.cli.add_command(cli.gr)
 
+
+    #Sponsor page
+    @app.route("/sponsor")
+    def sponsorindex():
+        return render_template('home/sponsor/index.html')
+    
+    @app.route('/sponsor/<path:path>')
+    def sponsor(path):
+        return send_from_directory('templates/home/sponsor', path)
+
+    #Code of condcut
+    @app.route("/conduct")
+    def conductindex():
+        return render_template('home/conduct/index.html')
+    
+    @app.route('/conduct/<path:path>')
+    def conduct(path):
+        return send_from_directory('templates/home/conduct', path)
+
     # Homepage
     @app.route("/")
     def index_redirect():
