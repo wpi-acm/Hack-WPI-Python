@@ -57,7 +57,7 @@ def create_app():
     #Code of conduct 
     @app.route('/conduct/conduct.pdf')
     def conduct():
-        return url_for('static', filename='conduct.pdf')
+        return url_for('templates/home/conduct', filename='conduct.pdf')
 
     # Homepage
     @app.route("/")
