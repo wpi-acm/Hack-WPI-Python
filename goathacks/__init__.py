@@ -56,12 +56,12 @@ def create_app():
 
     #Code of conduct 
     @app.route('/conduct')
-    def conduct():
+    def conductindex():
         return render_template('home/conduct/index.html')
     @app.route('/conduct/<path:path>')
-    def sponsor(path):
+    def conduct(path):
         return send_from_directory('templates/home/conduct', path)
-        
+
     # Homepage
     @app.route("/")
     def index_redirect():
