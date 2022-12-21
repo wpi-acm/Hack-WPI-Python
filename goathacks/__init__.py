@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, send_from_directory
+from flask import Flask, redirect, render_template, send_from_directory, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
@@ -43,6 +43,24 @@ def create_app():
 
     from goathacks import cli
     app.cli.add_command(cli.gr)
+
+
+    #Sponsor page
+    @app.route("/sponsor")
+    def sponsorindex():
+        return render_template('home/sponsor/index.html')
+    
+    @app.route('/sponsor/<path:path>')
+    def sponsor(path):
+        return send_from_directory('templates/home/sponsor', path)
+
+    #Code of conduct 
+    @app.route('/conduct')
+    def conductindex():
+        return render_template('home/conduct/index.html')
+    @app.route('/conduct/<path:path>')
+    def conduct(path):
+        return send_from_directory('templates/home/conduct', path)
 
     # Homepage
     @app.route("/")
