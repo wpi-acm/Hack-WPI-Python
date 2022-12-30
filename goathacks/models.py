@@ -50,3 +50,8 @@ def user_loader(user_id):
 def unauth():
     flash("Please login first")
     return redirect(url_for("registration.register"))
+
+
+class PwResetRequest(db.Model):
+    id = Column(String, primary_key=True)
+    user_id = db.relationship("User")
