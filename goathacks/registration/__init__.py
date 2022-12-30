@@ -4,8 +4,9 @@ import flask_login
 from flask_login import current_user
 from goathacks.registration.forms import LoginForm, RegisterForm
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_mail import Message
 
-from goathacks import db
+from goathacks import db, mail as app_mail
 from goathacks.models import User
 
 bp = Blueprint('registration', __name__, url_prefix="/registration")
@@ -54,6 +55,16 @@ def register():
             db.session.add(user)
             db.session.commit()
             flask_login.login_user(user)
+
+            if waitlisted:
+                msg = Message("Goathacks - Waitlist Confirmation")
+            else:
+                msg = Message("GoatHacks - Registration Confirmation")
+
+            msg.add_recipient(user.email)
+            msg.sender = ("GoatHacks Team", "hack@wpi.edu")
+            msg.body = render_template("emails/registration.txt", user=user)
+            app_mail.send(msg)
 
             return redirect(url_for("dashboard.home"))
         else:
