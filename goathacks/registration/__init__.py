@@ -1,13 +1,14 @@
 from datetime import datetime
-from flask import Blueprint, config, current_app, flash, redirect, render_template, request, url_for
+from flask import Blueprint, abort, config, current_app, flash, redirect, render_template, request, url_for
 import flask_login
 from flask_login import current_user
-from goathacks.registration.forms import LoginForm, RegisterForm
+from goathacks.registration.forms import LoginForm, PwResetForm, RegisterForm, ResetForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_mail import Message
+import ulid
 
 from goathacks import db, mail as app_mail
-from goathacks.models import User
+from goathacks.models import PwResetRequest, User
 
 bp = Blueprint('registration', __name__, url_prefix="/registration")
 
@@ -81,6 +82,9 @@ def login():
         password = request.form.get('password')
 
         user = User.query.filter_by(email=email).first()
+        if user == None:
+            flash("Email or password incorrect")
+            return render_template("login.html", form=form)
 
         if check_password_hash(user.password, password):
             flask_login.login_user(user)
@@ -92,3 +96,62 @@ def login():
             flash("Incorrect password")
 
     return render_template("login.html", form=form)
+
+@bp.route("/reset", methods=["GET", "POST"])
+def reset():
+    form = ResetForm(request.form)
+
+    if request.method == 'POST':
+        email = request.form.get('email')
+
+        user = User.query.filter_by(email=email).first()
+
+        if user == None:
+            flash("If that email has an account here, we've just sent it a link to reset your password.")
+            return redirect(url_for("registration.login"))
+        else:
+            r = PwResetRequest(
+                    id=str(ulid.ulid()),
+                    user_id=user.id
+                    )
+            db.session.add(r)
+            db.session.commit()
+            
+            msg = Message("GoatHacks - Password Reset Request")
+            msg.add_recipient(user.email)
+            msg.body = render_template("emails/password_reset.txt", code=r.id)
+            app_mail.send(msg)
+            flash("If that email has an account here, we've just sent it a link to reset your password.")
+            return redirect(url_for("registration.login"))
+
+    else:
+        return render_template("pw_reset.html", form=form)
+
+@bp.route("/reset/complete/<string:id>", methods=["GET", "POST"])
+def do_reset(id):
+    form = PwResetForm(request.form)
+    req = PwResetRequest.query.filter_by(id=id).first()
+
+    if req == None:
+        flash("Invalid request")
+        return redirect(url_for("registration.login"))
+
+    if request.method == "POST":
+        password = request.form.get("password")
+        password_c = request.form.get("password_confirm")
+
+        if password == password_c:
+            user = User.query.filter_by(id=req.user_id).first()
+            if user == None:
+                flash("Invalid user")
+                return redirect(url_for("registration.login"))
+            user.password = generate_password_hash(password)
+            db.session.delete(req)
+            db.session.commit()
+            flash("Password successfully reset")
+            return redirect(url_for("registration.login"))
+        else:
+            flash("Passwords do not match!")
+            return render_template("password_reset.html", form=form)
+    else:
+        return render_template("password_reset.html", form=form)

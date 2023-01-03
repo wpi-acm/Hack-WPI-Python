@@ -1,6 +1,6 @@
 from flask import flash, redirect, url_for
 from flask_login import UserMixin
-from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String
 from . import db
 from . import login
 
@@ -54,4 +54,4 @@ def unauth():
 
 class PwResetRequest(db.Model):
     id = Column(String, primary_key=True)
-    user_id = db.relationship("User")
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
