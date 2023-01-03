@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import Blueprint, abort, config, current_app, flash, redirect, render_template, request, url_for
 import flask_login
 from flask_login import current_user
@@ -112,7 +112,8 @@ def reset():
         else:
             r = PwResetRequest(
                     id=str(ulid.ulid()),
-                    user_id=user.id
+                    user_id=user.id,
+                    expires=datetime.now() + timedelta(minutes=30)
                     )
             db.session.add(r)
             db.session.commit()
@@ -133,6 +134,12 @@ def do_reset(id):
     req = PwResetRequest.query.filter_by(id=id).first()
 
     if req == None:
+        flash("Invalid request")
+        return redirect(url_for("registration.login"))
+
+    if req.expires < datetime.now():
+        db.session.delete(req)
+        db.session.commit()
         flash("Invalid request")
         return redirect(url_for("registration.login"))
 
