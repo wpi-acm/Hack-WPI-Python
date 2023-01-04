@@ -23,3 +23,11 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     submit = SubmitField("Sign in")
 
+class ResetForm(FlaskForm):
+    email = StringField("Email", validators=[DataRequired()])
+    submit = SubmitField("Request reset")
+
+class PwResetForm(FlaskForm):
+    password = PasswordField("Password")
+    password_confirm = PasswordField("Confirm Password")
+    submit = SubmitField("Submit")

@@ -1,6 +1,6 @@
 from flask import flash, redirect, url_for
 from flask_login import UserMixin
-from sqlalchemy import Boolean, Column, DateTime, Integer, String
+from sqlalchemy import Boolean, Column, Date, DateTime, ForeignKey, Integer, String
 from . import db
 from . import login
 
@@ -50,3 +50,9 @@ def user_loader(user_id):
 def unauth():
     flash("Please login first")
     return redirect(url_for("registration.register"))
+
+
+class PwResetRequest(db.Model):
+    id = Column(String, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    expires = Column(DateTime, nullable=False)

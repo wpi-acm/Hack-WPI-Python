@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_assets import Bundle, Environment
 from flask_cors import CORS
-from flask_mail import Mail
+from flask_mail import Mail, email_dispatched
 
 
 db = SQLAlchemy()
@@ -74,6 +74,11 @@ def create_app():
     @app.route("/assets/<path:path>")
     def assets(path):
         return send_from_directory('templates/home/assets', path)
+
+    def log_message(message, app):
+        app.logger.debug(message)
+
+    email_dispatched.connect(log_message)
 
     return app
 
