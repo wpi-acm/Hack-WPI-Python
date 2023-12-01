@@ -15,7 +15,7 @@ def workshop_checkin(id):
         return redirect(url_for("dashboard.home"))
 
     checkin = EventCheckins.query.filter_by(event_id=id,
-                                            user_id=current_user.id).one()
+                                            user_id=current_user.id).first()
     if checkin is not None:
         flash("You've already checked into this event!")
         return redirect(url_for("dashboard.home"))

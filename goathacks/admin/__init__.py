@@ -7,6 +7,7 @@ from goathacks.models import User
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
 from goathacks import db, mail as app_mail
+from goathacks.admin import events
 
 @bp.route("/")
 @login_required
