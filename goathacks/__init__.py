@@ -35,10 +35,12 @@ def create_app():
     from . import registration
     from . import dashboard
     from . import admin
+    from . import events
 
     app.register_blueprint(registration.bp)
     app.register_blueprint(dashboard.bp)
     app.register_blueprint(admin.bp)
+    app.register_blueprint(events.bp)
 
 
     from goathacks import cli
