@@ -20,7 +20,7 @@ init_env:
 	source .venv/bin/activate && pip3 install -r requirements.txt txt
 
 upgrade_env:
-	source .venv/bin/activate && pip3 install --upgrade -r requirements.txt txt
+	source .venv/bin/activate && pip3 install --upgrade -r requirements.txt
 
 make_migrations:
 	source .venv/bin/activate && flask db migrate

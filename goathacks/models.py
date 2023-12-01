@@ -41,7 +41,6 @@ class User(db.Model, UserMixin):
 
         return hackers
 
-
 @login.user_loader
 def user_loader(user_id):
     return User.query.filter_by(id=user_id).first()
@@ -56,3 +55,45 @@ class PwResetRequest(db.Model):
     id = Column(String, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
     expires = Column(DateTime, nullable=False)
+
+
+"""
+Represents an event within the hackathon, that can be checked into
+"""
+class Event(db.Model):
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    description = Column(String, nullable=True)
+    location = Column(String, nullable=False)
+    start_time = Column(DateTime, nullable=False)
+    end_time = Column(DateTime, nullable=False)
+    category = Column(String, nullable=True)
+
+    def create_json_output(lis):
+        events = []
+
+        for e in lis:
+            events.append({
+                'id': e.id,
+                'name': e.name,
+                'description': e.description,
+                'location': e.location,
+                'start': e.start_time,
+                'end': e.end_time,
+                'category': e.category
+            })
+
+        return events
+
+    def get_checkins(self):
+        checkins = EventCheckins.query.filter_by(event_id=self.id).all()
+
+        return checkins
+        
+
+
+class EventCheckins(db.Model):
+    __tablename__ = "event_checkins"
+    id = Column(Integer, primary_key=True)
+    event_id = Column(Integer, ForeignKey('event.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
