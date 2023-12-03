@@ -1,6 +1,7 @@
 alembic==1.8.1
 click==8.1.3
 Flask==2.2.2
+Flask-QRCode
 Flask-Assets
 Flask-CORS
 Flask-Mail

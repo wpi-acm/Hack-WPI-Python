@@ -1,0 +1,6 @@
+<head>
+    <title>QR Code for {{ event.name }}</title>
+</head>
+<body>
+    <img src="{{ qrcode(url_for('events.workshop_checkin', id=event.id)) }}">
+</body>

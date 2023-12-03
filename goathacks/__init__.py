@@ -6,6 +6,8 @@ from flask_assets import Bundle, Environment
 from flask_cors import CORS
 from flask_mail import Mail, email_dispatched
 from flask_bootstrap import Bootstrap5
+from flask_qrcode import QRcode
+
 
 
 db = SQLAlchemy()
@@ -15,6 +17,7 @@ environment = Environment()
 cors = CORS()
 mail = Mail()
 bootstrap = Bootstrap5()
+qrcode = QRcode()
 
 def create_app():
     app = Flask(__name__)
@@ -28,6 +31,7 @@ def create_app():
     cors.init_app(app)
     mail.init_app(app)
     bootstrap.init_app(app)
+    qrcode.init_app(app)
 
     scss = Bundle('css/style.scss', filters='scss',
     output='css/style.css')
@@ -38,10 +42,12 @@ def create_app():
     from . import registration
     from . import dashboard
     from . import admin
+    from . import events
 
     app.register_blueprint(registration.bp)
     app.register_blueprint(dashboard.bp)
     app.register_blueprint(admin.bp)
+    app.register_blueprint(events.bp)
 
 
     from goathacks import cli

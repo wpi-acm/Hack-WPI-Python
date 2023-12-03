@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="height: 100%;">
+    <div id="registration-banner" class="parallax-container valign-wrapper">
+        <div class="section">
+            <h3 class="header-center text-darken-2">Create/Edit Event</h3>
+        </div>
+    </div>
+</div>
+<div class="container">
+<div class="section" style="background-color: #974355; padding: 20px;">
+    <form method="post">
+        {{ form.csrf_token }}
+        <div>
+            {{ form.name}}<br/> {{ form.name.label }}
+        </div>
+        <div>
+            {{ form.description}}<br/>{{form.description.label}}
+        </div>
+        <div>
+            {{ form.location}}<br/>{{form.location.label}}
+        </div>
+        <div>
+            {{form.start_time}}<br/>{{form.start_time.label}}
+        </div>
+        <div>
+            {{form.end_time}}<br/>{{form.end_time.label}}
+        </div>
+        <div>
+            {{form.category}}<br/>{{form.category.label}}
+        </div>
+        <div>
+            {{form.submit}}
+        </div>
+    </form>
+</div>
+</div>
+{% endblock %}

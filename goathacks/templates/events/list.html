@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="height: 100%; color: white;">
+    <h2>Events</h2>
+    Get a JSON readout of events <a href="{{ url_for('admin.events_json')
+                                          }}">here</a>
+    <table class="table table-striped table-hover table-condensed" style="color:
+                  white;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Category</th>
+                <th>Checked in</th>
+                <th>QR Code</th>
+                <th><a href="{{url_for('admin.new_event')}}">New</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr id="{{event.id}}-row">
+                <td>{{ event.id }}</td>
+                <td>{{ event.name }}</td>
+                <td>{{ event.location }}</td>
+                <td>{{ event.start_time }}</td>
+                <td>{{ event.end_time }}</td>
+                <td>{{ event.category }}</td>
+                <td>{{ event.get_checkins()|length }}</td>
+                <td><a href='{{ url_for("admin.qrcode_event", id=event.id)
+                                         }}'>QR Code</a></td>
+                <td><a href="{{url_for('admin.edit_event', id=event.id)}}">Edit</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
