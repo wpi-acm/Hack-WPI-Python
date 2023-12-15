@@ -30,10 +30,13 @@
             Forgot to upload your resume while registering? No worries, submit it below.
         </div>
         <div class="row center justify-content-center">
+	  {% if config['DISCORD_LINK'] is defined %}
             <h5>Make sure to join the Discord and enter your shirt size below!</h5>
-            <p>(Please note that due to COVID-19 constraints, we can't guarantee that all participants will receive Hack@WPI t-shirts this year but we are trying to find a way!)</p>
-            <a href="https://discord.gg/G3pseHPRNv" style="margin: 5px;"
+            <a href="{{ config['DISCORD_LINK'] }}" style="margin: 5px;"
                 class="btn btn-lg btn-primary btn-invert">Discord</a>
+	    {% else %}
+	    <h5>Our discord is still under construction! We'll send out an email when it's ready.</h5>
+	  {% endif %}
         </div>
 	    <div class="row center justify-content-center" style="background-color: #974355; padding: 20; margin-left: 20; margin-right: 20; border-radius: 5px;">
             <form method="post">
