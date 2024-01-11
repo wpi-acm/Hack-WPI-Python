@@ -2,5 +2,6 @@
     <title>QR Code for {{ event.name }}</title>
 </head>
 <body>
-    <img src="{{ qrcode(url_for('events.workshop_checkin', id=event.id)) }}">
+    <img src="{{ qrcode(url_for('events.workshop_checkin', id=event.id,
+    _external=True)) }}">
 </body>
