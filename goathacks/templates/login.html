@@ -4,13 +4,13 @@
 {% block content %}
 <div style="height: 100%;">
     <div id="registration-banner" class="parallax-container valign-wrapper">
-        <div class="section">
+        <div class="section mt-3">
             <h3 class="header-center text-darken-2">Login</h3>
         </div>
     </div>
 </div>
 <div class="container">
-    <div class="section" style="background-color: #974355; padding: 20px;">
+    <div class="section">
         {{ render_form(form) }}
         <span><p><em>Don't have an account? <a
                                                     href="{{url_for('registration.register')}}">Register

@@ -22,21 +22,27 @@
         
     <h1>Hi {{ current_user.first_name }}!</h1><br/>
 
-   </div>    <div class="row p-2">
+   </div>    
+   <div class="row">
     {% if current_user.waitlisted %}
     <h2>You're currently waitlisted, keep checking your email to see if space
         opens up!</h2>
     {% else %}
+   </div>
+   <div class="row">
     <h2>Your registration is confirmed! We're looking forward to seeing you at
         GoatHacks!</h2>
-    <span>Let us know if you have any questions by sending them to <a
-                                                                           href="mailto:hack@wpi.edu">hack@wpi.edu</a></span>
+   </div>
+   <div class="row">
+    <p class="justify-content-center">Let us know if you have any questions
+    by sending them to <a href="mailto:hack@wpi.edu">hack@wpi.edu</a></p> 
     </div>
     <br/>
     <div class="row">
         <p>Make sure you join the Discord and add your shirt size as well as any
         needed accomodations below</p>
     </div>
+
     <div class="row mb-3">
         <button type="button" class="btn btn-secondary"><a
                               href="https://discord.gg/gqYxndzY"
@@ -44,8 +50,8 @@
     </div>
     
     <div class="row mb-3">
-        <div class="card" style="width: 50rem; background-color: #974355;">
-            <div class="card-body">
+        <div class="card w-auto">
+            <div class="card-body w-100 p-5">
                 <div class="card-text">
                     {{ render_form(form) }}
                 </div>
@@ -58,19 +64,12 @@
                 <p><b>If you'd like, add your resume to send to sponsors... </b></p>
                 <div class="file-field input-field">
                     <div class="btn">
-                        <label for="resume">File</span>
                         <input class="form-control" id="resume" name="resume" type="file" oninput="resumeChange()"/>
                         
                     </div>
-                </div>
                 <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
+                </div>
             </form>
-    </div>
-    {% endif %}
-    {% if current_user.is_admin %}
-    <div class="row">
-        <button type="button" class="btn btn-primary"><a href="{{
-                             url_for('admin.home') }}" class="link-light">Admin Dashboard</a></button>
     </div>
     {% endif %}
 </div>

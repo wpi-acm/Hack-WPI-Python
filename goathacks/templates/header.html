@@ -4,24 +4,17 @@
 
     <head>
         {{ bootstrap.load_css() }}
-
+<!--
         {% assets 'scss' %}
         <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
         {% endassets %}
+-->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
 
-    <style>
-      nav {
-        background-color: #F5665B;
-        border-color: #E7E4C6;
-        color: white;
-      }
-    </style>
-
     <body>
-      <nav class="navbar navbar-inverse sticky-top navbar-expand">
+      <nav class="navbar navbar-inverse sticky-top navbar-expand mb-5">
         <div class="container-fluid">
           <div class="navbar-header">
             <a class="navbar-brand" href="/">Goathacks</a>
@@ -37,6 +30,12 @@
             <li class="nav-item">
               <a class="nav-link" href="../static/assets/Hack@WPI-SponsorshipInformation-2020.pdf">Sponsorship Packet</a>
             </li> -->
+            {% if current_user.is_admin %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin.home')
+                          }}">Admin Dashboard</a>
+            </li>
+            {% endif %}
             <li class="nav-item">
               <a class="nav-link" href="https://hack.wpi.edu/conduct/conduct.pdf">Code of Conduct</a>
             </li>

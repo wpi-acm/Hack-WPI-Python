@@ -65,6 +65,16 @@ def mail():
 
     return render_template("mail.html", NUM_HACKERS=total_count)
 
+@bp.route("/users")
+@login_required
+def users():
+    if not current_user.is_admin:
+        return redirect(url_for("dashboard.home"))
+
+    users = User.query.all()
+
+    return render_template("users.html", users=users)
+
 @bp.route("/send", methods=["POST"])
 @login_required
 def send():
