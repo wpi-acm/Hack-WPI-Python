@@ -1,8 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'admin-layout.html' %}
 
-{% block content %}
+{% block app_content %}
+<div class="card text-center">
 
-<div style="height: 100%; color: white;">
+<div style="height: 100%;">
     <h2>Events</h2>
     Get a JSON readout of events <a href="{{ url_for('admin.events_json')
                                           }}">here</a>
@@ -39,5 +40,5 @@
         </tbody>
     </table>
 </div>
-
+</div>
 {% endblock %}

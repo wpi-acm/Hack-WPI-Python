@@ -1,0 +1,44 @@
+
+{% from 'bootstrap5/nav.html' import render_nav_item %}
+{% from 'bootstrap5/utils.html' import render_messages %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        {% block head %}
+        {% if title %}
+        <title>{{ title }} - GoatHacks</title>
+        {% else %}
+        <title>GoatHacks</title>
+        {% endif %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        {% block styles %}
+            <!-- Bootstrap CSS -->
+            {{ bootstrap.load_css() }}
+        {% endblock %}
+
+        {% endblock %}
+    </head>
+    <body>
+        <!-- Your page content -->
+        {% block navbar %}{% endblock %}
+
+        <!-- Your page content -->
+        <div class="container">
+            <div id="outerAlerts">
+            {{ render_messages(container=False, dismissible=True, dismiss_animate=True) }}
+            </div>
+
+            {% block app_content %}{% endblock %}
+
+        </div>
+
+        {% block scripts %}
+            <!-- Optional JavaScript -->
+            {{ bootstrap.load_js() }}
+        {% endblock %}
+    </body>
+</html>
+

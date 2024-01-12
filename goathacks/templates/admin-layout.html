@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block navbar %}
+<nav class="navbar navbar-dark mb-4 navbar-expand-lg">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                                     data-bs-target="#navbarSupportedContent"
+                                                     aria-controls="navbarSupportedContent"
+                                                     aria-expanded="true"
+                                                     aria-label="Toggle
+                                                                  navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('admin.home') }}">
+                <img src="{{url_for('static', filename='img/logo.png')}}"
+                     alt="Logo" width="35" height="35" class="d-inline-block
+                                       align-text-middle mx-2">GoatHacks Admin</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+                {{ render_nav_item('admin.home', 'User List')}}
+                {{ render_nav_item('admin.list_events', 'Event List')}}
+                {{ render_nav_item('admin.mail', 'Bulk Mail Tool')}}
+            </ul>
+            <ul class="nav navbar-nav">
+                {% if current_user.is_authenticated %}
+                    {{ render_nav_item('dashboard.home', '<- Back To Site') }}
+                    {{ render_nav_item('registration.logout', 'Logout') }}
+                {% else %}
+                    {{ render_nav_item('registration.register', 'Registration') }}
+                    {{ render_nav_item('registration.login', 'Login') }}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}

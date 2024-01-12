@@ -1,1 +1,94 @@
-{% extends 'admin_base.html' %}
+{% extends 'admin-layout.html' %}
+
+{% block head %}
+{{super()}}
+    <script src="http://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.4.3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="{{url_for('static', filename='js/admin.js')}}"></script>
+{% endblock %}
+
+{% block app_content %}
+<div class="card text-center">
+    <div class="card-body">
+        <h1 class="h3 mb-3 fw-normal">Registered Users</h1>
+        <table id="hackers" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Options</th>
+                    <th>Checked In?</th>
+                    <th>Waitlisted?</th>
+                    <th>Admin</th>
+                    <th>User ID</th>
+                    <th>Registration Time</th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Shirt</th>
+                    <th>Special</th>
+                    <th>School</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for hacker in hackers %}
+                <tr id="{{hacker.id}}-row">
+                    <td>
+                        <div class="dropdown">
+                            <a href="#" class="btn btn-primary dropdown-toggle"
+                                        data-bs-toggle="dropdown"><span
+                                        class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                {% if not hacker.checked_in %}
+                                <li><a class="dropdown-item check_in" id="{{
+                                                            hacker.id}}-check_in"
+                                                            href="#">Check
+                                                            In</a></li>
+                                {% endif %}
+                                {% if hacker.waitlisted and not
+                                hacker.checked_in %}
+                                <li><a class="dropdown-item
+                                              promote_from_waitlist" id="{{
+                                              hacker.id}}-promote_from_waitlist"
+                                                       href="#">Promote From
+                                                       Waitlist</a></li>
+                                {% endif %}
+                                <li><hr class="dropdown-divider"></li>
+                                {% if not hacker.checked_in %}
+                                <li><a class="dropdown-item drop"
+                                       id="{{hacker.id}}-drop"
+                                       href="#">Drop Registration</a></li>
+                                {% endif %}
+                                {% if hacker.is_admin %}
+                                <li><a class="dropdown-item demote_admin"
+                                              id="{{hacker.id}}-demote_admin"
+                                              href="#">Demote Admin</a></li>
+                                {% else %}
+                                <li><a class="dropdown-item promote_admin"
+                                              id="{{hacker.id}}-promote_admin"
+                                              href="#">Promote Admin</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </td>
+                    <td>{{ hacker.checked_in }}</td>
+                    <td>{{ hacker.waitlisted }}</td>
+                    <td>{{ hacker.is_admin }}</td>
+                    <td>{{ hacker.id }}</td>
+                    <td>{{ hacker.last_login }}</td>
+                    <td>{{ hacker.email }}</td>
+                    <td>{{ hacker.first_name + ' ' + hacker.last_name }}</td>
+                    <td>{{ hacker.phone }}</td>
+                    <td>{{ hacker.shirt_size }}</td>
+                    <td>{{ hacker.accomodations }}</td>
+                    <td>{{ hacker.school }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+

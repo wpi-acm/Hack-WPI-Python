@@ -1,89 +1,50 @@
-{% extends 'base.html' %}
-{% from 'bootstrap5/form.html' import render_form %}
+{% extends 'layout.html' %}
+{% from 'bootstrap5/form.html' import render_field %}
 
-{% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<script>
-    function drop(id) {
-        if(window.confirm("Are you sure you wish to drop your application? This cannot be undone. (patiently wait after clicking the button)")) {
-            window.location.href = "/admin/drop/" + id;
-        }
-    }
+{% block app_content %}
+<div class="card text-center">
+    <div class="card-body">
+        <h1 class="h2 mb-3 fw-normal">Hi {{current_user.first_name}}!</h1> 
+        {% if current_user.waitlisted %}
+        <h4 class="h3 mb-3 fw-normal">You're currently waitlisted. If space
+            opens up, we'll let you know!</h4>
+        {% else %}
+        <h4>You are fully registered! We look forward to seeing you!</h4>
+        {% endif %}
 
-    function resumeChange() {
-        let val = document.getElementById('resume').value;
-        val = val.split(/\\|\//gi).slice(-1)[0]
-        document.getElementById('filename').setAttribute('value', val);
-    }
-</script>
+        <p class="card-text">Let us know if you have any questions by sending
+        them to <a href="mailto:hack@wpi.edu">hack@wpi.edu</a></p>
 
-<div class="d-flex flex-column p-2 mt-3 align-items-center">
-   <div class="row">
-        
-    <h1>Hi {{ current_user.first_name }}!</h1><br/>
-
-   </div>    
-   <div class="row">
-    {% if current_user.waitlisted %}
-    <h2>You're currently waitlisted, keep checking your email to see if space
-        opens up!</h2>
-    {% else %}
-   </div>
-   <div class="row">
-    <h2>Your registration is confirmed! We're looking forward to seeing you at
-        GoatHacks!</h2>
-   </div>
-   <div class="row">
-    <p class="justify-content-center">Let us know if you have any questions
-    by sending them to <a href="mailto:hack@wpi.edu">hack@wpi.edu</a></p> 
-    </div>
-    <br/>
-    <div class="row">
-        <p>Make sure you join the Discord and add your shirt size as well as any
-        needed accomodations below</p>
-    </div>
-
-    <div class="row mb-3">
-        <button type="button" class="btn btn-secondary"><a
-                              href="https://discord.gg/gqYxndzY"
-                                    class="link-light">Discord</a></button>
-    </div>
-    
-    <div class="row mb-3">
-        <div class="card w-auto">
-            <div class="card-body w-100 p-5">
-                <div class="card-text">
-                    {{ render_form(form) }}
+        <div class="row center justify-content-center">
+            <form method="post">
+                {{ form.csrf_token() }}
+                <p><b>Optional Info</b></p>
+                <div class="form-floating mb-3 required">
+                    {{ form.shirt_size(class="form-control", selected=current_user.shirt_size) }}
+                    {{ form.shirt_size.label() }}
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-            <form method="post" action="{{url_for('dashboard.resume')}}" enctype="multipart/form-data">
-                {{ resform.csrf_token }}
-                <p><b>If you'd like, add your resume to send to sponsors... </b></p>
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <input class="form-control" id="resume" name="resume" type="file" oninput="resumeChange()"/>
-                        
-                    </div>
-                <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
+                <div class="form-floating mb-3 required">
+                    {{ form.accomodations(class="form-control") }}
+                    {{ form.accomodations.label() }}
                 </div>
+                {{ render_field(form.submit) }}
+
             </form>
+        </div>
+        <hr/>
+        <div class="row center justify-content-center">
+            <form method="post" action={{url_for('dashboard.resume')}}"
+                  enctype="multipart/form-data">
+                {{ resform.csrf_token() }}
+                <p><b>If you'd like, add your resume to send to
+                    sponsors...</b></p>
+                <div class="form mb-3 required">
+                    {{ resform.resume(class="form-control") }}
+                </div>
+                {{ render_field(resform.submit) }}
+            </form>
+        </div>
+
     </div>
-    {% endif %}
 </div>
-
-<script>
-    let errColor = '#E74C3C'
-
-    $(document).ready(() => {
-        $('#drop-link').click((e) => {
-            e.preventDefault()
-        let id = {{ id }}
-            drop(id)
-        })
-    })
-
-</script>
 {% endblock %}

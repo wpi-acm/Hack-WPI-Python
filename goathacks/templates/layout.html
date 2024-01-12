@@ -1,0 +1,56 @@
+{% extends 'bootstrap-base.html' %}
+
+{% block html_attribs %} lang="en"{% endblock %}
+
+{% block title %}{% if title %}{{ title }} - GoatHacks{% else %}GoatHacks{%
+endif %}{% endblock %}
+
+{% block head %}
+{{super()}}
+{{ font_awesome.load_css() }}
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+{% assets 'scss' %}
+<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}">
+{% endassets %}
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-dark mb-4 navbar-expand-lg">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                                                     data-bs-target="#navbarSupportedContent"
+                                                     aria-controls="navbarSupportedContent"
+                                                     aria-expanded="true"
+                                                     aria-label="Toggle
+                                                                  navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ url_for('registration.register') }}">
+                <img src="{{url_for('static', filename='img/logo.png')}}"
+                     alt="Logo" width="35" height="35" class="d-inline-block
+                                       align-text-middle mx-2">GoatHacks</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+                {{ render_nav_item('registration.register', 'Home')}}
+            </ul>
+            <ul class="nav navbar-nav">
+                {% if current_user.is_authenticated %}
+                    {{ render_nav_item('dashboard.home', 'Dashboard') }}
+                    {% if current_user.is_admin %}
+                        {{ render_nav_item('admin.home', 'Admin Dash') }}
+                    {% endif %}  
+                    {{ render_nav_item('registration.logout', 'Logout') }}
+                {% else %}
+                    {{ render_nav_item('registration.register', 'Registration') }}
+                    {{ render_nav_item('registration.login', 'Login') }}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+{% endblock %}

@@ -6,6 +6,7 @@ from flask_assets import Bundle, Environment
 from flask_cors import CORS
 from flask_mail import Mail, email_dispatched
 from flask_bootstrap import Bootstrap5
+from flask_font_awesome import FontAwesome
 from flask_qrcode import QRcode
 
 
@@ -17,6 +18,7 @@ environment = Environment()
 cors = CORS()
 mail = Mail()
 bootstrap = Bootstrap5()
+font_awesome = FontAwesome()
 qrcode = QRcode()
 
 def create_app():
@@ -32,6 +34,7 @@ def create_app():
     mail.init_app(app)
     bootstrap.init_app(app)
     qrcode.init_app(app)
+    font_awesome.init_app(app)
 
     scss = Bundle('css/style.scss', filters='scss',
     output='css/style.css')
