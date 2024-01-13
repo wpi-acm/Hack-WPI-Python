@@ -90,8 +90,9 @@ def login():
             flask_login.login_user(user)
 
             flash("Welcome back!")
+            next = request.args.get('next')
 
-            return redirect(url_for("dashboard.home"))
+            return redirect(next or url_for("dashboard.home"))
         else:
             flash("Incorrect password")
 
@@ -117,7 +118,7 @@ def reset():
                     )
             db.session.add(r)
             db.session.commit()
-            
+
             msg = Message("GoatHacks - Password Reset Request")
             msg.add_recipient(user.email)
             msg.body = render_template("emails/password_reset.txt", code=r.id)
