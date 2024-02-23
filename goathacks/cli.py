@@ -9,6 +9,8 @@ from goathacks.registration import bp
 from goathacks import db, mail
 from goathacks.models import User
 
+from tabulate import tabulate
+
 gr = AppGroup("user")
 
 @gr.command('create')
@@ -122,3 +124,56 @@ def drop_user(email, confirm):
     db.session.commit()
     click.echo(f"Dropped {user.first_name}'s registration")
     
+@gr.command("list")
+def list_users():
+    """
+    Gets a list of all users
+    """
+    users = User.query.all()
+
+    def make_table_content(user):
+        return [user.email, f"{user.first_name} {user.last_name}", user.waitlisted, user.is_admin]
+
+    table = map(make_table_content, users)
+
+    print(tabulate(table, headers=["Email", "Name", "Waitlisted", "Admin"]))
+
+
+@gr.command("autopromote")
+def autopromote_users():
+    """
+    Runs through and automatically promotes users up to the waitlist limit
+    """
+    WAITLIST_LIMIT = current_app.config['MAX_BEFORE_WAITLIST']
+    num_confirmed = db.session.query(User).filter(User.waitlisted == False).count()
+    click.echo(f"Got {num_confirmed} confirmed attendees")
+    num_waitlisted = db.session.query(User).filter(User.waitlisted == True).count()
+    click.echo(f"Got {num_waitlisted} waitlisted attendees")
+
+    num_to_promote = WAITLIST_LIMIT - num_confirmed
+
+    if num_to_promote > num_waitlisted:
+        num_to_promote = num_waitlisted
+
+    click.echo(f"About to promote {str(num_to_promote)} attendees from waitlist")
+
+    users = db.session.query(User).filter(User.waitlisted == True).all()
+
+    num_promoted = 0
+    num_to_promote_orig = num_to_promote
+
+    for u in users:
+        if num_to_promote > 0:
+            click.echo(f"Attempting to promote {u.email} ({u.id})")
+            u.waitlisted = False
+            db.session.commit()
+            msg = Message("Waitlist Promotion")
+            msg.add_recipient(u.email)
+            msg.sender = ("GoatHacks Team", "hack@wpi.edu")
+            msg.body = render_template("emails/waitlist_promotion.txt", user=u)
+            mail.send(msg)
+            num_promoted += 1
+            num_to_promote -= 1
+
+    click.echo(f"Promoted {num_promoted}/{num_to_promote_orig} attendees off the waitlist!")
+            

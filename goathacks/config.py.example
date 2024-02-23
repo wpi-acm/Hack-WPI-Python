@@ -4,6 +4,8 @@ SECRET_KEY="bad-key-change-me"
 
 UPLOAD_FOLDER="./uploads/"
 
+DISCORD_LINK=None
+
 
 # Mail settings
 MAIL_SERVER="localhost"
