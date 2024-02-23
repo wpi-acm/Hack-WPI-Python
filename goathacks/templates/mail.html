@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>🍪CookieMailer</title>
+{% extends 'admin-layout.html' %}
+
+  {% block head %}
+  {{super()}}
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   <meta name="theme-color" content="">
-  <link rel="stylesheet" type="text/css" href="/static/css/mail.css" />
   <script src="https://cdn.tiny.cloud/1/{{MCE_API_KEY}}/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script></head>
-  <body>
-  <div id="loader"></div>
-  <div class="container">
-    <div class="row">
-      <div id="root" class="col">
-        <h2>🍪CookieMailer</h2>
+  {% endblock %}
+  {% block app_content %}
+<div class="card">
+    <div class="card-body">
+        <h1 class="h3 mb-3 fw-normal">🍪CookieMailer</h1>
         <label for="recipients">To: </label>
         <br/>
-        <select id="recipients" name="recipients">
+        <select class="form-control" id="recipients" name="recipients">
             <option value="admin">Test Email (SysAdmin)</option>
             <option value="org">Test Email (Organizers)</option>
             <!-- <option value="wpi">WPI Only</option> -->
@@ -26,7 +23,8 @@
         <br/>
         <label for="subject">Subject: </label>
         <br/>
-        <input id="subject" name="subject" width="100%" type="text" value="Hack@WPI" />
+        <input class="form-control" id="subject" name="subject" width="100%"
+        type="text" value="GoatHacks -- " />
         <br/>
         <br/>
         <textarea id="content" name="content">
@@ -40,7 +38,7 @@
         </textarea>
         <br/>
         <br/>
-        <input type="button" onClick="send()" value="Send"/>
+        <input class="btn btn-primary" type="button" onClick="send()" value="Send"/>
       </div>
     </div>
   </div>
@@ -77,6 +75,7 @@
     ];
 
     if((rec != "all" && window.confirm("Send test email?")) || (rec == "all" && window.confirm("Send email to {{NUM_HACKERS}} recipients?"))) {
+        console.log(`Sending email to ${rec}`)
       fetch('/admin/send', {method: 'POST', body: JSON.stringify(body), headers: headers}).then(async (res) => {
         window.alert(await res.text());
       }).catch((err) => {
@@ -96,7 +95,7 @@
     // })
   }
   </script>
-</body>
-
-</html>
+</div>
+</div>
+{% endblock %}
 
