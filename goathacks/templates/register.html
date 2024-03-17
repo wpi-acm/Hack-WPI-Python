@@ -1,58 +1,69 @@
-{% extends 'base.html' %}
+{% extends 'layout.html' %}
+{% from 'bootstrap5/form.html' import render_field %}
 
-{% block content %}
-<div style="height: 100%;">
-    <div id="registration-banner" class="parallax-container valign-wrapper">
-        <div class="section">
-            <h3 class="header-center text-darken-2">Registration</h3>
+{% block app_content %}
+<div class="card text-center">
+    <div class="card-body">
+        <img class="mb-4" src="{{ url_for('static', filename='img/banner.png')
+                               }}" alt="GoatHacks Banner">
+        <h1 class="h3 mb-3 fw-normal">Welcome to GoatHacks!</h1>
+        <p class="card-text">Please use this page to register for this year's
+        Hackathon. Accounts from prior years are not carried over!</p>
+
+        <div class="text-center">
+            <form action="" method="post" class="form" role="form">
+                {{ form.csrf_token() }}
+                <div class="form-floating mb-3 required">
+                    {{ form.email(class="form-control") }}
+                    {{ form.email.label() }}
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3 required">
+                            {{ form.password(class="form-control") }}
+                            {{ form.password.label() }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3 required">
+                            {{ form.password_confirm(class="form-control") }}
+                            {{ form.password_confirm.label() }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3 required">
+                            {{ form.first_name(class="form-control") }}
+                            {{ form.first_name.label() }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3 required">
+                            {{ form.last_name(class="form-control") }}
+                            {{ form.last_name.label() }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-floating mb-3 required">
+                    {{ form.school(class="form-control") }}
+                    {{ form.school.label() }}
+                </div>
+                <div class="form-floating mb-3 required">
+                    {{ form.phone_number(class="form-control") }}
+                    {{ form.phone_number.label() }}
+                </div>
+                <div class="form-floating mb-3 required">
+                    {{ form.gender(class="form-control") }}
+                    {{ form.gender.label() }}
+                </div>
+                <div class="form-check mb-3 required">
+                    {{ form.agree_coc }}
+                    {{ form.agree_coc.label() }}
+                </div>
+                {{ render_field(form.submit) }}
+            </form>
         </div>
     </div>
 </div>
-<div class="container">
-<div class="section" style="background-color: #974355; padding: 20px;">
-    <form method="post">
-        {{ form.csrf_token }}
-        <div>
-            {{ form.email}}<br/> {{ form.email.label }}
-        </div>
-        <div>
-            {{ form.password}}<br/>{{form.password.label}}
-        </div>
-        <div>
-            {{ form.password_confirm}}<br/>{{form.password_confirm.label}}
-        </div>
-        <div>
-            {{form.first_name}}<br/>{{form.first_name.label}}
-        </div>
-        <div>
-            {{form.last_name}}<br/>{{form.last_name.label}}
-        </div>
-        <hr/>
-        <h3>Miscellaneous Information</h3>
-        <div>
-            {{form.phone_number}}<br/>{{form.phone_number.label}}
-        </div>
-        <div>
-            {{form.school}}<br/>{{form.school.label}}
-        </div>
-        <div>
-            {{form.gender.label}}{{form.gender}}
-        </div>
-        <hr/>
-        <div>
-            <label for="agree_coc">I confirm that I have read and agree to the
-                Code of Conduct</label>
-            <input type="checkbox" id="agree_coc" name="agree_coc">
-        </div>
-        <div>
-            {{form.submit}}
-        </div>
-    </form>
-
-    <span><p><em>You may also want to <a
-                                              href="{{url_for('registration.login')}}">
-                log in</a>.</em></p></span>
-</div>
-</div>
 {% endblock %}
-

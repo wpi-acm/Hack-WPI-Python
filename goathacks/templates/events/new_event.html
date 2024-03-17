@@ -1,6 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'admin-layout.html' %}
 
-{% block content %}
+{% block app_content %}
+<div class="card text-center">
 <div style="height: 100%;">
     <div id="registration-banner" class="parallax-container valign-wrapper">
         <div class="section">
@@ -9,30 +10,39 @@
     </div>
 </div>
 <div class="container">
-<div class="section" style="background-color: #974355; padding: 20px;">
     <form method="post">
         {{ form.csrf_token }}
-        <div>
-            {{ form.name}}<br/> {{ form.name.label }}
+        <div class="form-floating mb-3 required">
+            {{ form.name(class="form-control") }} 
+            {{ form.name.label }}
         </div>
-        <div>
-            {{ form.description}}<br/>{{form.description.label}}
+        <div class="form-floating mb-3">
+            {{ form.description(class="form-control") }}
+            {{form.description.label}}
         </div>
-        <div>
-            {{ form.location}}<br/>{{form.location.label}}
+        <div class="form-floating mb-3 required">
+            {{ form.location(class="form-control")}}
+            {{form.location.label}}
         </div>
-        <div>
-            {{form.start_time}}<br/>{{form.start_time.label}}
+        <div class="row">
+            <div class="col">
+        <div class="form mb-3 required">
+            {{form.start_time(class="form-control")}}
+            {{form.start_time.label}}
         </div>
-        <div>
-            {{form.end_time}}<br/>{{form.end_time.label}}
+            </div>
+            <div class="col">
+        <div class="form mb-3 required">
+            {{form.end_time(class="form-control")}}
+            {{form.end_time.label}}
         </div>
-        <div>
-            {{form.category}}<br/>{{form.category.label}}
+            </div>
         </div>
-        <div>
+        <div class="form-floating mb-3 required">
+            {{form.category(class="form-control")}}
+            {{form.category.label}}
+        </div>
             {{form.submit}}
-        </div>
     </form>
 </div>
 </div>

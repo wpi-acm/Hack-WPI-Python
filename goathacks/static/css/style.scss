@@ -1,184 +1,21 @@
+$color-nav-bg: #974355;
 $color-bg: #003049;
-$color-fg: #eee;
-$color-section-bg: #974355;
-$color-accent: #26a69a;
-@font-face {font-family: "Krungthep"; src: url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.eot"); src: url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.woff") format("woff"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/736cf5b08b01082a3645e14038868e20.svg#Krungthep") format("svg"); }
 
-html {
-	height: 100%;
+.navbar-dark, .modal-header, .table-header {
+    background-color: $color-nav-bg;
+    color: #FFFFFF;
+}
+
+.modal-header, .table-header {
+    color: #FFFFFF;
+}
+
+.container {
+    min-height: 100vh;
+    position: relative;
 }
 
 body {
+    min-height: 100vh;
     background-color: $color-bg;
-    font-family: 'Montserrat', sans-serif;
-	font-size: 1.1rem;
-	color: $color-fg;
-	position: relative;
-	min-height: 100%;
 }
-
-p {
-	line-height: 2rem;
-}
-
-#logo-container {
-	display: flex;
-	justify-content: center;
-	flex-direction: row;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	height: 100%;
-	width: 100%;
-}
-
-#goat {
-	height: 100%;
-}
-
-.button-collapse {
-	color: $color-accent;
-}
-
-
-.parallax-container {
-	min-height: 380px;
-	line-height: 0;
-	height: auto;
-	color: rgba(255,255,255,.9);
-}
-.parallax-container .section {
-	width: 100%;
-}
-
-label  {
-	color: white !important;
-}
-
-@media only screen and (max-width : 992px) {
-	.parallax-container .section {
-		top: 40%;
-	}
-	#index-banner .section {
-		top: 10%;
-	}
-}
-
-@media only screen and (max-width : 600px) {
-	.parallax-container .section {
-		height: auto;
-		overflow: auto;
-	}
-	.container {
-		height: auto;
-	}
-	#index-banner .section {
-		top: 0;
-	}
-}
-
-#tagline {
-	font-weight: 600;
-}
-
-#event-info {
-	font-weight: 400;
-}
-
-#registration-banner {
-	min-height: 100px;
-	max-height: 150px;
-}
-
-#registration-banner .section{
-	top: auto;
-}
-
-.icon-block {
-	padding: 0 15px;
-}
-.icon-block .material-icons {
-	font-size: inherit;
-}
-
-.parallax img {
-	display: inherit;
-	max-width: 200%;
-}
-
-#mlh-trust-badge {
-	display: block;
-	max-width: 100px;
-	min-width: 60px;
-	position: fixed;
-	right: 50px;
-	top: 0;
-	width: 10%;
-	z-index: 10000;
-}
-
-nav {
-	line-height: normal !important;
-	font-family: "Jost", sans-serif;
-	font-weight: 700;
-}
-/* 
-.navbar-brand {
-} */
-
-.footer-nav {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-}
-
-
-// Forms
-label {
-    padding-bottom: 0.5rem;
-}
-form {
-    input {
-        border-radius: 5px;
-    }
-    input[type="submit"] {
-        background: $color-accent;
-        border-radius: 10px;
-        border-color: $color-accent;
-    }
-    input[type="radio"] {
-        padding-right: 5px;
-    }
-    input[type="checkbox"]:checked {
-        visibility: visible;
-        left: unset;
-        position: unset;
-    }
-    label {
-        font-size: 1.1rem;
-        padding-right: 10px;
-        padding-left: 25px !important;
-    }
-    select {
-        display: unset;
-        background: $color-section-bg;
-        max-width: 11rem;
-    }
-}
-
-// Flashed messages
-.flashes {
-    list-style-type: none;
-    display: flex;
-    justify-content: center;
-}
-
-.message {
-    width: 80%;
-    justify-content: center; 
-    border: 1px solid $color-fg;
-    background-color: $color-accent;
-    padding: 0.2rem;
-    font-size: large;
-    color: $color-fg;
-}
-

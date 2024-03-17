@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from flask import Blueprint, abort, config, current_app, flash, redirect, render_template, request, url_for
 import flask_login
-from flask_login import current_user
+from flask_login import current_user, login_required
 from goathacks.registration.forms import LoginForm, PwResetForm, RegisterForm, ResetForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_mail import Message
@@ -96,6 +96,13 @@ def login():
             flash("Incorrect password")
 
     return render_template("login.html", form=form)
+
+@bp.route("/logout")
+@login_required
+def logout():
+    flask_login.logout_user()
+    flash("See you later!")
+    return redirect(url_for("registration.login"))
 
 @bp.route("/reset", methods=["GET", "POST"])
 def reset():

@@ -1,104 +1,50 @@
-{% extends 'base.html' %}
+{% extends 'layout.html' %}
+{% from 'bootstrap5/form.html' import render_field %}
 
-{% block content %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
-<script>
-    function drop(id) {
-        if(window.confirm("Are you sure you wish to drop your application? This cannot be undone. (patiently wait after clicking the button)")) {
-            window.location.href = "/admin/drop/" + id;
-        }
-    }
-
-    function resumeChange() {
-        let val = document.getElementById('resume').value;
-        val = val.split(/\\|\//gi).slice(-1)[0]
-        document.getElementById('filename').setAttribute('value', val);
-    }
-</script>
-
-<div class="contact-section" style="height: 100%;">
-    <div class="container">
-        <div class="row center justify-content-center" style="margin-top: 10%;">
-            <h1>Hi {{ current_user.first_name }}!</h1>
-            {% if current_user.waitlisted %}
-            <h2>You are waitlisted, if space opens up we will let you know</h2>
-            {% else %}
-            <h2>You are fully registered! We look forward to seeing you!</h2>
-            Let us know if you have any questions by sending them to <a href="mailto:hack@wpi.edu">hack@wpi.edu</a>
-            <br>
-            <br>
-            Forgot to upload your resume while registering? No worries, submit it below.
-        </div>
-        <div class="row center justify-content-center">
-	  {% if config['DISCORD_LINK'] is defined %}
-            <h5>Make sure to join the Discord and enter your shirt size below!</h5>
-            <a href="{{ config['DISCORD_LINK'] }}" style="margin: 5px;"
-                class="btn btn-lg btn-primary btn-invert">Discord</a>
-	    {% else %}
-	    <h5>Our discord is still under construction! We'll send out an email when it's ready.</h5>
-	  {% endif %}
-        </div>
-	    <div class="row center justify-content-center" style="background-color: #974355; padding: 20; margin-left: 20; margin-right: 20; border-radius: 5px;">
-            <form method="post">
-                {{ form.csrf_token }}
-                <br>
-                <p><b>Optional Info:</b></p>
-                    <div>
-                            <p>Shirt Size (Currently selected: {{current_user.shirt_size}})</p>
-                            {% for subfield in form.shirt_size %}
-                            {{subfield}}{{subfield.label}} 
-                            {% endfor %}
-                            <p>Special Needs/Accommodations:</p>
-                            <input type="text" name="accomodations"
-                            id="special_needs" value="{{ current_user.accomodations }}">
-                    </div>
-                    <br><br>
-                    <input name="save" class="btn btn-lg btn-primary btn-invert" type="submit" value="Save"/>
-                    <br><br><br>
-                </form>
-        </div>
-        <div class="row center justify-content-center">
-            <form method="post" action="{{url_for('dashboard.resume')}}" enctype="multipart/form-data">
-                {{ resform.csrf_token }}
-                <p><b>If you'd like, add your resume to send to sponsors... </b></p>
-                <div class="file-field input-field">
-                    <div class="btn">
-                        <span>File</span>
-                        <input id="resume" name="resume" type="file" oninput="resumeChange()"/>
-                        
-                    </div>
-                    <div class="file-path-wrapper white-text">
-                        <input disabled id="filename" class="file-path validate white-text" type="text">
-                    </div>
-                </div>
-                <input name="submit" class="btn btn-lg btn-primary btn-invert" type="submit" value="Submit"/>
-            </form>
-            {% endif %}
-            <br>
-        </div>
-        {% if current_user.is_admin %}
-        <br>
-        <div class="row justify-content-center">
-                <a href="/admin"><p class="btn">Admin Dashboard</p></a>
-        </div>
+{% block app_content %}
+<div class="card text-center">
+    <div class="card-body">
+        <h1 class="h2 mb-3 fw-normal">Hi {{current_user.first_name}}!</h1> 
+        {% if current_user.waitlisted %}
+        <h4 class="h3 mb-3 fw-normal">You're currently waitlisted. If space
+            opens up, we'll let you know!</h4>
+        {% else %}
+        <h4>You are fully registered! We look forward to seeing you!</h4>
         {% endif %}
-        <br>
+
+        <p class="card-text">Let us know if you have any questions by sending
+        them to <a href="mailto:hack@wpi.edu">hack@wpi.edu</a></p>
+
+        <div class="row center justify-content-center">
+            <form method="post">
+                {{ form.csrf_token() }}
+                <p><b>Optional Info</b></p>
+                <div class="form-floating mb-3 required">
+                    {{ form.shirt_size(class="form-control", selected=current_user.shirt_size) }}
+                    {{ form.shirt_size.label() }}
+                </div>
+                <div class="form-floating mb-3 required">
+                    {{ form.accomodations(class="form-control") }}
+                    {{ form.accomodations.label() }}
+                </div>
+                {{ render_field(form.submit) }}
+
+            </form>
+        </div>
+        <hr/>
+        <div class="row center justify-content-center">
+            <form method="post" action={{url_for('dashboard.resume')}}"
+                  enctype="multipart/form-data">
+                {{ resform.csrf_token() }}
+                <p><b>If you'd like, add your resume to send to
+                    sponsors...</b></p>
+                <div class="form mb-3 required">
+                    {{ resform.resume(class="form-control") }}
+                </div>
+                {{ render_field(resform.submit) }}
+            </form>
+        </div>
+
     </div>
-    <br>
-    <br>
-    <center><a onclick="drop('{{current_user.id}}')" id="drop-link"><p class="btn">Drop Application if you can't make it :(</p></a></center>
 </div>
-
-<script>
-    let errColor = '#E74C3C'
-
-    $(document).ready(() => {
-        $('#drop-link').click((e) => {
-            e.preventDefault()
-        let id = {{ id }}
-            drop(id)
-        })
-    })
-
-</script>
 {% endblock %}

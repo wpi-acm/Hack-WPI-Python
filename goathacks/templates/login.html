@@ -1,34 +1,34 @@
-{% extends 'base.html' %}
+{% extends 'layout.html' %}
+{% from 'bootstrap5/form.html' import render_field %}
 
-{% block content %}
-<div style="height: 100%;">
-    <div id="registration-banner" class="parallax-container valign-wrapper">
-        <div class="section">
-            <h3 class="header-center text-darken-2">Login</h3>
+{% block app_content %}
+<div class="card text-center">
+    <div class="card-body">
+        <img class="mb-4" src="{{ url_for('static', filename='img/banner.png')
+                               }}" alt="GoatHacks 2024 Banner">
+        <h1 class="h3 mb-3 fw-normal">Welcome back to GoatHacks!</h1>
+        <p class="card-text">If you've already registered, please use this page
+        to access your participant dashboard. Otherwise, please use the <a
+                                                                                href="{{
+                                                                                      url_for('registration.register')
+                                                                                      }}"
+                                                                                >
+            registration</a> page to register!</p>
+
+        <div class="text-center">
+            <form action="" method="post" class="form" role="form">
+                {{ form.csrf_token() }}
+                <div class="form-floating mb-3 required">
+                    {{ form.email(class="form-control") }}
+                    {{ form.email.label() }}
+                </div>
+                <div class="form-floating mb-3 required">
+                    {{ form.password(class="form-control") }}
+                    {{ form.password.label() }}
+                </div>
+                {{ render_field(form.submit) }}
+            </form>
         </div>
-    </div>
-</div>
-<div class="container">
-    <div class="section" style="background-color: #974355; padding: 20px;">
-        <form method="post">
-            {{ form.csrf_token }}
-            <div>
-                {{form.email}}<br/>{{ form.email.label}}
-            </div>
-            <div>
-                {{form.password}}<br/>{{form.password.label}}
-            </div>
-            <div>
-                {{form.submit}}
-            </div>
-        </form>
-        <span><p><em>Don't have an account? <a
-                                                    href="{{url_for('registration.register')}}">Register
-                                                    here</a>.</em></p></span>
-
-    <span><p><em>Forgot your password? Head over <a
-                                                         href="{{url_for('registration.reset')}}">here</a>
-            to reset it.</em></p></span>
     </div>
 </div>
 {% endblock %}

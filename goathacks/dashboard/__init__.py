@@ -19,6 +19,8 @@ def home():
         current_user.accomodations = request.form.get('accomodations')
         db.session.commit()
         flash("Updated successfully")
+    else:
+        form = forms.ShirtAndAccomForm(obj=current_user)
     return render_template("dashboard.html", form=form, resform=resform)
 
 @bp.route("/resume", methods=["POST"])

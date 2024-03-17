@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, redirect, render_template, request, url_for
+from flask import Blueprint, current_app, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from flask_mail import Message
 
@@ -62,8 +62,20 @@ def mail():
         return redirect(url_for("dashboard.home"))
 
     total_count = len(db.session.execute(db.select(User)).scalars().all())
+    api_key = current_app.config["MCE_API_KEY"]
 
-    return render_template("mail.html", NUM_HACKERS=total_count)
+    return render_template("mail.html", NUM_HACKERS=total_count,
+                           MCE_API_KEY=api_key)
+
+@bp.route("/users")
+@login_required
+def users():
+    if not current_user.is_admin:
+        return redirect(url_for("dashboard.home"))
+
+    users = User.query.all()
+
+    return render_template("users.html", users=users)
 
 @bp.route("/send", methods=["POST"])
 @login_required
