@@ -37,3 +37,9 @@ daemon:
 	@echo ""
 	@echo "--- STARTING UWSGI DAEMON ---"	
 	
+post_upgrade: upgrade_env run_migrations
+	# Make sure a tmp directory exists
+	@mkdir -p acmsite/tmp
+	# Create upload directory
+	@mkdir -p acmsite/uploads
+
