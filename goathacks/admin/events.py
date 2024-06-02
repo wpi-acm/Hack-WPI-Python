@@ -16,7 +16,9 @@ def list_events():
 
     events = Event.query.all()
 
-    return render_template("events/list.html", events=events)
+    form = forms.EventForm()
+
+    return render_template("events/list.html", events=events, form=form)
 
 @bp.route("/events/events.json")
 @login_required
