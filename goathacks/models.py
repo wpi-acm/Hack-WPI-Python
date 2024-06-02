@@ -84,6 +84,16 @@ class Event(db.Model):
             })
 
         return events
+    
+    def create_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "location": self.location,
+            "start_time": self.start_time.isoformat(),
+            "end_time": self.end_time.isoformat(),
+        }
 
     def get_checkins(self):
         checkins = EventCheckins.query.filter_by(event_id=self.id).all()
