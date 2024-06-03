@@ -67,6 +67,7 @@ def update_create_event(id):
                               datetime.time.fromisoformat(start_time)) 
     end = datetime.datetime.combine(datetime.date.fromisoformat(end_day),
                                   datetime.time.fromisoformat(end_time)) 
+    category = request.form.get("category")
 
     if id == 0:
         # new event
@@ -75,6 +76,7 @@ def update_create_event(id):
                 description=description,
                 location=location,
                 start_time=start,
+                category=category,
                 end_time=end)
         db.session.add(e)
         db.session.commit()
@@ -88,6 +90,7 @@ def update_create_event(id):
         e.location = location
         e.start_time = start
         e.end_time = end
+        e.category=category
         db.session.commit()
         current_app.logger.info(f"{current_user} is updating an existing event: {e.name}")
 
