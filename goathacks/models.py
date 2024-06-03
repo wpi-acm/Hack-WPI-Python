@@ -50,7 +50,7 @@ def user_loader(user_id):
 @login.unauthorized_handler
 def unauth():
     flash("Please login first")
-    return redirect(url_for("registration.register"))
+    return redirect(url_for("registration.login"))
 
 
 class PwResetRequest(db.Model):
