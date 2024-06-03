@@ -65,6 +65,10 @@
                 {{ form.location(class="form-control") }}
                 {{ form.location.label() }}
             </div>
+            <div class="form-floating mb-3">
+                {{ form.category(class="form-control") }}
+                {{ form.category.label() }}
+            </div>
             <div class="row">
                 <div class="col">
                     <div class="form-floating mb-3 required">
@@ -155,7 +159,8 @@
                 } else {
                     name = data.name,
                     description = data.description,
-                    loc = data.location
+                    loc = data.location,
+                    category = data.category
 
                     start = new Date(data.start_time) 
 
@@ -180,6 +185,7 @@
                     modal.find('#start_time').val(start_time)
                     modal.find('#end_day').val(end_day)
                     modal.find('#end_time').val(end_time)
+                    modal.find('#category').val(category)
 
                
             });
