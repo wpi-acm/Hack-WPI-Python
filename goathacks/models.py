@@ -21,6 +21,8 @@ class User(db.Model, UserMixin):
     phone = Column(String, nullable=True)
     gender = Column(String, nullable=True)
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.email})"
     def create_json_output(lis):
         hackers = []
 
@@ -48,7 +50,7 @@ def user_loader(user_id):
 @login.unauthorized_handler
 def unauth():
     flash("Please login first")
-    return redirect(url_for("registration.register"))
+    return redirect(url_for("registration.login"))
 
 
 class PwResetRequest(db.Model):
@@ -73,17 +75,20 @@ class Event(db.Model):
         events = []
 
         for e in lis:
-            events.append({
-                'id': e.id,
-                'name': e.name,
-                'description': e.description,
-                'location': e.location,
-                'start': e.start_time,
-                'end': e.end_time,
-                'category': e.category
-            })
+            events.append(e.create_json())
 
         return events
+    
+    def create_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "location": self.location,
+            "start_time": self.start_time.isoformat(),
+            "end_time": self.end_time.isoformat(),
+            "category": self.category
+        }
 
     def get_checkins(self):
         checkins = EventCheckins.query.filter_by(event_id=self.id).all()

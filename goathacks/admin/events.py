@@ -1,11 +1,11 @@
 import flask
-from flask import Response, render_template, redirect, request, url_for, flash
+from flask import Response, render_template, redirect, request, url_for, flash, current_app
 from flask_login import current_user, login_required
 from goathacks.admin import bp, forms
 from goathacks import db
 from goathacks.models import Event
 
-import io, qrcode
+import io, qrcode, datetime
 import qrcode.image.pure
 
 @bp.route("/events")
@@ -16,7 +16,86 @@ def list_events():
 
     events = Event.query.all()
 
-    return render_template("events/list.html", events=events)
+    form = forms.EventForm()
+
+    return render_template("events/list.html", events=events, form=form)
+
+@bp.route("/event/<int:id>/delete")
+@login_required
+def delete_event(id):
+    if not current_user.is_admin:
+        return {"status": "error", "message": "Unauthorized"}
+    
+    event = Event.query.filter_by(id=id).first()
+
+    if event is None:
+        return {"status": "error", "message": "Invalid event ID"}
+    
+    db.session.delete(event)
+    db.session.commit()
+
+    return {"status": "success"}
+
+@bp.route("/event/<int:id>")
+@login_required
+def event(id):
+    if not current_user.is_admin:
+        return {"status": "error", "message": "Unauthorized"}
+    
+    event = Event.query.filter_by(id=id).first()
+
+    if event is None:
+        return {"status": "error", "message": "Invalid event ID"}
+    
+    return event.create_json()
+
+@bp.route("/event/<int:id>", methods=["POST"])
+@login_required
+def update_create_event(id):
+    if not current_user.is_admin:
+        flash("Unauthorized")
+        return redirect(url_for("dashboard.home"))
+
+    name = request.form.get('name')
+    description = request.form.get('description')
+    location = request.form.get('location')
+    start_day = request.form.get('start_day')
+    start_time = request.form.get('start_time')
+    end_day = request.form.get('end_day')
+    end_time = request.form.get('end_time')
+    start = datetime.datetime.combine(datetime.date.fromisoformat(start_day),
+                              datetime.time.fromisoformat(start_time)) 
+    end = datetime.datetime.combine(datetime.date.fromisoformat(end_day),
+                                  datetime.time.fromisoformat(end_time)) 
+    category = request.form.get("category")
+
+    if id == 0:
+        # new event
+        e = Event(
+                name=name,
+                description=description,
+                location=location,
+                start_time=start,
+                category=category,
+                end_time=end)
+        db.session.add(e)
+        db.session.commit()
+        current_app.logger.info(f"{current_user} is creating a new event: {e.name}")
+    else:
+        e = Event.query.filter_by(id=id).first()
+        if e is None:
+            return {"status": "error", "message": "Invalid event ID"}
+        e.name = name
+        e.description = description
+        e.location = location
+        e.start_time = start
+        e.end_time = end
+        e.category=category
+        db.session.commit()
+        current_app.logger.info(f"{current_user} is updating an existing event: {e.name}")
+
+
+    return redirect(url_for("admin.list_events"))
 
 @bp.route("/events/events.json")
 @login_required
