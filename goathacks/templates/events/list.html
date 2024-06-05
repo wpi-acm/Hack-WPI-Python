@@ -19,7 +19,7 @@
                 <th>Category</th>
                 <th>Checked in</th>
                 <th>QR Code</th>
-                <th><a href="{{url_for('admin.new_event')}}">New</a></th>
+                <th><a href="#editModal" data-bs-toggle="modal" data-id="0">New</a></th>
             </tr>
         </thead>
         <tbody>
@@ -34,11 +34,166 @@
                 <td>{{ event.get_checkins()|length }}</td>
                 <td><a href='{{ url_for("admin.qrcode_event", id=event.id)
                                          }}'>QR Code</a></td>
-                <td><a href="{{url_for('admin.edit_event', id=event.id)}}">Edit</a></td>
+                <td><a href="#editModal" data-bs-toggle="modal" data-id="{{ event.id}}" >Edit</a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
 </div>
+
+<div class="modal" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+                                                aria-hidden="true">
+      <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="editModalLabel">Event</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="form" id="edit-form" action="/admin/events/0" role="form" method="post">
+          <div class="modal-body">
+          {{ form.csrf_token }}
+            <div class="form-floating mb-3 required">
+                {{ form.name(class="form-control") }}
+                {{ form.name.label() }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form.description(class="form-control") }}
+                {{ form.description.label() }}
+            </div>
+            <div class="form-floating mb-3 required">
+                {{ form.location(class="form-control") }}
+                {{ form.location.label() }}
+            </div>
+            <div class="form-floating mb-3">
+                {{ form.category(class="form-control") }}
+                {{ form.category.label() }}
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating mb-3 required">
+                        {{ form.start_day(class="form-control") }}
+                        {{ form.start_day.label() }}
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3 required">
+                        {{ form.start_time(class="form-control") }}
+                        {{ form.start_time.label() }}
+                    </div>                    
+                </div> 
+            </div> 
+            <div class="row">
+                <div class="col">
+                    <div class="form-floating mb-3 required">
+                        {{ form.end_day(class="form-control") }}
+                        {{ form.end_day.label() }}
+                    </div> 
+                </div>
+                <div class="col">
+                    <div class="form-floating mb-3 required">
+                        {{ form.end_time(class="form-control") }}
+                        {{ form.end_time.label() }}
+                    </div>                    
+                </div> 
+            </div>  
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-id="0" id="delete">Delete</button>
+            <button type="submit" class="btn btn-primary" id="edit-save">Save changes</button>
+          </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/jquery-3.6.3.min.js') }}" charset="utf-8"></script>
+
+<script charset="utf-8">
+    const editButton = document.getElementById("edit-save")
+
+    $('#delete').on("click", (event) => {
+        if (window.confirm("Delete this event?")) {
+            console.log("Got OK")
+            deleteButton = document.getElementById("delete")
+            id = deleteButton.dataset.id
+            $.get(`/admin/event/${id}/delete`, (data) => {
+                if (data.status == "error") {
+                    window.alert(`Error: ${data.message}`)
+                } else {
+                    window.alert("Success")
+                }
+                location.reload()
+            })
+        }
+    })
+
+    $('#editModal').on('show.bs.modal', function(event) {
+        var modal = $(this)
+                modal.find('#name').val('')
+        modal.find('#location').val('')
+        modal.find('#description').val('')
+        modal.find('#start_day').val('')
+        modal.find('#start_time').val('')
+        modal.find('#end_day').val('')
+        modal.find('#end_time').val('')
+
+        var button = $(event.relatedTarget)
+        var name,description,loc,start_time,start_day,end_time,end_day
+        id = button.data('id')
+
+        saveButton = document.getElementById("edit-save")
+        saveButton.dataset.id = id
+
+        deleteButton = document.getElementById("delete")
+        deleteButton.dataset.id = id
+
+        editForm = document.getElementById("edit-form")
+        editForm.action = "/admin/event/" + id
+
+        if (id) {
+            $.get(`/admin/event/${id}`, (data) => {
+
+                if (data.status == "error") {
+                    // This is a new event, do nothing!
+                } else {
+                    name = data.name,
+                    description = data.description,
+                    loc = data.location,
+                    category = data.category
+
+                    start = new Date(data.start_time) 
+
+                    var day = ("0" + start.getDate()).slice(-2);
+                    var month = ("0" + (start.getMonth() + 1)).slice(-2);
+
+                    start_day = start.getFullYear()+"-"+(month)+"-"+(day); 
+                    start_time = `${start.getHours()}:${padTwoDigits(start.getMinutes())}`
+                    end = new Date(data.end_time)
+
+                    var day = ("0" + end.getDate()).slice(-2);
+                    var month = ("0" + (end.getMonth() + 1)).slice(-2);
+
+                    end_day = end.getFullYear()+"-"+(month)+"-"+(day); 
+                    end_time = `${end.getHours()}:${padTwoDigits(end.getMinutes())}`
+                }
+
+                    modal.find('#name').val(name)
+                    modal.find('#location').val(loc)
+                    modal.find('#description').val(description)
+                    modal.find('#start_day').val(start_day)
+                    modal.find('#start_time').val(start_time)
+                    modal.find('#end_day').val(end_day)
+                    modal.find('#end_time').val(end_time)
+                    modal.find('#category').val(category)
+
+               
+            });
+        }
+    })
+
+    function padTwoDigits(num) {
+        return num.toString().padStart(2, '0')
+    }
+</script>
 {% endblock %}
