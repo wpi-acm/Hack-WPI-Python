@@ -32,7 +32,7 @@ daemon:
 	@echo "--- STARTING UWSGI DAEMON ---"
 	@echo ""
 	@echo ""	
-	source .venv/bin/activate && flask run
+	source .venv/bin/activate && flask --debug run
 	@echo ""
 	@echo ""
 	@echo "--- STARTING UWSGI DAEMON ---"	
