@@ -81,6 +81,10 @@ def create_app():
     @app.route("/index.html")
     def index():
         return render_template("home/index.html")
+    
+    @app.route("/index2.html")
+    def index2():
+        return render_template("home/index2.html")
 
     # homepage assets
     @app.route("/assets/<path:path>")
