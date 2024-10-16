@@ -65,7 +65,7 @@ def register():
                     flash("User with email " + email + " already exists.")
                 else:
                     flash("An unknown error occurred.")
-                return render_template("register.html", form=form)
+                return redirect(url_for("registration.login"))
 
             #user successfully registered, so login
             flask_login.login_user(user)
