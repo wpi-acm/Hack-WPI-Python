@@ -6,6 +6,7 @@ from goathacks.registration.forms import LoginForm, PwResetForm, RegisterForm, R
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_mail import Message
 import ulid
+from sqlalchemy.exc import IntegrityError
 
 from goathacks import db, mail as app_mail
 from goathacks.models import PwResetRequest, User
@@ -53,8 +54,20 @@ def register():
                     phone=phone,
                     gender=gender
             )
-            db.session.add(user)
-            db.session.commit()
+
+            #try to add the user to the database, checking for duplicate users
+            try:
+                db.session.add(user)
+                db.session.commit()
+            except IntegrityError as err:
+                db.session.rollback()
+                if "duplicate key value violates unique constraint" in str(err):
+                    flash("User with email " + email + " already exists.")
+                else:
+                    flash("An unknown error occurred.")
+                return render_template("register.html", form=form)
+
+            #user successfully registered, so login
             flask_login.login_user(user)
 
             if waitlisted:
@@ -122,9 +135,10 @@ def reset():
                     user_id=user.id,
                     expires=datetime.now() + timedelta(minutes=30)
                     )
+            
             db.session.add(r)
             db.session.commit()
-            
+
             msg = Message("GoatHacks - Password Reset Request")
             msg.add_recipient(user.email)
             msg.body = render_template("emails/password_reset.txt", code=r.id)
