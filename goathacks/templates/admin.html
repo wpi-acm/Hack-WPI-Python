@@ -14,7 +14,21 @@
 {% block app_content %}
 <div class="card text-center">
     <div class="card-body">
-        <h1 class="h3 mb-3 fw-normal">Registered Users</h1>
+
+        <div style="display:flex;flex-wrap:nowrap;align-items:center;">
+            <div class="dropdown">
+                <a href="#" class="btn btn-primary dropdown-toggle"
+                            data-bs-toggle="dropdown">Search<span
+                            class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <input style="padding:5px;margin-left:10px;margin-right:10px;" type="text" id="searchbox" name="searchbox_text" placeholder="Search By Email" onkeyup="filterHackers()"/>
+                </ul>
+            </div>
+
+            <!-- TODO: get "Registered Users" properly centered -->
+            <h1 style="flex-grow:1;justify-content:center;" class="h3 mb-3 fw-normal">Registered Users</h1>
+        </div>
+
         <table id="hackers" class="table table-striped">
             <thead>
                 <tr>
@@ -90,5 +104,32 @@
         </table>
     </div>
 </div>
+
+<script type="text/javascript">
+    function filterHackers() {
+        const input = document.getElementById("searchbox").value.toLowerCase();
+        const hackertable = document.getElementById("hackers");
+        let rows = hackertable.getElementsByTagName("tr");
+
+        //iterate over all rows
+        for(let i = 1; i < rows.length; i++) {
+            //get the email
+            const cells = rows[i].getElementsByTagName("td");
+            const emailCell = cells[6];
+
+            //if there is an email, display or dont display based on searchbox
+            if(emailCell) {
+                const emailText = emailCell.textContent.toLowerCase();
+                if(!emailText.includes(input)) {
+                    rows[i].style.display = "none";
+                }
+                else {
+                    rows[i].style.display = "";
+                }
+            }
+        }
+    }
+
+</script>
 {% endblock %}
 
