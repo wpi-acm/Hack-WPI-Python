@@ -13,6 +13,8 @@ goathacks/config.py
 sqldmp
 .vscode/
 
+.DS_Store
+
 
 ### Bower ###
 bower_components
