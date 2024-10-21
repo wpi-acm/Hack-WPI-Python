@@ -30,6 +30,7 @@ def register():
         school = request.form.get('school')
         phone = request.form.get('phone_number')
         gender = request.form.get('gender')
+        country = request.form.get('country')
         print(school)
 
 
