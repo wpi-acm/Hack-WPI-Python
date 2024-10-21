@@ -6,6 +6,7 @@ import os
 class RegisterForm(FlaskForm):
     __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
     schools_list = open(os.path.join(__location__, 'schools.txt')).read().split("\n")
+    countries_list = open(os.path.join(__location__, 'countries.csv')).read().split("\n")
 
     email = StringField("Email", validators=[DataRequired()])
     first_name = StringField("Preferred First Name",
@@ -19,8 +20,8 @@ class RegisterForm(FlaskForm):
     gender = SelectField("Gender", choices=[("F", "Female"), ("M", "Male"),
                                             ("NB", "Non-binary/Other")],
                          widget=widgets.Select())
+    country = SelectField("Country", choices=[(country.split(",")[0], country.split(",")[0]) for country in countries_list], widget=widgets.Select())
     agree_coc = BooleanField("I confirm that I have read and agree to the Code of Conduct", validators=[DataRequired()])
-
     submit = SubmitField("Register")
 
 class LoginForm(FlaskForm):
