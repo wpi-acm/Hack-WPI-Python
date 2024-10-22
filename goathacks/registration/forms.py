@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import BooleanField, PasswordField, SelectField, StringField, SubmitField, widgets
+from wtforms import BooleanField, IntegerField, PasswordField, SelectField, StringField, SubmitField, widgets
 from wtforms.validators import DataRequired
 import os
 
@@ -17,11 +17,15 @@ class RegisterForm(FlaskForm):
                                      validators=[DataRequired()])
     school = SelectField("School", choices=[(school, school) for school in schools_list], widget=widgets.Select())
     phone_number = StringField("Phone number", validators=[DataRequired()])
+    age = IntegerField("Age", validators=[DataRequired()])
+    dietary_restrictions = StringField("Dietary Restrictions (Optional)")
     gender = SelectField("Gender", choices=[("F", "Female"), ("M", "Male"),
                                             ("NB", "Non-binary/Other")],
                          widget=widgets.Select())
     country = SelectField("Country", choices=[(country.split(",")[0], country.split(",")[0]) for country in countries_list], widget=widgets.Select())
+    newsletter = BooleanField("Subscribe to the MLH newsletter?")
     agree_coc = BooleanField("I confirm that I have read and agree to the Code of Conduct", validators=[DataRequired()])
+
     submit = SubmitField("Register")
 
 class LoginForm(FlaskForm):
