@@ -60,17 +60,35 @@
                   </div>
                 </div>
                
-                <div class="form-floating mb-3 required">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3 required">
                     {{ form.phone_number(class="form-control") }}
-                    {{ form.phone_number.label() }}
+                            {{ form.phone_number.label() }}
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3 required">
+                            {{ form.age(class="form-control") }}
+                            {{ form.age.label() }}
+                        </div>
+                    </div>
                 </div>
                 <div class="form-floating mb-3 required">
                     {{ form.gender(class="form-control") }}
                     {{ form.gender.label() }}
                 </div>
+                <div class="form-floating mb-3">
+                    {{ form.dietary_restrictions(class="form-control") }}
+                    {{ form.dietary_restrictions.label() }}
+                </div>
                 <div class="form-check mb-3 required">
                     {{ form.agree_coc }}
                     I confirm that I have read and agree to the <a href="https://static.mlh.io/docs/mlh-code-of-conduct.pdf" target="_blank">MLH Code of Conduct</a>
+                </div>
+                <div class="form-check mb-3">
+                    {{ form.newsletter }}
+                    Subscribe to the MLH newsletter?
                 </div>
                 {{ render_field(form.submit) }}
             </form>

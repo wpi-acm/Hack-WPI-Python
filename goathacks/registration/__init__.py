@@ -31,8 +31,9 @@ def register():
         phone = request.form.get('phone_number')
         gender = request.form.get('gender')
         country = request.form.get('country')
-        print(school)
-
+        age = request.form.get('age')
+        dietary_restrictions = request.form.get('dietary_restrictions')
+        newsletter = request.form.get('newsletter')
 
         # if password == password_c:
         #     # Passwords match!
