@@ -20,6 +20,10 @@ class User(db.Model, UserMixin):
     school = Column(String, nullable=True)
     phone = Column(String, nullable=True)
     gender = Column(String, nullable=True)
+    newsletter = Column(Boolean, nullable=False, default=False)
+    country = Column(String, nullable=False)
+    age = Column(Integer, nullable=False)
+    dietary_restrictions = Column(String, nullable=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.email})"

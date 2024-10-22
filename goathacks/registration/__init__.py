@@ -35,44 +35,48 @@ def register():
         dietary_restrictions = request.form.get('dietary_restrictions')
         newsletter = request.form.get('newsletter')
 
-        # if password == password_c:
-        #     # Passwords match!
+        if password == password_c:
+            # Passwords match!
 
-        #     # Count of all non-waitlisted hackers
-        #     num_not_waitlisted = len(User.query.filter_by(waitlisted=False).all())
-        #     waitlisted = False
-        #     print(num_not_waitlisted)
-        #     print(current_app.config['MAX_BEFORE_WAITLIST'])
-        #     if num_not_waitlisted >= current_app.config['MAX_BEFORE_WAITLIST']:
-        #         waitlisted = True
-        #     user = User(
-        #             email=email,
-        #             password=generate_password_hash(password),
-        #             first_name=first_name,
-        #             last_name=last_name,
-        #             last_login=datetime.now(),
-        #             waitlisted=waitlisted,
-        #             school=school,
-        #             phone=phone,
-        #             gender=gender
-        #     )
-        #     db.session.add(user)
-        #     db.session.commit()
-        #     flask_login.login_user(user)
+            # Count of all non-waitlisted hackers
+            num_not_waitlisted = len(User.query.filter_by(waitlisted=False).all())
+            waitlisted = False
+            print(num_not_waitlisted)
+            print(current_app.config['MAX_BEFORE_WAITLIST'])
+            if num_not_waitlisted >= current_app.config['MAX_BEFORE_WAITLIST']:
+                waitlisted = True
+            user = User(
+                    email=email,
+                    password=generate_password_hash(password),
+                    first_name=first_name,
+                    last_name=last_name,
+                    last_login=datetime.now(),
+                    waitlisted=waitlisted,
+                    school=school,
+                    phone=phone,
+                    gender=gender,
+                    country=country,
+                    age=age,
+                    dietary_restrictions=dietary_restrictions,
+                    newsletter=newsletter
+            )
+            db.session.add(user)
+            db.session.commit()
+            flask_login.login_user(user)
 
-        #     if waitlisted:
-        #         msg = Message("Goathacks - Waitlist Confirmation")
-        #     else:
-        #         msg = Message("GoatHacks - Registration Confirmation")
+            if waitlisted:
+                msg = Message("Goathacks - Waitlist Confirmation")
+            else:
+                msg = Message("GoatHacks - Registration Confirmation")
 
-        #     msg.add_recipient(user.email)
-        #     msg.sender = ("GoatHacks Team", "hack@wpi.edu")
-        #     msg.body = render_template("emails/registration.txt", user=user)
-        #     app_mail.send(msg)
+            msg.add_recipient(user.email)
+            msg.sender = ("GoatHacks Team", "hack@wpi.edu")
+            msg.body = render_template("emails/registration.txt", user=user)
+            app_mail.send(msg)
 
-        #     return redirect(url_for("dashboard.home"))
-        # else:
-        #     flash("Passwords do not match")
+            return redirect(url_for("dashboard.home"))
+        else:
+            flash("Passwords do not match")
 
     return render_template("register.html", form=form)
 
