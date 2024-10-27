@@ -29,7 +29,7 @@
             <h1 style="flex-grow:1;justify-content:center;" class="h3 mb-3 fw-normal">Registered Users</h1>
         </div>
 
-        <table id="hackers" class="table table-striped">
+        <table id="hackers" class="table table-striped sortable">
             <thead>
                 <tr>
                     <th>Options</th>
@@ -107,6 +107,7 @@
 
 <script type="text/javascript">
     function filterHackers() {
+        //get hacker table and searchbox info
         const input = document.getElementById("searchbox").value.toLowerCase();
         const hackertable = document.getElementById("hackers");
         let rows = hackertable.getElementsByTagName("tr");
@@ -129,7 +130,6 @@
             }
         }
     }
-
 </script>
 {% endblock %}
 
