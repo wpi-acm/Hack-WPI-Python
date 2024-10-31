@@ -30,7 +30,10 @@ def register():
         school = request.form.get('school')
         phone = request.form.get('phone_number')
         gender = request.form.get('gender')
-
+        country = request.form.get('country')
+        age = request.form.get('age')
+        dietary_restrictions = request.form.get('dietary_restrictions')
+        newsletter = request.form.get('newsletter')
 
         if password == password_c:
             # Passwords match!
@@ -51,7 +54,11 @@ def register():
                     waitlisted=waitlisted,
                     school=school,
                     phone=phone,
-                    gender=gender
+                    gender=gender,
+                    country=country,
+                    age=age,
+                    dietary_restrictions=dietary_restrictions,
+                    newsletter=newsletter
             )
             db.session.add(user)
             db.session.commit()

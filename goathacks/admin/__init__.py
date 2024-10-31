@@ -9,9 +9,9 @@ bp = Blueprint("admin", __name__, url_prefix="/admin")
 from goathacks import db, mail as app_mail
 from goathacks.admin import events
 
-@bp.route("/")
-@login_required
-def home():
+# Helper function for admin.home and admin.admin_list to render list of users.
+# This function was abstracted to promote code reuse.
+def render_user_list(admin_list):
     if not current_user.is_admin:
         return redirect(url_for("dashboard.home"))
     male_count = 0
@@ -21,7 +21,10 @@ def home():
     waitlist_count = 0
     total_count = 0
     shirt_count = {'XS': 0, 'S': 0, 'M': 0, 'L': 0, 'XL': 0}
-    hackers = db.session.execute(db.select(User)).scalars().all()
+    if(admin_list):
+        hackers = db.session.execute(db.select(User).where(User.is_admin)).scalars().all()
+    else:
+        hackers = db.session.execute(db.select(User).where(User.is_admin == False)).scalars().all()
     schools = {}
     
     for h in hackers:
@@ -55,12 +58,23 @@ def home():
                            female_count=female_count, nb_count=nb_count,
                            check_in_count=check_in_count, schools=schools)
 
+@bp.route("/")
+@login_required
+def home():
+    return render_user_list(False) # list users (not admins)
+
+@bp.route("/admin_list")
+@login_required
+def admin_list():
+    return render_user_list(True) # list users (admins)
+
+
 @bp.route("/mail")
 @login_required
 def mail():
     if not current_user.is_admin:
         return redirect(url_for("dashboard.home"))
-
+    
     total_count = len(db.session.execute(db.select(User)).scalars().all())
     api_key = current_app.config["MCE_API_KEY"]
 
