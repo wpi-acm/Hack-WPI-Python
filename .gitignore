@@ -1,7 +1,6 @@
 resumes*/
 resumes*.zip
 config_hackWPI.py
-config.py
 admin/*.json
 admin/*.csv
 

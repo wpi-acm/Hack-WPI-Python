@@ -9,6 +9,8 @@ from flask_bootstrap import Bootstrap5
 from flask_font_awesome import FontAwesome
 from flask_qrcode import QRcode
 
+from config import Config
+
 
 
 db = SQLAlchemy()
@@ -21,10 +23,10 @@ bootstrap = Bootstrap5()
 font_awesome = FontAwesome()
 qrcode = QRcode()
 
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
 
-    app.config.from_pyfile("config.py")
+    app.config.from_object(config_class)
 
     db.init_app(app)
     migrate.init_app(app, db)
