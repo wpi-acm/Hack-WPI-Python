@@ -11,7 +11,8 @@ class Config():
 
     SQLALCHEMY_DATABASE_URI = dotenv_values().get("SQLALCHEMY_DATABASE_URI") or "postgresql://localhost/goathacks"
 
-    MAX_BEFORE_WAITLIST = dotenv_values().get("MAX_BEFORE_WAITLIST") or 1
+    MAX_BEFORE_WAITLIST = int(dotenv_values().get("MAX_BEFORE_WAITLIST")) or 1
+    MCE_API_KEY = dotenv_values().get("MCE_API_KEY")
     SECRET_KEY = dotenv_values().get("SECRET_KEY") or "bad-key-change-me"
 
     UPLOAD_FOLDER = dotenv_values().get("UPLOAD_FOLDER") or "./uploads/"
