@@ -4,6 +4,8 @@ from flask_mail import Message
 
 from goathacks.models import User
 
+from sqlalchemy.exc import IntegrityError
+
 bp = Blueprint("admin", __name__, url_prefix="/admin")
 
 from goathacks import db, mail as app_mail
@@ -220,6 +222,44 @@ def hackers():
 
     users = User.query.all()
     return User.create_json_output(users)
+
+@bp.route("/updateHacker", methods=["POST"])
+@login_required
+def updateHacker():
+    if not current_user.is_admin:
+        return redirect(url_for("dashboard.home"))
+    
+    # get params from json
+    hacker_id = request.json['hacker_id']
+    change_field = request.json['change_field']
+    new_val = request.json['new_val']
+
+    # find the user in db
+    user = User.query.filter_by(id=hacker_id).one()
+    if user is None:
+        return {"status": "error", "msg": "user not found"}
+    
+
+    # update the hacker depending on change_field
+    match change_field:
+        case "first_name":
+            user.first_name = new_val
+        case "last_name":
+            user.last_name = new_val
+        case "school":
+            user.school = new_val
+        case "phone":
+            user.phone = new_val
+
+    try:
+        db.session.commit()
+    except IntegrityError as err:
+        db.session.rollback()
+        flash("Could not update user information for user " + hacker_id)
+        return {"status": "error"}
+
+        
+    return {"status": "success"}
 
 import json
 import csv
