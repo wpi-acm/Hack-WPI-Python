@@ -23,8 +23,10 @@ gr = AppGroup("user")
 @click.option("--school", prompt=True)
 @click.option("--phone", prompt=True)
 @click.option("--gender", prompt=True)
+@click.option("--country", prompt=True)
+@click.option("--age", prompt=True)
 def create_user(email, first_name, last_name, password, school, phone, gender,
-                admin):
+                admin,age, country):
     """
     Creates a user
     """
@@ -48,7 +50,9 @@ def create_user(email, first_name, last_name, password, school, phone, gender,
             school=school,
             phone=phone,
             gender=gender,
-            is_admin=admin
+            is_admin=admin,
+            country=country,
+            age=age
             )
     db.session.add(user)
     db.session.commit()

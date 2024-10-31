@@ -26,3 +26,4 @@ ulid
 bootstrap-flask
 Font-Awesome-Flask
 tabulate
+markupsafe
