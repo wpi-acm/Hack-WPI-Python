@@ -21,7 +21,7 @@
                             data-bs-toggle="dropdown">Search<span
                             class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <input style="padding:5px;margin-left:10px;margin-right:10px;" type="text" id="searchbox" name="searchbox_text" placeholder="Search By Email" onkeyup="filterHackers()"/>
+                    <input style="padding:5px;margin-left:10px;margin-right:10px;" type="text" id="searchbox" name="searchbox-text" placeholder="Search By Email" onkeyup="filterHackers()"/>
                 </ul>
             </div>
 
@@ -93,11 +93,20 @@
                     <td>{{ hacker.id }}</td>
                     <td>{{ hacker.last_login }}</td>
                     <td>{{ hacker.email }}</td>
-                    <td>{{ hacker.first_name + ' ' + hacker.last_name }}</td>
-                    <td>{{ hacker.phone }}</td>
+                    <td>
+                        <div style="display: flex; justify-content: flex-start;">
+                            <input style="padding:5px; margin-left:10px; margin-right:10px;width:fit-content;max-width:100px;" type="text" id="{{hacker.id}}-namebox-first" placeholder="first_name" value="{{hacker.first_name}}" onchange="updateHacker(this.id, 'first_name', this.value)"/>
+                            <input style="padding:5px; margin-left:10px; margin-right:10px;width:fit-content;max-width:100px;" type="text" id="{{hacker.id}}-namebox-last" placeholder="last_name" value="{{hacker.last_name}}" onchange="updateHacker(this.id, 'last_name', this.value)"/>
+                        </div>
+                    </td>
+                    <td>
+                        <input style="padding:5px; margin-left:10px; margin-right:10px;width:fit-content;max-width:100px;" type="text" id="{{hacker.id}}-phonebox" placeholder="phone" value="{{hacker.phone}}" onchange="updateHacker(this.id, 'phone', this.value)"/>
+                    </td>
                     <td>{{ hacker.shirt_size }}</td>
                     <td>{{ hacker.accomodations }}</td>
-                    <td>{{ hacker.school }}</td>
+                    <td>
+                        <input style="padding:5px; margin-left:10px; margin-right:10px;width:fit-content;max-width:75px;" type="text" id="{{hacker.id}}-schoolbox" placeholder="school" value="{{hacker.school}}" onchange="updateHacker(this.id, 'school', this.value)"/>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -129,6 +138,25 @@
                 }
             }
         }
+    }
+
+    function updateHacker(id, change_field, new_val) {
+        //tell backend to update a specific field for a hacker
+        const headers = [
+            ["Content-Type", "application/json"],
+        ];
+
+        let body = {
+            "hacker_id": id.substr(0, id.indexOf('-')),
+            "change_field": change_field,
+            "new_val": new_val,
+        }
+
+        //send the post request, and report the error if there is one
+        fetch('/admin/updateHacker', {method: 'POST', body: JSON.stringify(body), headers: headers}).catch((err) => {
+            window.alert("Error updating user - see console for details");
+            console.log(err);
+        })
     }
 </script>
 {% endblock %}
