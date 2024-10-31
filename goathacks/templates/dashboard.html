@@ -33,7 +33,7 @@
         </div>
         <hr/>
         <div class="row center justify-content-center">
-            <form method="post" action={{url_for('dashboard.resume')}}"
+            <form method="post" action="{{url_for('dashboard.resume')}}"
                   enctype="multipart/form-data">
                 {{ resform.csrf_token() }}
                 <p><b>If you'd like, add your resume to send to

@@ -1,4 +1,4 @@
-from flask import Blueprint, current_app, flash, jsonify, render_template, request
+from flask import Blueprint, current_app, flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from werkzeug.utils import secure_filename
 
@@ -47,9 +47,17 @@ def resume():
             filename = current_user.first_name.lower() + '_' + current_user.last_name.lower() + '_' + str(
                 current_user.id) + '.' + resume.filename.split('.')[-1].lower()
             filename = secure_filename(filename)
+            if not os.path.exists(current_app.config['UPLOAD_FOLDER']):
+                try:
+                    os.makedirs(current_app.config['UPLOAD_FOLDER'])
+                except Exception:
+                    flash("Error saving resume. Contact acm-sysadmin@wpi.edu")
+                    return redirect(url_for("dashboard.home"))
             resume.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-            return 'Resume uploaded!  <a href="/dashboard">Return to dashboard</a>'
-    return "Something went wrong. If this keeps happening, contact hack@wpi.edu for assistance"
+            flash("Resume uploaded!")
+            return redirect(url_for("dashboard.home"))
+    flash("Something went wrong. If this keeps happening, contact hack@wpi.edu for assistance")
+    return redirect(url_for("dashboard.home"))
 
 
 def allowed_file(filename):
