@@ -22,8 +22,8 @@ class RegisterForm(FlaskForm):
     gender = SelectField("Gender", choices=[("F", "Female"), ("M", "Male"),
                                             ("NB", "Non-binary/Other")],
                          widget=widgets.Select())
-    country = SelectField("Country", choices=[(country.split(",")[0], country.split(",")[0]) for country in countries_list], widget=widgets.Select())
-    newsletter = BooleanField("Subscribe to the MLH newsletter?")
+    country = SelectField("Country of Origin", choices=[(country.split(",")[0], country.split(",")[0]) for country in countries_list], widget=widgets.Select())
+    newsletter = BooleanField("'I authorize MLH to send me occasional emails about relevant events, career opportunities, and community announcements.")
     agree_coc = BooleanField("I confirm that I have read and agree to the Code of Conduct", validators=[DataRequired()])
     logistics = BooleanField("I authorize you to share my application/registration with Major League Hacking for event administration, ranking, and MLH administration in-line with the MLH privacy policy.I further agree to the terms of both the MLH Contest Terms and Conditions and the MLH Privacy Policy.", validators=[DataRequired()])
 
