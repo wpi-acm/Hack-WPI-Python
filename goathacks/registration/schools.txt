@@ -1,4 +1,4 @@
-
+Worcester Polytechnic Institute
 21st Century Cyber Charter School
 Aalto University
 Aarhus University
@@ -2198,7 +2198,6 @@ Woodbridge High School - London
 "Woodbridge High School - Woodbridge, NJ"
 "Woodbridge High School - Woodbridge, ON"
 "Woodbridge High School - Woodbridge, VA"
-Worcester Polytechnic Institute
 Worcester State University
 World Communications Charter School
 Wright State University
