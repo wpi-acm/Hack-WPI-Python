@@ -15,6 +15,12 @@
         <p class="card-text">Let us know if you have any questions by sending
         them to <a href="mailto:hack@wpi.edu">hack@wpi.edu</a></p>
 
+        {% if not current_user.waitlisted and config['DISCORD_LINK'] %}
+        <p>Make sure to join our Discord to get the latest updates!</p>
+            <button type="button" class="btn btn-primary mb-3"><a href="{{ config['DISCORD_LINK']
+                          }}" class="link-light">Discord</a></button>
+        {% endif %}
+
         <div class="row center justify-content-center">
             <form method="post">
                 {{ form.csrf_token() }}
